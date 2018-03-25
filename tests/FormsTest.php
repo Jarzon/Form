@@ -74,11 +74,38 @@ class FormsTest extends TestCase
         $forms->verification();
     }
 
+
+    public function testValidDate()
+    {
+        $forms = new Forms(['test' => '12/04/2014']);
+
+        $forms
+            ->date('test');
+
+        $values = $forms->verification();
+
+        $this->assertEquals(['test' => '12/04/2014'], $values);
+    }
+
+    /**
+     * @expectedException     \Exception
+     * @expectedExceptionMessage test is not a valid date
+     */
+    public function testInvalidDate()
+    {
+        $forms = new Forms(['test' => '00/00/0000']);
+
+        $forms
+            ->date('test');
+
+        $forms->verification();
+    }
+
     /**
      * @expectedException     \Exception
      * @expectedExceptionMessage test is not a valid email
      */
-    public function test()
+    public function testInvalidEmail()
     {
         $forms = new Forms(['test' => 'asdf']);
 
@@ -386,6 +413,17 @@ class FormsTest extends TestCase
         $content = $forms->getForms();
 
         $this->assertEquals('<input name="test" type="number" step="0.01" min="4" max="10">', $content['test']['html']);
+    }
+
+    public function testGetFormsDate() {
+        $forms = new Forms(['test' => 'a']);
+
+        $forms
+            ->date('test');
+
+        $content = $forms->getForms();
+
+        $this->assertEquals('<input name="test" type="text" pattern="[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]">', $content['test']['html']);
     }
 
     public function testGetFormsEmail()

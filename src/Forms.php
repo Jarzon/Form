@@ -4,7 +4,7 @@ namespace Jarzon;
 class Forms
 {
     public $forms = [];
-    protected $dateFormat = '[0-9]{2}/[0-9]{2}/[0-9]{4}';
+    protected $dateFormat = '[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]';
     protected $post = [];
     protected $update = false;
 
@@ -193,12 +193,17 @@ class Forms
         return $this;
     }
 
+    public function setDateFormat(string $format = '[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]')
+    {
+        $this->dateFormat = $format;
+    }
+
     public function date(string $name)
     {
         $this->row('date', $name);
         $this->lastRow['attributes']['type'] = 'text';
 
-        $this->lastRow['attributes']['pattern'] = '[0-9]{2}/[0-9]{2}/[0-9]{4}';
+        $this->lastRow['attributes']['pattern'] = $this->dateFormat;
 
         return $this;
     }
@@ -208,7 +213,7 @@ class Forms
         $this->row('datetime', $name);
         $this->lastRow['attributes']['type'] = 'text';
 
-        $this->lastRow['attributes']['pattern'] = '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}';
+        $this->lastRow['attributes']['pattern'] = "$this->dateFormat [0-9]{2}:[0-9]{2}";
 
         return $this;
     }
@@ -436,11 +441,8 @@ class Forms
                     }
                 }
                 else if($input['type'] == 'date') {
-                    // TODO: Be able to change the format for every date and match the $format with pattern
-
-                    $format = 'd/m/Y';
-                    $d = \DateTime::createFromFormat($format, $value);
-                    if(!$d || $d->format($format) != $value) {
+                    $format = str_replace('/', '\/', $input['attributes']['pattern']);
+                    if(preg_match("/$format/", $value) == 0) {
                         throw new \Exception($input['name'] . ' is not a valid date');
                     }
                 }
