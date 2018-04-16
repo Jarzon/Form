@@ -326,6 +326,19 @@ class Forms
         return $this;
     }
 
+    public function id(?string $id = null)
+    {
+        if($id === null) $id = $this->lastRow['name'];
+
+        if($this->lastRow['type'] == 'radio') {
+            $this->lastRow['id'] = $id;
+        } else {
+            $this->lastRow['attributes']['id'] = $id;
+        }
+
+        return $this;
+    }
+
     public function selected($selected = true)
     {
         if($this->lastRow['type'] === 'checkbox') {
