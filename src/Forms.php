@@ -196,6 +196,8 @@ class Forms
     public function setDateFormat(string $format = '[0-3]?[0-9]/[0-1]?[0-9]/(19|20)?[0-9]{2}')
     {
         $this->dateFormat = $format;
+
+        return $this;
     }
 
     public function date(string $name)
