@@ -315,8 +315,12 @@ class Forms
         return $this;
     }
 
-    public function class(string $classes = '')
+    public function class(?string $classes = null)
     {
+        if($classes === null) {
+            $classes = $this->lastRow['name'];
+        }
+
         if($this->lastRow['type'] == 'radio') {
             $this->lastRow['class'] = $classes;
         } else {
