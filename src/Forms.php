@@ -4,7 +4,7 @@ namespace Jarzon;
 class Forms
 {
     public $forms = [];
-    protected $dateFormat = '[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]';
+    protected $dateFormat = '[0-3]?[0-9]/[0-1]?[0-9]/(19|20)?[0-9]{2}';
     protected $post = [];
     protected $update = false;
 
@@ -193,7 +193,7 @@ class Forms
         return $this;
     }
 
-    public function setDateFormat(string $format = '[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]')
+    public function setDateFormat(string $format = '[0-3]?[0-9]/[0-1]?[0-9]/(19|20)?[0-9]{2}')
     {
         $this->dateFormat = $format;
     }
