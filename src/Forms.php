@@ -439,30 +439,30 @@ class Forms
             }
 
             if(array_key_exists('required', $input['attributes']) && $value === '') {
-                throw new \Exception($input['name'] . ' is required');
+                throw new \Exception("{$input['name']} is required");
             }
             else if((!array_key_exists('required', $input['attributes']) && !empty($value))) {
                 if(($input['type'] == 'text' || $input['type'] == 'password' || $input['type'] == 'email')) {
                     $numberChars = mb_strlen($value);
                     if(!empty($input['max']) && $numberChars > $input['max']) {
-                        throw new \Exception($input['name'] . ' is too long');
+                        throw new \Exception("{$input['name']} is too long");
                     }
                     else if(!empty($input['min']) && $numberChars < $input['min']) {
-                        throw new \Exception($input['name'] . ' is too short');
+                        throw new \Exception("{$input['name']} is too short");
                     }
                 }
                 else if(($input['type'] == 'number' || $input['type'] == 'float')) {
                     if(!empty($input['max']) && $value > $input['max']) {
-                        throw new \Exception($input['name'] . ' is too high');
+                        throw new \Exception("{$input['name']} is too high");
                     }
                     else if(!empty($input['min']) && $value < $input['min']) {
-                        throw new \Exception($input['name'] . ' is too low');
+                        throw new \Exception("{$input['name']} is too low");
                     }
                 }
                 else if($input['type'] == 'date') {
                     $format = str_replace('/', '\/', $input['attributes']['pattern']);
                     if(preg_match("/$format/", $value) == 0) {
-                        throw new \Exception($input['name'] . ' is not a valid date');
+                        throw new \Exception("{$input['name']} is not a valid date");
                     }
                 }
                 else if($input['type'] == 'select' || $input['type'] == 'radio') {
@@ -481,12 +481,12 @@ class Forms
 
                 if($input['type'] == 'email') {
                     if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                        throw new \Exception($input['name'] . ' is not a valid email');
+                        throw new \Exception("{$input['name']} is not a valid email");
                     }
                 }
                 else if($input['type'] == 'url') {
                     if(!filter_var($value, FILTER_VALIDATE_URL)) {
-                        throw new \Exception($input['name'] . ' is not a valid url');
+                        throw new \Exception("{$input['name']} is not a valid url");
                     }
                 }
                 else if($input['type'] == 'file') {
