@@ -465,6 +465,19 @@ class Forms
                         throw new \Exception("{$input['name']} is not a valid date");
                     }
                 }
+                else if($input['type'] == 'select' || $input['type'] == 'radio') {
+                    $exist = false;
+
+                    // Use the correct value type
+                    if($key = array_search($value, $input['value'])) {
+                        $value = $input['value'][$key];
+                        $exist = true;
+                    }
+
+                    if(!$exist) {
+                        throw new \Error("$value doesn't exist");
+                    }
+                }
 
                 if($input['type'] == 'email') {
                     if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
