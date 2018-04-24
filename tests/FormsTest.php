@@ -423,7 +423,7 @@ class FormsTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" pattern="[1-3][0-9]/[0-1][0-9]/[1-2]?[0-9]?[0-9][0-9]">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="text" pattern="(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d">', $content['test']['html']);
     }
 
     public function testGetFormsEmail()

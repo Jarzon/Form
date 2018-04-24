@@ -4,7 +4,7 @@ namespace Jarzon;
 class Forms
 {
     public $forms = [];
-    protected $dateFormat = '[0-3]?[0-9]/[0-1]?[0-9]/(19|20)?[0-9]{2}';
+    protected $dateFormat = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d';
     protected $post = [];
     protected $update = false;
 
@@ -193,7 +193,7 @@ class Forms
         return $this;
     }
 
-    public function setDateFormat(string $format = '[0-3]?[0-9]/[0-1]?[0-9]/(19|20)?[0-9]{2}')
+    public function setDateFormat(string $format = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d')
     {
         $this->dateFormat = $format;
 
@@ -441,7 +441,7 @@ class Forms
             if(array_key_exists('required', $input['attributes']) && $value === '') {
                 throw new \Exception("{$input['name']} is required");
             }
-            else if((!array_key_exists('required', $input['attributes']) && !empty($value))) {
+            else if(!empty($value)) {
                 if(($input['type'] == 'text' || $input['type'] == 'password' || $input['type'] == 'email')) {
                     $numberChars = mb_strlen($value);
                     if(!empty($input['max']) && $numberChars > $input['max']) {
@@ -463,19 +463,6 @@ class Forms
                     $format = str_replace('/', '\/', $input['attributes']['pattern']);
                     if(preg_match("/$format/", $value) == 0) {
                         throw new \Exception("{$input['name']} is not a valid date");
-                    }
-                }
-                else if($input['type'] == 'select' || $input['type'] == 'radio') {
-                    $exist = false;
-
-                    foreach($input['value'] as $inputValue) {
-                        if($value == $inputValue) {
-                            $exist = true;
-                        }
-                    }
-
-                    if(!$exist) {
-                        throw new \Error("$value doesn't exist");
                     }
                 }
 
