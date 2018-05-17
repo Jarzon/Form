@@ -54,9 +54,11 @@ class Forms
             }
             if($form['type'] == 'select' || $form['type'] == 'radio') {
                 $form['selected'] = $value;
-            } else if ($form['type'] != 'file') {
+            } else {
                 $form['value'] = $value;
-                $form['attributes']['value'] = $value;
+                if ($form['type'] != 'file') {
+                    $form['attributes']['value'] = $value;
+                }
             }
         }
 
@@ -269,7 +271,7 @@ class Forms
         return $this;
     }
 
-    public function max(int $max = 0)
+    public function max(int $max = PHP_INT_MAX)
     {
         $row =& $this->lastRow;
         $attr = 'maxlength';
