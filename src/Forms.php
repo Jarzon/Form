@@ -404,6 +404,16 @@ class Forms
             unset($this->lastRow['attributes']['pattern']);
         }
 
+        return $this;
+    }
+
+    public function placeholder($placeholder = false)
+    {
+        if($placeholder) {
+            $this->lastRow['attributes']['placeholder'] = $placeholder;
+        } else {
+            unset($this->lastRow['attributes']['placeholder']);
+        }
 
         return $this;
     }
