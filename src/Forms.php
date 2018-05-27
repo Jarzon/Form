@@ -269,6 +269,13 @@ class Forms
         return $this;
     }
 
+    public function tel(string $name)
+    {
+        $this->row('tel', $name);
+
+        return $this;
+    }
+
     public function color(string $name)
     {
         $this->row('color', $name);
