@@ -263,6 +263,13 @@ class Forms
         return $this;
     }
 
+    public function search(string $name)
+    {
+        $this->row('search', $name);
+
+        return $this;
+    }
+
     public function color(string $name)
     {
         $this->row('color', $name);
