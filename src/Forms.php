@@ -385,7 +385,7 @@ class Forms
         return $this;
     }
 
-    public function multiple($multiple = true)
+    public function multiple(bool $multiple = true)
     {
         if($multiple) {
             $this->lastRow['attributes']['multiple'] = null;
@@ -396,9 +396,9 @@ class Forms
         return $this;
     }
 
-    public function pattern($pattern = false)
+    public function pattern(?string $pattern = null)
     {
-        if($pattern) {
+        if($pattern !== null) {
             $this->lastRow['attributes']['pattern'] = $pattern;
         } else {
             unset($this->lastRow['attributes']['pattern']);
@@ -407,12 +407,34 @@ class Forms
         return $this;
     }
 
-    public function placeholder($placeholder = false)
+    public function placeholder(?string $placeholder = null)
     {
-        if($placeholder) {
+        if($placeholder !== null) {
             $this->lastRow['attributes']['placeholder'] = $placeholder;
         } else {
             unset($this->lastRow['attributes']['placeholder']);
+        }
+
+        return $this;
+    }
+
+    public function spellcheck(?bool $placeholder = null)
+    {
+        if($placeholder !== null) {
+            $this->lastRow['attributes']['spellcheck'] = ($placeholder) ? 'true': 'false';
+        } else {
+            unset($this->lastRow['attributes']['spellcheck']);
+        }
+
+        return $this;
+    }
+
+    public function autocomplete(?string $value = null)
+    {
+        if($value !== null) {
+            $this->lastRow['attributes']['autocomplete'] = $value;
+        } else {
+            unset($this->lastRow['attributes']['spelautocompletelcheck']);
         }
 
         return $this;
