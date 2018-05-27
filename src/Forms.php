@@ -263,6 +263,13 @@ class Forms
         return $this;
     }
 
+    public function color(string $name)
+    {
+        $this->row('color', $name);
+
+        return $this;
+    }
+
     public function min(int $min = 0)
     {
         $row =& $this->lastRow;
