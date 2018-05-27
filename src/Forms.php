@@ -185,6 +185,13 @@ class Forms
         return $this;
     }
 
+    public function range(string $name)
+    {
+        $this->row('range', $name);
+
+        return $this;
+    }
+
     public function float(string $name)
     {
         $this->row('float', $name);
@@ -260,7 +267,7 @@ class Forms
     {
         $row =& $this->lastRow;
         $attr = 'minlength';
-        if($row['type'] == 'number' || $row['type'] == 'float') {
+        if(in_array($row['type'], ['number', 'float', 'range'])) {
             $attr = 'min';
         }
 
@@ -275,7 +282,7 @@ class Forms
     {
         $row =& $this->lastRow;
         $attr = 'maxlength';
-        if($row['type'] == 'number' || $row['type'] == 'float') {
+        if(in_array($row['type'], ['number', 'float', 'range'])) {
             $attr = 'max';
         }
 
@@ -603,7 +610,8 @@ class Forms
         return [$file, $name];
     }
 
-    public function move_uploaded_file($tmp_name, $dest) {
+    public function move_uploaded_file($tmp_name, $dest)
+    {
         return move_uploaded_file(
             $tmp_name,
             $dest
