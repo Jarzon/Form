@@ -219,12 +219,11 @@ class Forms
         return $this;
     }
 
-    public function datetime(string $name)
+    public function time(string $name)
     {
-        $this->row('datetime', $name);
-        $this->lastRow['attributes']['type'] = 'text';
+        $this->row('time', $name);
 
-        $this->lastRow['attributes']['pattern'] = "$this->dateFormat [0-9]{2}:[0-9]{2}";
+        $this->lastRow['attributes']['pattern'] = "[0-9]{2}:[0-9]{2}";
 
         return $this;
     }
@@ -486,6 +485,12 @@ class Forms
                     $format = str_replace('/', '\/', $input['attributes']['pattern']);
                     if(preg_match("/$format/", $value) == 0) {
                         throw new \Exception("{$input['name']} is not a valid date");
+                    }
+                }
+                else if($input['type'] == 'time') {
+                    $format = str_replace('/', '\/', $input['attributes']['pattern']);
+                    if(preg_match("/$format/", $value) == 0) {
+                        throw new \Exception("{$input['name']} is not a valid time");
                     }
                 }
                 else if($input['type'] == 'select' || $input['type'] == 'radio') {
