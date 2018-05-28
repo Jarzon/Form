@@ -434,7 +434,18 @@ class Forms
         if($value !== null) {
             $this->lastRow['attributes']['autocomplete'] = $value;
         } else {
-            unset($this->lastRow['attributes']['spelautocompletelcheck']);
+            unset($this->lastRow['attributes']['autocomplete']);
+        }
+
+        return $this;
+    }
+
+    public function tabindex(?int $index = null)
+    {
+        if($index !== null) {
+            $this->lastRow['attributes']['tabindex'] = $index;
+        } else {
+            unset($this->lastRow['attributes']['tabindex']);
         }
 
         return $this;
