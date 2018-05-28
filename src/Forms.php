@@ -327,7 +327,6 @@ class Forms
     public function value($value = '')
     {
         // TODO: force variable type base on input type
-        // TODO: don't add value attribut if its a radio or a select
         $this->lastRow['value'] = $value;
 
         if(!is_array($value)) {
@@ -337,10 +336,8 @@ class Forms
         return $this;
     }
 
-    public function types($types = [])
+    public function types(array $types = [])
     {
-        // TODO: implements
-
         $this->lastRow['attributes']['accept'] = implode(', ', $types);
 
         return $this;
