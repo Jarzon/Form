@@ -63,11 +63,11 @@ class TextInput extends Input
         if(!empty($value)) {
 
             $numberChars = mb_strlen($value);
-            if(!empty($input['max']) && $numberChars > $input['max']) {
-                throw new \Exception("{$input['name']} is too long");
+            if(!empty($this->max) && $numberChars > $this->max) {
+                throw new \Exception("{$this->name} is too long");
             }
-            else if(!empty($input['min']) && $numberChars < $input['min']) {
-                throw new \Exception("{$input['name']} is too short");
+            else if(!empty($this->min) && $numberChars < $this->min) {
+                throw new \Exception("{$this->name} is too short");
             }
         }
 
