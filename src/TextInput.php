@@ -54,4 +54,37 @@ class TextInput extends Input
     {
         $this->setHtml($this->generateTag('input', $this->attributes));
     }
+
+    public function validation($value = null, $update = false)
+    {
+        if(array_key_exists('required', $this->attributes) && $value === null) {
+            throw new \Exception("{$this->name} is required");
+        }
+        if(!empty($value)) {
+
+            $numberChars = mb_strlen($value);
+            if(!empty($input['max']) && $numberChars > $input['max']) {
+                throw new \Exception("{$input['name']} is too long");
+            }
+            else if(!empty($input['min']) && $numberChars < $input['min']) {
+                throw new \Exception("{$input['name']} is too short");
+            }
+        }
+
+        $updated = false;
+
+        if($value !== $this->value) {
+            $updated = true;
+        }
+
+        if($updated) {
+            $this->value($value);
+        }
+
+        if((array_key_exists('required', $this->attributes) && !$update) || $updated) {
+            return $value;
+        }
+
+        return null;
+    }
 }

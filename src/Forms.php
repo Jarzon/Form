@@ -472,9 +472,23 @@ class Forms
 
     public function validation()
     {
-        foreach($this->items as $input) {
-            $input->validation();
+        $values = [];
+
+        foreach($this->items as $key => $input) {
+            $value = null;
+
+            if($this->keyExists($key)) {
+                $value = $this->post[$key];
+            }
+
+            $result = $input->validation($value, $this->update);
+
+            if($result !== null) {
+                $values[$key] = $result;
+            }
         }
+
+        return $values;
     }
 
     public function verification() : array
