@@ -207,6 +207,27 @@ class Forms
         return $this;
     }
 
+    public function search(string $name)
+    {
+        $this->addItem(new SearchInput($name), $name);
+
+        return $this;
+    }
+
+    public function tel(string $name)
+    {
+        $this->row('tel', $name);
+
+        return $this;
+    }
+
+    public function color(string $name)
+    {
+        $this->row('color', $name);
+
+        return $this;
+    }
+
     public function number(string $name)
     {
         $this->addItem(new NumberInput($name), $name);
@@ -284,27 +305,6 @@ class Forms
 
         $this->lastRow['destination'] = $destination;
         $this->lastRow['ext'] = $ext;
-
-        return $this;
-    }
-
-    public function search(string $name)
-    {
-        $this->row('search', $name);
-
-        return $this;
-    }
-
-    public function tel(string $name)
-    {
-        $this->row('tel', $name);
-
-        return $this;
-    }
-
-    public function color(string $name)
-    {
-        $this->row('color', $name);
 
         return $this;
     }
