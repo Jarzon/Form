@@ -57,10 +57,10 @@ class TextInput extends Input
 
     public function validation($value = null, $update = false)
     {
-        if(array_key_exists('required', $this->attributes) && $value === null) {
+        if($value == ''  && array_key_exists('required', $this->attributes)) {
             throw new \Exception("{$this->name} is required");
         }
-        if(!empty($value)) {
+        else if($value !== null) {
 
             $numberChars = mb_strlen($value);
             if(!empty($this->max) && $numberChars > $this->max) {
