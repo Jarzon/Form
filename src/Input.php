@@ -9,8 +9,10 @@ class Input
     public $html = '';
     protected $attributes = [];
 
-    protected $min = 0;
-    protected $max = 0;
+    protected $min = null;
+    protected $max = null;
+
+    protected $pattern = null;
 
     public function __construct(string $name)
     {
@@ -100,6 +102,17 @@ class Input
         $this->setValue($value);
 
         $this->setAttribute('value', $value);
+    }
+
+    public function pattern(?string $pattern = null)
+    {
+        $this->pattern = $pattern;
+
+        if($pattern !== null) {
+            $this->setAttribute('pattern', $pattern);
+        } else {
+            $this->deleteAttribute('pattern');
+        }
     }
 
     public function required(bool $required = true)

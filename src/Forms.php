@@ -2,6 +2,7 @@
 namespace Jarzon;
 
 use Jarzon\Input\ColorInput;
+use Jarzon\Input\DateInput;
 use Jarzon\Input\EmailInput;
 use Jarzon\Input\FloatInput;
 use Jarzon\Input\HiddenInput;
@@ -18,7 +19,6 @@ class Forms
 {
     public $forms = [];
     protected $items = [];
-    protected $dateFormat = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d';
     protected $post = [];
     protected $update = false;
 
@@ -262,19 +262,9 @@ class Forms
         return $this;
     }
 
-    public function setDateFormat(string $format = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d')
-    {
-        $this->dateFormat = $format;
-
-        return $this;
-    }
-
     public function date(string $name)
     {
-        $this->row('date', $name);
-        $this->lastRow['attributes']['type'] = 'text';
-
-        $this->lastRow['attributes']['pattern'] = $this->dateFormat;
+        $this->addItem(new DateInput($name), $name);
 
         return $this;
     }
@@ -401,11 +391,7 @@ class Forms
 
     public function pattern(?string $pattern = null)
     {
-        if($pattern !== null) {
-            $this->lastRow['attributes']['pattern'] = $pattern;
-        } else {
-            unset($this->lastRow['attributes']['pattern']);
-        }
+        $this->lastRow->pattern($pattern);
 
         return $this;
     }
@@ -536,30 +522,7 @@ class Forms
                 throw new \Exception("{$input['name']} is required");
             }
             else if(!empty($value)) {
-                if(($input['type'] == 'text' || $input['type'] == 'password' || $input['type'] == 'email')) {
-                    $numberChars = mb_strlen($value);
-                    if(!empty($input['max']) && $numberChars > $input['max']) {
-                        throw new \Exception("{$input['name']} is too long");
-                    }
-                    else if(!empty($input['min']) && $numberChars < $input['min']) {
-                        throw new \Exception("{$input['name']} is too short");
-                    }
-                }
-                else if(($input['type'] == 'number' || $input['type'] == 'float')) {
-                    if(!empty($input['max']) && $value > $input['max']) {
-                        throw new \Exception("{$input['name']} is too high");
-                    }
-                    else if(!empty($input['min']) && $value < $input['min']) {
-                        throw new \Exception("{$input['name']} is too low");
-                    }
-                }
-                else if($input['type'] == 'date') {
-                    $format = str_replace('/', '\/', $input['attributes']['pattern']);
-                    if(preg_match("/$format/", $value) == 0) {
-                        throw new \Exception("{$input['name']} is not a valid date");
-                    }
-                }
-                else if($input['type'] == 'time') {
+                if($input['type'] == 'time') {
                     $format = str_replace('/', '\/', $input['attributes']['pattern']);
                     if(preg_match("/$format/", $value) == 0) {
                         throw new \Exception("{$input['name']} is not a valid time");
