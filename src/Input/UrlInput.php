@@ -10,4 +10,15 @@ class UrlInput extends TextBasedInput
         parent::__construct($name);
         $this->setAttribute('type', 'url');
     }
+
+    public function passValidation($value = null): bool
+    {
+        parent::passValidation($value);
+
+        if(!filter_var($value, FILTER_VALIDATE_URL)) {
+            throw new \Exception("$this->name is not a valid url");
+        }
+
+        return true;
+    }
 }

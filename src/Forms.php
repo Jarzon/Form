@@ -542,17 +542,7 @@ class Forms
                     }
                 }
 
-                if($input['type'] == 'email') {
-                    if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                        throw new \Exception("{$input['name']} is not a valid email");
-                    }
-                }
-                else if($input['type'] == 'url') {
-                    if(!filter_var($value, FILTER_VALIDATE_URL)) {
-                        throw new \Exception("{$input['name']} is not a valid url");
-                    }
-                }
-                else if($input['type'] == 'file') {
+                if($input['type'] == 'file') {
                     $infos = [];
 
                     // TODO: verify file type
