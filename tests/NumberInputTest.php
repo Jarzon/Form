@@ -19,6 +19,6 @@ class NumberInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="number" step="1" min="4" max="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="number" step="1" min="4" max="10">', $content['test']->html);
     }
 }

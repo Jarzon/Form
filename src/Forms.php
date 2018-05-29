@@ -209,9 +209,7 @@ class Forms
 
     public function number(string $name)
     {
-        $this->row('number', $name);
-
-        $this->lastRow['attributes']['step'] = 1;
+        $this->addItem(new NumberInput($name), $name);
 
         return $this;
     }
