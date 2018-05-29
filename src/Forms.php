@@ -66,27 +66,6 @@ class Forms
         return;
     }
 
-    public function generateTag(string $tag, array $attributes, $content = false) : string
-    {
-        $attr = '';
-
-        foreach($attributes as $attribute => $value) {
-            if($value === null) {
-                $attr .= " $attribute";
-            } else {
-                $attr .= " $attribute=\"$value\"";
-            }
-        }
-
-        $html = "<$tag$attr>";
-
-        if($content !== false) {
-            $html .= "$content</$tag>";
-        }
-
-        return $html;
-    }
-
     public function generateInput(array $input)
     {
         if($input['type'] == 'radio') {
@@ -129,24 +108,25 @@ class Forms
 
     public function generateInputs()
     {
-        foreach ($this->forms as $index => &$form) {
-            $this->forms[$index]['html'] = $this->generateInput($form);
+        foreach ($this->items as $form) {
+            $form->generateInput();
         }
     }
 
     public function addItem(object $object, ?string $key = null)
     {
-        if ($key !== null) {
-            if (isset($this->items[$key])) {
-                throw new \Exception("Key $key already in use.");
-            }
-
-            $this->items[$key] = $object;
-
-            $this->lastRow =& $this->items[$key];
+        if ($key === null) {
+            $this->items[] = $object;
+            return;
         }
 
-        $this->items[] = $object;
+        if (isset($this->items[$key])) {
+            throw new \Exception("Key $key already in use.");
+        }
+
+        $this->items[$key] = $object;
+
+        $this->lastRow =& $this->items[$key];
     }
 
     public function deleteItem(string $key)
@@ -335,53 +315,28 @@ class Forms
 
     public function min(int $min = 0)
     {
-        $row =& $this->lastRow;
-        $attr = 'minlength';
-        if(in_array($row['type'], ['number', 'float', 'range'])) {
-            $attr = 'min';
-        }
-
-        $row['attributes'][$attr] = $min;
-
-        $row['min'] = $min;
+        $this->lastRow->min($min);
 
         return $this;
     }
 
     public function max(int $max = PHP_INT_MAX)
     {
-        $row =& $this->lastRow;
-        $attr = 'maxlength';
-        if(in_array($row['type'], ['number', 'float', 'range'])) {
-            $attr = 'max';
-        }
-
-        $row['attributes'][$attr] = $max;
-
-        $row['max'] = $max;
+        $this->lastRow->max($max);
 
         return $this;
     }
 
     public function required(bool $required = true)
     {
-        if($required) {
-            $this->lastRow['attributes']['required'] = null;
-        } else {
-            unset($this->lastRow['attributes']['required']);
-        }
+        $this->lastRow->required($required);
 
         return $this;
     }
 
     public function value($value = '')
     {
-        // TODO: force variable type base on input type
-        $this->lastRow['value'] = $value;
-
-        if(!is_array($value)) {
-            $this->lastRow['attributes']['value'] = $value;
-        }
+        $this->lastRow->value($value);
 
         return $this;
     }
@@ -395,15 +350,7 @@ class Forms
 
     public function class(?string $classes = null)
     {
-        if($classes === null) {
-            $classes = $this->lastRow['name'];
-        }
-
-        if($this->lastRow['type'] == 'radio') {
-            $this->lastRow['class'] = $classes;
-        } else {
-            $this->lastRow['attributes']['class'] = $classes;
-        }
+        $this->lastRow->class($classes);
 
         return $this;
     }
@@ -500,18 +447,16 @@ class Forms
 
     public function label($label = false)
     {
-        if($label) {
-            $this->lastRow['label'] = $label;
-        } else {
-            unset($this->lastRow['label']);
-        }
+        $this->lastRow->label($label);
 
         return $this;
     }
 
     public function attributes($attributes = [])
     {
-        $this->lastRow['attributes'] += $attributes;
+        foreach ($attributes as $name => $value) {
+            $this->lastRow->setAttribute($name, $value);
+        }
 
         return $this;
     }
@@ -745,6 +690,6 @@ class Forms
     {
         $this->generateInputs();
 
-        return $this->forms;
+        return $this->items;
     }
 }
