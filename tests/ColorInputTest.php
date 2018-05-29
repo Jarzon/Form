@@ -17,6 +17,6 @@ class ColorInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="color">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="color">', $content['test']->html);
     }
 }

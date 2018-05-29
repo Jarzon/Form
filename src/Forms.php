@@ -223,7 +223,7 @@ class Forms
 
     public function color(string $name)
     {
-        $this->row('color', $name);
+        $this->addItem(new ColorInput($name), $name);
 
         return $this;
     }
