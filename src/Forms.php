@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon;
 
+use Jarzon\Input\CheckboxInput;
 use Jarzon\Input\ColorInput;
 use Jarzon\Input\DateInput;
 use Jarzon\Input\EmailInput;
@@ -18,7 +19,6 @@ use Jarzon\Input\TextareaInput;
 use Jarzon\Input\TextInput;
 use Jarzon\Input\TimeInput;
 use Jarzon\Input\UrlInput;
-use Tests\RadioInputTest;
 
 class Forms
 {
@@ -297,9 +297,7 @@ class Forms
 
     public function checkbox(string $name)
     {
-        $this->row('checkbox', $name);
-
-        $this->lastRow['selected'] = false;
+        $this->addItem(new CheckboxInput($name), $name);
 
         return $this;
     }

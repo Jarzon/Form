@@ -16,7 +16,7 @@ class CheckboxInputTest extends TestCase
             ->checkbox('test')
             ->value('testy');
 
-        $params = $forms->verification();
+        $params = $forms->validation();
 
         $this->assertEquals('testy', $params['test']);
     }
@@ -29,7 +29,7 @@ class CheckboxInputTest extends TestCase
             ->checkbox('test')
             ->value('testy');
 
-        $params = $forms->verification();
+        $params = $forms->validation();
 
         $this->assertEquals(false, $params['test']);
     }
@@ -42,7 +42,7 @@ class CheckboxInputTest extends TestCase
             ->checkbox('test')
             ->value(true);
 
-        $params = $forms->verification();
+        $params = $forms->validation();
 
         $this->assertEquals(true, $params['test']);
     }
@@ -55,7 +55,7 @@ class CheckboxInputTest extends TestCase
             ->checkbox('test')
             ->value(true);
 
-        $params = $forms->verification();
+        $params = $forms->validation();
 
         $this->assertEquals(false, $params['test']);
     }
@@ -71,7 +71,7 @@ class CheckboxInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="checkbox" value="test" checked>', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="checkbox" value="test" checked>', $content['test']->html);
     }
 
     public function testUpdateValuesCheckbox()
@@ -84,12 +84,12 @@ class CheckboxInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="fruits" type="checkbox" value="apples">', $content['fruits']['html']);
+        $this->assertEquals('<input name="fruits" type="checkbox" value="apples">', $content['fruits']->html);
 
-        $forms->verification();
+        $forms->validation();
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="fruits" type="checkbox" value="apples" checked>', $content['fruits']['html']);
+        $this->assertEquals('<input name="fruits" type="checkbox" value="apples" checked>', $content['fruits']->html);
     }
 }

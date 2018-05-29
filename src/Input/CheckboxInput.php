@@ -3,7 +3,7 @@ namespace Jarzon\Input;
 
 use Jarzon\ListBasedInput;
 
-class RadioInput extends ListBasedInput
+class CheckboxInput extends ListBasedInput
 {
     public function __construct(string $name)
     {
