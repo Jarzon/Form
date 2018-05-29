@@ -14,6 +14,7 @@ use Jarzon\Input\SearchInput;
 use Jarzon\Input\TelInput;
 use Jarzon\Input\TextareaInput;
 use Jarzon\Input\TextInput;
+use Jarzon\Input\TimeInput;
 use Jarzon\Input\UrlInput;
 
 class Forms
@@ -272,9 +273,7 @@ class Forms
 
     public function time(string $name)
     {
-        $this->row('time', $name);
-
-        $this->lastRow['attributes']['pattern'] = "[0-9]{2}:[0-9]{2}";
+        $this->addItem(new TimeInput($name), $name);
 
         return $this;
     }
