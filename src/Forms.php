@@ -181,8 +181,7 @@ class Forms
 
     public function textarea(string $name)
     {
-        $this->row('textarea', $name);
-        $this->lastRow['value'] = '';
+        $this->addItem(new TextareaInput($name), $name);
 
         return $this;
     }

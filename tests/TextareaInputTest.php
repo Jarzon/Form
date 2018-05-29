@@ -19,6 +19,6 @@ class TextareaInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<textarea name="test" minlength="0" maxlength="500"></textarea>', $content['test']['html']);
+        $this->assertEquals('<textarea name="test" minlength="0" maxlength="500"></textarea>', $content['test']->html);
     }
 }
