@@ -11,6 +11,7 @@ use Jarzon\Input\NumberInput;
 use Jarzon\Input\PasswordInput;
 use Jarzon\Input\RangeInput;
 use Jarzon\Input\SearchInput;
+use Jarzon\Input\SelectInput;
 use Jarzon\Input\TelInput;
 use Jarzon\Input\TextareaInput;
 use Jarzon\Input\TextInput;
@@ -280,8 +281,7 @@ class Forms
 
     public function select(string $name)
     {
-        $this->row('select', $name);
-        $this->lastRow['selected'] = '';
+        $this->addItem(new SelectInput($name), $name);
 
         return $this;
     }

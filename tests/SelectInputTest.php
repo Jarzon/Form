@@ -19,7 +19,7 @@ class SelectInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<select name="test"><option value="test" selected>test</option></select>', $content['test']['html']);
+        $this->assertEquals('<select name="test"><option value="test" selected>test</option></select>', $content['test']->html);
     }
 
     public function testUpdateValuesSelect()
@@ -32,13 +32,13 @@ class SelectInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>', $content['fruits']['html']);
+        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>', $content['fruits']->html);
 
         $forms->verification();
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges" selected>oranges</option></select>', $content['fruits']['html']);
+        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges" selected>oranges</option></select>', $content['fruits']->html);
 
     }
 }
