@@ -19,7 +19,7 @@ class EmailInputTest extends TestCase
         $forms
             ->email('test');
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testGetFormsEmail()
@@ -33,6 +33,6 @@ class EmailInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">', $content['test']->html);
     }
 }

@@ -195,7 +195,7 @@ class Forms
 
     public function email(string $name)
     {
-        $this->row('email', $name);
+        $this->addItem(new EmailInput($name), $name);
 
         return $this;
     }
