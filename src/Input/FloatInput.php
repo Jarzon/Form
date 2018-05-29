@@ -11,4 +11,10 @@ class FloatInput extends DigitBasedInput
         $this->setAttribute('type', 'number');
         $this->setAttribute('step', 0.01);
     }
+
+
+    public function validation($value = null, $update = false)
+    {
+        return (float)parent::validation($value, $update);
+    }
 }

@@ -11,4 +11,9 @@ class NumberInput extends DigitBasedInput
         $this->setAttribute('type', 'number');
         $this->setAttribute('step', 1);
     }
+
+    public function validation($value = null, $update = false)
+    {
+        return (int)parent::validation($value, $update);
+    }
 }

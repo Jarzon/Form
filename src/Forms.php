@@ -511,13 +511,6 @@ class Forms
                 $value = $this->post[$input['name']];
             }
 
-            if($input['type'] == 'number') {
-                $value = (int)$value;
-            }
-            else if($input['type'] == 'float') {
-                $value = (float)$value;
-            }
-
             if(array_key_exists('required', $input['attributes']) && $value === '') {
                 throw new \Exception("{$input['name']} is required");
             }
