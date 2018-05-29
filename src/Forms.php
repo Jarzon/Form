@@ -4,6 +4,7 @@ namespace Jarzon;
 class Forms
 {
     public $forms = [];
+    protected $items = [];
     protected $dateFormat = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d';
     protected $post = [];
     protected $update = false;
@@ -131,6 +132,55 @@ class Forms
         foreach ($this->forms as $index => &$form) {
             $this->forms[$index]['html'] = $this->generateInput($form);
         }
+    }
+
+    public function addItem(object $object, ?string $key = null)
+    {
+        if ($key !== null) {
+            if (isset($this->items[$key])) {
+                throw new \Exception("Key $key already in use.");
+            }
+
+            $this->items[$key] = $object;
+
+            $this->lastRow =& $this->items[$key];
+        }
+
+        $this->items[] = $object;
+    }
+
+    public function deleteItem(string $key)
+    {
+        if (!isset($this->items[$key]))
+        {
+            throw new \Exception("Invalid key $key.");
+        }
+
+        unset($this->items[$key]);
+    }
+
+    public function keyExists(string $key) : bool
+    {
+        return isset($this->items[$key]);
+    }
+
+    public function getItem($key)
+    {
+        if (!isset($this->items[$key])) {
+            throw new \Exception("Invalid key $key.");
+        }
+
+        return $this->items[$key];
+    }
+
+    public function keys() : array
+    {
+        return array_keys($this->items);
+    }
+
+    public function length() : int
+    {
+        return count($this->items);
     }
 
     public function hidden(string $name)
