@@ -20,7 +20,7 @@ class TextInputTest extends TestCase
             ->text('test')
             ->min(4);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     /**
@@ -37,7 +37,7 @@ class TextInputTest extends TestCase
             ->max(10)
             ->required();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     /**
@@ -52,7 +52,7 @@ class TextInputTest extends TestCase
             ->text('test')
             ->max(10);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testGetFormsText()
@@ -120,7 +120,7 @@ class TextInputTest extends TestCase
 
         $this->assertEquals('<input name="test" type="text" value="wrong" minlength="4" maxlength="10">', $content['test']['html']);
 
-        $forms->verification();
+        $forms->validation();
 
         $content = $forms->getForms();
 

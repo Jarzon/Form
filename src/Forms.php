@@ -192,7 +192,7 @@ class Forms
 
     public function text(string $name)
     {
-        $this->row('text', $name);
+        $this->addItem(new TextInput($name), $name);
 
         return $this;
     }
@@ -521,6 +521,13 @@ class Forms
         unset($this->lastRow['attributes'][$attribute]);
 
         return $this;
+    }
+
+    public function validation()
+    {
+        foreach($this->items as $input) {
+            $input->validation();
+        }
     }
 
     public function verification() : array
