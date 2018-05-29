@@ -188,7 +188,7 @@ class Forms
 
     public function password(string $name)
     {
-        $this->row('password', $name);
+        $this->addItem(new PasswordInput($name), $name);
 
         return $this;
     }
