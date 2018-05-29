@@ -1,24 +1,11 @@
 <?php
 namespace Jarzon;
 
-use Jarzon\Input\CheckboxInput;
-use Jarzon\Input\ColorInput;
-use Jarzon\Input\DateInput;
-use Jarzon\Input\EmailInput;
-use Jarzon\Input\FileInput;
-use Jarzon\Input\FloatInput;
-use Jarzon\Input\HiddenInput;
-use Jarzon\Input\NumberInput;
-use Jarzon\Input\PasswordInput;
-use Jarzon\Input\RadioInput;
-use Jarzon\Input\RangeInput;
-use Jarzon\Input\SearchInput;
-use Jarzon\Input\SelectInput;
-use Jarzon\Input\TelInput;
-use Jarzon\Input\TextareaInput;
-use Jarzon\Input\TextInput;
-use Jarzon\Input\TimeInput;
-use Jarzon\Input\UrlInput;
+use Jarzon\Input\{
+    CheckboxInput, ColorInput, DateInput, EmailInput, FileInput, FloatInput,
+    HiddenInput, NumberInput, PasswordInput, RadioInput, RangeInput, SearchInput,
+    SelectInput, TelInput, TextareaInput, TextInput, TimeInput, UrlInput
+};
 
 class Forms
 {
