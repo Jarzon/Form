@@ -41,7 +41,7 @@ class FileInputTest extends TestCase
             ->file('test', '/')
             ->types(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals('', $values['test']);
     }
@@ -67,7 +67,7 @@ class FileInputTest extends TestCase
             ->types(['.jpg', '.jpeg'])
             ->required();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testFileEmpty()
@@ -86,7 +86,7 @@ class FileInputTest extends TestCase
             ->file('test', '/')
             ->types(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals([], $values);
     }
@@ -109,7 +109,7 @@ class FileInputTest extends TestCase
             ->file('test', __DIR__.'/files/dest')
             ->types(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals([
             'test' => [
@@ -140,7 +140,7 @@ class FileInputTest extends TestCase
             ->file('test', vfsStream::url('root/data'))
             ->types(['.txt', '.text']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertTrue(file_exists('vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709'));
 
@@ -164,6 +164,6 @@ class FileInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="file" accept=".jpg, .jpeg" multiple>', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="file" accept=".jpg, .jpeg" multiple>', $content['test']->html);
     }
 }

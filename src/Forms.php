@@ -4,6 +4,7 @@ namespace Jarzon;
 use Jarzon\Input\ColorInput;
 use Jarzon\Input\DateInput;
 use Jarzon\Input\EmailInput;
+use Jarzon\Input\FileInput;
 use Jarzon\Input\FloatInput;
 use Jarzon\Input\HiddenInput;
 use Jarzon\Input\NumberInput;
@@ -302,12 +303,9 @@ class Forms
         return $this;
     }
 
-    public function file(string $name, string $destination, string $ext = '')
+    public function file(string $name, string $destination = '/tmp/', string $ext = '')
     {
-        $this->row('file', $name);
-
-        $this->lastRow['destination'] = $destination;
-        $this->lastRow['ext'] = $ext;
+        $this->addItem(new FileInput($name, $destination, $ext), $name);
 
         return $this;
     }
@@ -340,9 +338,9 @@ class Forms
         return $this;
     }
 
-    public function types(array $types = [])
+    public function accept(array $types = [])
     {
-        $this->lastRow['attributes']['accept'] = implode(', ', $types);
+        $this->lastRow->accept($types);
 
         return $this;
     }
@@ -380,11 +378,7 @@ class Forms
 
     public function multiple(bool $multiple = true)
     {
-        if($multiple) {
-            $this->lastRow['attributes']['multiple'] = null;
-        } else {
-            unset($this->lastRow['attributes']['multiple']);
-        }
+        $this->lastRow->multiple($multiple);
 
         return $this;
     }
@@ -498,15 +492,6 @@ class Forms
                     $value = false;
                 }
             }
-            else if($input['type'] === 'file') {
-                if(empty($_FILES[$input['name']]) && isset($this->post[$input['name']])) {
-                    throw new \Error('form seems to miss enctype attribute');
-                }
-
-                if($_FILES[$input['name']]['error'] !== UPLOAD_ERR_NO_FILE) {
-                    $value = $_FILES[$input['name']];
-                }
-            }
             else if(isset($this->post[$input['name']])) {
                 $value = $this->post[$input['name']];
             }
@@ -533,46 +518,6 @@ class Forms
                     if(!$exist) {
                         throw new \Error("$value doesn't exist");
                     }
-                }
-
-                if($input['type'] == 'file') {
-                    $infos = [];
-
-                    // TODO: verify file type
-
-                    if(array_key_exists('multiple', $input['attributes'])) {
-                        foreach ($value['error'] AS $index => $error) {
-                            $this->fileErrors($error);
-
-                            list($location, $name) = $this->fileMove($value['tmp_name'][$index], $input['destination'], $input['ext']);
-
-                            $infos[] = [
-                                'name' => $name,
-                                'original_name' => $value['name'][$index],
-                                'type' => $value['type'][$index],
-                                'location' => $location,
-                                'size' => $value['size'][$index],
-                            ];
-                        }
-                    } else {
-                        if(is_array($value['error'])) {
-                            throw new \Error('bypassed multiple limitation');
-                        }
-
-                        $this->fileErrors($value['error']);
-
-                        list($location, $name) = $this->fileMove($value['tmp_name'], $input['destination'], $input['ext']);
-
-                        $infos = [
-                            'name' => $name,
-                            'original_name' => $value['name'],
-                            'type' => $value['type'],
-                            'location' => $location,
-                            'size' => $value['size']
-                        ];
-                    }
-
-                    $value = $infos;
                 }
             }
 
@@ -607,52 +552,6 @@ class Forms
         }
 
         return $values;
-    }
-
-    private function fileErrors($error)
-    {
-        switch ($error) {
-            case UPLOAD_ERR_OK:
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                throw new \Exception('no file sent');
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                throw new \Exception('exceeded filesize limit');
-            default:
-                throw new \Error('unknown upload error');
-        }
-    }
-
-    private function fileMove(string $tmp_name, string $dest, string $ext = '')
-    {
-        $name = sha1_file($tmp_name);
-
-        $file = sprintf('%s/%s',
-            $dest,
-            $name
-        );
-
-        if($ext != '') {
-            $file .= ".$ext";
-        }
-
-        if (!$this->move_uploaded_file(
-            $tmp_name,
-            $file
-        )) {
-            throw new \Error('failed to move uploaded file');
-        }
-
-        return [$file, $name];
-    }
-
-    public function move_uploaded_file($tmp_name, $dest)
-    {
-        return move_uploaded_file(
-            $tmp_name,
-            $dest
-        );
     }
 
     public function getForms() : array
