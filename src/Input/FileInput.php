@@ -106,6 +106,8 @@ class FileInput extends TextBasedInput
         }
     }
 
+    public function value($value = ''){}
+
     private function fileMove(string $tmp_name, string $dest, string $ext = '')
     {
         $name = sha1_file($tmp_name);
