@@ -42,6 +42,17 @@ class FileInput extends TextBasedInput
         return true;
     }
 
+    public function isUpdated($value) : bool
+    {
+        $updated = false;
+
+        if($value !== '') {
+            $updated = true;
+        }
+
+        return $updated;
+    }
+
     public function validation($value = null, $update = false)
     {
         parent::validation($value, $update);

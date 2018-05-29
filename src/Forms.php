@@ -401,8 +401,7 @@ class Forms
         foreach($this->items as $key => $input) {
             $value = null;
 
-            // TODO: Inject post data into objects
-            if($this->keyExists($key)) {
+            if($this->keyExists($key) && isset($this->post[$key])) {
                 $value = $this->post[$key];
             }
 
@@ -440,12 +439,7 @@ class Forms
 
             $updated = false;
 
-            if($input['type'] === 'file') {
-                if($value !== '') {
-                    $updated = true;
-                }
-            }
-            else if($input['type'] == 'select' || $input['type'] == 'radio') {
+            if($input['type'] == 'select' || $input['type'] == 'radio') {
                 if($value != $input['selected']) {
                     $updated = true;
                 }
