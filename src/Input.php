@@ -104,6 +104,42 @@ class Input
         $this->setAttribute('value', $value);
     }
 
+    public function placeholder(?string $placeholder = null)
+    {
+        if($placeholder !== null) {
+            $this->setAttribute('placeholder', $placeholder);
+        } else {
+            $this->deleteAttribute('placeholder');
+        }
+    }
+
+    public function spellcheck(?bool $placeholder = null)
+    {
+        if($placeholder !== null) {
+            $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
+        } else {
+            $this->deleteAttribute('spellcheck');
+        }
+    }
+
+    public function autocomplete(?string $value = null)
+    {
+        if($value !== null) {
+            $this->setAttribute('autocomplete', $value);
+        } else {
+            $this->deleteAttribute('autocomplete');
+        }
+    }
+
+    public function tabindex(?int $index = null)
+    {
+        if($index !== null) {
+            $this->setAttribute('tabindex', $index);
+        } else {
+            $this->deleteAttribute('tabindex');
+        }
+    }
+
     public function pattern(?string $pattern = null)
     {
         $this->pattern = $pattern;
@@ -172,7 +208,7 @@ class Input
         }
 
         $updated = $this->isUpdated($value);
-        
+
         if($updated) {
             $this->value($value);
         }

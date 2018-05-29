@@ -329,44 +329,28 @@ class Forms
 
     public function placeholder(?string $placeholder = null)
     {
-        if($placeholder !== null) {
-            $this->lastRow['attributes']['placeholder'] = $placeholder;
-        } else {
-            unset($this->lastRow['attributes']['placeholder']);
-        }
+        $this->lastRow->placeholder($placeholder);
 
         return $this;
     }
 
     public function spellcheck(?bool $placeholder = null)
     {
-        if($placeholder !== null) {
-            $this->lastRow['attributes']['spellcheck'] = ($placeholder) ? 'true': 'false';
-        } else {
-            unset($this->lastRow['attributes']['spellcheck']);
-        }
+        $this->lastRow->spellcheck($placeholder);
 
         return $this;
     }
 
     public function autocomplete(?string $value = null)
     {
-        if($value !== null) {
-            $this->lastRow['attributes']['autocomplete'] = $value;
-        } else {
-            unset($this->lastRow['attributes']['autocomplete']);
-        }
+        $this->lastRow->autocomplete($value);
 
         return $this;
     }
 
     public function tabindex(?int $index = null)
     {
-        if($index !== null) {
-            $this->lastRow['attributes']['tabindex'] = $index;
-        } else {
-            unset($this->lastRow['attributes']['tabindex']);
-        }
+        $this->lastRow->tabindex($index);
 
         return $this;
     }
@@ -387,9 +371,9 @@ class Forms
         return $this;
     }
 
-    public function RemoveAttribute($attribute)
+    public function deleteAttribute($attribute)
     {
-        unset($this->lastRow['attributes'][$attribute]);
+        $this->lastRow->deleteAttribute($attribute);
 
         return $this;
     }
@@ -433,12 +417,6 @@ class Forms
                 $value = $this->post[$input['name']];
             }
 
-            if(array_key_exists('required', $input['attributes']) && $value === '') {
-                throw new \Exception("{$input['name']} is required");
-            }
-
-            $updated = false;
-
             if($input['type'] == 'select' || $input['type'] == 'radio') {
                 if($value != $input['selected']) {
                     $updated = true;
@@ -448,17 +426,6 @@ class Forms
                 if(($input['selected'] && $value === '') || (!$input['selected'] && $value !== '')) {
                     $updated = true;
                 }
-            }
-            else if($value !== $input['value']) {
-                $updated = true;
-            }
-
-            if($updated) {
-                $this->updateValue($input['name'], $value);
-            }
-
-            if((array_key_exists('required', $input['attributes']) && !$this->update) || $updated) {
-                $values[$input['name']] = $value;
             }
         }
 
