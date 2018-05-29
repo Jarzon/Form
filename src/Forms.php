@@ -34,19 +34,6 @@ class Forms
         $this->post = $post;
     }
 
-    protected function row(string $type, string $name)
-    {
-        $row = ['type' => $type, 'name' => $name, 'attributes' => ['name' => $name], 'label' => $name, 'value' => ''];
-
-        if(!in_array($type, ['textarea', 'select', 'radio'])) {
-            $row['attributes']['type'] = $type;
-        }
-
-        $this->forms[$name] = $row;
-
-        $this->lastRow =& $this->forms[$name];
-    }
-
     public function updateValues($values = []) {
         if(empty($values)) {
             $values = $this->post;
@@ -75,11 +62,6 @@ class Forms
             }
             if($form['type'] == 'select' || $form['type'] == 'radio') {
                 $form['selected'] = $value;
-            } else {
-                $form['value'] = $value;
-                if ($form['type'] != 'file') {
-                    $form['attributes']['value'] = $value;
-                }
             }
         }
 
@@ -100,21 +82,6 @@ class Forms
 
                 $html[] = ['label' => $index, 'input' => $this->generateTag('input', $attr)];
             }
-        }
-        else if($input['type'] == 'select') {
-            $content = '';
-
-            foreach($input['value'] as $index => $attrValue) {
-                $attr = ['value' => $attrValue];
-
-                if(isset($input['selected']) && $input['selected'] === $attrValue) {
-                    $attr['selected'] = null;
-                }
-
-                $content .= $this->generateTag('option', $attr, $index);
-            }
-
-            $html = $this->generateTag('select', $input['attributes'], $content);
         }
         else if($input['type'] == 'textarea') {
             $html = $this->generateTag('textarea', $input['attributes'], $input['value']);

@@ -34,7 +34,7 @@ class SelectInputTest extends TestCase
 
         $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>', $content['fruits']->html);
 
-        $forms->verification();
+        $forms->validation();
 
         $content = $forms->getForms();
 

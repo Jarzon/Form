@@ -13,7 +13,11 @@ class ListBasedInput extends Input
 
     public function value($values = [])
     {
-        $this->values = $values;
+        if(is_array($values)) {
+            $this->values = $values;
+        } else {
+            $this->selected($values);
+        }
     }
 
     public function passValidation($value = null) : bool
