@@ -97,7 +97,7 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals(null, $content['test']->getLabel());
+        $this->assertEquals(null, $content['test']->label);
     }
 
     public function testUpdateValue()
@@ -112,13 +112,13 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="wrong" minlength="4" maxlength="10">', $content['test']->getHtml());
+        $this->assertEquals('<input name="test" type="text" value="wrong" minlength="4" maxlength="10">', $content['test']->html);
 
         $forms->validation();
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->getHtml());
+        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->html);
     }
 
     public function testUpdateUnexistingValue()
@@ -135,6 +135,6 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->getHtml());
+        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->html);
     }
 }

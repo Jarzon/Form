@@ -76,10 +76,6 @@ class Input
 
     public function setAttribute(string $name, $value)
     {
-        if(isset($this->attributes[$name])) {
-            throw new \Exception("Input attribute $name already exist");
-        }
-
         $this->attributes[$name] = $value;
     }
 

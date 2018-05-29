@@ -37,7 +37,9 @@ class Forms
         }
 
         foreach ($values as $name => $value) {
-            $this->updateValue($name, $value);
+            if($this->keyExists($name)) {
+                $this->getItem($name)->value($value);
+            }
         }
     }
 
