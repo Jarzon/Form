@@ -167,7 +167,7 @@ class Forms
 
     public function hidden(string $name)
     {
-        $this->row('hidden', $name);
+        $this->addItem(new HiddenInput($name), $name);
 
         return $this;
     }
