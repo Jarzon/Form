@@ -214,19 +214,16 @@ class Forms
         return $this;
     }
 
-    public function range(string $name)
+    public function float(string $name)
     {
-        $this->row('range', $name);
+        $this->addItem(new FloatInput($name), $name);
 
         return $this;
     }
 
-    public function float(string $name)
+    public function range(string $name)
     {
-        $this->row('float', $name);
-
-        $this->lastRow['attributes']['step'] = 0.01;
-        $this->lastRow['attributes']['type'] = 'number';
+        $this->row('range', $name);
 
         return $this;
     }
