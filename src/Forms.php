@@ -202,7 +202,7 @@ class Forms
 
     public function url(string $name)
     {
-        $this->row('url', $name);
+        $this->addItem(new UrlInput($name), $name);
 
         return $this;
     }
