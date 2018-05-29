@@ -39,7 +39,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
         $values = $forms->validation();
 
@@ -64,7 +64,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg'])
+            ->accept(['.jpg', '.jpeg'])
             ->required();
 
         $forms->validation();
@@ -84,7 +84,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
         $values = $forms->validation();
 
@@ -107,7 +107,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', __DIR__.'/files/dest')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
         $values = $forms->validation();
 
@@ -138,7 +138,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', vfsStream::url('root/data'))
-            ->types(['.txt', '.text']);
+            ->accept(['.txt', '.text']);
 
         $values = $forms->validation();
 
@@ -159,7 +159,7 @@ class FileInputTest extends TestCase
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg'])
+            ->accept(['.jpg', '.jpeg'])
             ->multiple();
 
         $content = $forms->getForms();
