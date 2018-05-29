@@ -216,7 +216,7 @@ class Forms
 
     public function tel(string $name)
     {
-        $this->row('tel', $name);
+        $this->addItem(new TelInput($name), $name);
 
         return $this;
     }
