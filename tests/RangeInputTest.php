@@ -19,6 +19,6 @@ class RangeInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="range" min="0" max="500">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="range" min="0" max="500">', $content['test']->html);
     }
 }

@@ -223,7 +223,7 @@ class Forms
 
     public function range(string $name)
     {
-        $this->row('range', $name);
+        $this->addItem(new RangeInput($name), $name);
 
         return $this;
     }
