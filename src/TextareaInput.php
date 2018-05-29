@@ -6,7 +6,6 @@ class TextareaInput extends Input
     public function __construct(string $name)
     {
         parent::__construct($name);
-        //$this->setAttribute('type', 'textarea');
     }
 
     public function min(int $min = 0)
@@ -44,15 +43,11 @@ class TextareaInput extends Input
     public function value($value = '')
     {
         $this->setValue($value);
-
-        if(!is_array($value)) {
-            $this->setAttribute('value', $value);
-        }
     }
 
     public function generateInput()
     {
-        $this->setHtml($this->generateTag('textarea', $this->attributes, ''));
+        $this->setHtml($this->generateTag('textarea', $this->attributes, $this->value));
     }
 
     public function validation($value = null, $update = false)

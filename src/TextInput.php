@@ -45,9 +45,7 @@ class TextInput extends Input
     {
         $this->setValue($value);
 
-        if(!is_array($value)) {
-            $this->setAttribute('value', $value);
-        }
+        $this->setAttribute('value', $value);
     }
 
     public function generateInput()
