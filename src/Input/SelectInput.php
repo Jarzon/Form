@@ -1,20 +1,15 @@
 <?php
 namespace Jarzon\Input;
 
-use Jarzon\TextBasedInput;
+use Jarzon\ListBasedInput;
 
-class SelectInput extends TextBasedInput
+class SelectInput extends ListBasedInput
 {
     protected $values = [];
 
     public function __construct(string $name)
     {
         parent::__construct($name);
-        $this->setAttribute('type', 'text');
-    }
-
-    public function value($values = [])
-    {
-        $this->values = $values;
+        $this->setAttribute('type', 'select');
     }
 }

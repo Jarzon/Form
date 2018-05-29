@@ -20,7 +20,7 @@ class RadioInputTest extends TestCase
             ->radio('test')
             ->value(['test' => 'test']);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testRadioValue()
@@ -32,7 +32,7 @@ class RadioInputTest extends TestCase
             ->value(['test' => 'test', 'testy' => 'testy'])
             ->selected('test');
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals('testy', $values['test']);
     }
@@ -47,12 +47,12 @@ class RadioInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']['html'][0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']->html[0]['input']);
 
         $forms->selected('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']['html'][0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']->html[0]['input']);
     }
 }

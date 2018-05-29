@@ -9,6 +9,7 @@ use Jarzon\Input\FloatInput;
 use Jarzon\Input\HiddenInput;
 use Jarzon\Input\NumberInput;
 use Jarzon\Input\PasswordInput;
+use Jarzon\Input\RadioInput;
 use Jarzon\Input\RangeInput;
 use Jarzon\Input\SearchInput;
 use Jarzon\Input\SelectInput;
@@ -17,6 +18,7 @@ use Jarzon\Input\TextareaInput;
 use Jarzon\Input\TextInput;
 use Jarzon\Input\TimeInput;
 use Jarzon\Input\UrlInput;
+use Tests\RadioInputTest;
 
 class Forms
 {
@@ -288,7 +290,7 @@ class Forms
 
     public function radio(string $name)
     {
-        $this->row('radio', $name);
+        $this->addItem(new RadioInput($name), $name);
 
         return $this;
     }
@@ -366,11 +368,7 @@ class Forms
 
     public function selected($selected = true)
     {
-        if($this->lastRow['type'] === 'checkbox') {
-            $this->lastRow['attributes']['checked'] = null;
-        }
-
-        $this->lastRow['selected'] = $selected;
+        $this->lastRow->selected($selected);
 
         return $this;
     }
