@@ -1,5 +1,7 @@
 <?php
-namespace Jarzon;
+namespace Jarzon\Input;
+
+use Jarzon\TextBasedInput;
 
 class PasswordInput extends TextBasedInput
 {

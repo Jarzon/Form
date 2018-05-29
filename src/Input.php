@@ -18,31 +18,6 @@ class Input
         $this->setLabel($name);
     }
 
-    public function required(bool $required = true)
-    {
-        if(!isset($this->attributes['required'])) {
-            $this->setAttribute('required', null);
-        }
-        else {
-            $this->deleteAttribute('required');
-        }
-    }
-
-    public function class(?string $classes = null)
-    {
-        if($classes === null) {
-            $classes = $this->lastRow['name'];
-        }
-
-        if($this->lastRow['type'] == 'radio') {
-            $this->lastRow['class'] = $classes;
-        } else {
-            $this->lastRow['attributes']['class'] = $classes;
-        }
-
-        return $this;
-    }
-
     public function setName(string $name)
     {
         $this->setAttribute('name', $name);
@@ -92,14 +67,49 @@ class Input
         unset($this->attributes[$name]);
     }
 
+    public function getHtml() : string
+    {
+        return $this->html;
+    }
+
     public function setHtml(string $html)
     {
         $this->html = $html;
     }
 
-    public function getHtml() : string
+    public function class(?string $classes = null)
     {
-        return $this->html;
+        if($classes === null) {
+            $classes = $this->name;
+        }
+
+        $this->setAttribute('class', $classes);
+    }
+
+    public function label($label = false)
+    {
+        if($label) {
+            $this->setLabel($label);
+        } else {
+            $this->setLabel(null);
+        }
+    }
+
+    public function value($value = '')
+    {
+        $this->setValue($value);
+
+        $this->setAttribute('value', $value);
+    }
+
+    public function required(bool $required = true)
+    {
+        if(!isset($this->attributes['required'])) {
+            $this->setAttribute('required', null);
+        }
+        else {
+            $this->deleteAttribute('required');
+        }
     }
 
     public function generateTag(string $tag, array $attributes, $content = false) : string
@@ -123,13 +133,34 @@ class Input
         return $html;
     }
 
-    public function validation()
+    public function validation($value = null, $update = false)
     {
+        if($value == '' && array_key_exists('required', $this->attributes)) {
+            throw new \Exception("{$this->name} is required");
+        }
+        else if($value !== null) {
+            $this->passValidation($value);
+        }
 
+        $updated = false;
+
+        if($value !== $this->value) {
+            $updated = true;
+        }
+
+        if($updated) {
+            $this->value($value);
+        }
+
+        if((array_key_exists('required', $this->attributes) && !$update) || $updated) {
+            return $value;
+        }
+
+        return null;
     }
 
     public function generateInput()
     {
-
+        $this->setHtml($this->generateTag('input', $this->attributes));
     }
 }

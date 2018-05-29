@@ -1,5 +1,7 @@
 <?php
-namespace Jarzon;
+namespace Jarzon\Input;
+
+use Jarzon\DigitBasedInput;
 
 class RangeInput extends DigitBasedInput
 {
