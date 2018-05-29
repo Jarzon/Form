@@ -68,31 +68,6 @@ class Forms
         return;
     }
 
-    public function generateInput(array $input)
-    {
-        if($input['type'] == 'radio') {
-            $html = [];
-
-            foreach($input['value'] as $index => $attrValue) {
-                $attr = ['type' => $input['type'], 'name' => $input['name'], 'value' => $attrValue];
-
-                if(isset($input['selected']) && $input['selected'] === $attrValue) {
-                    $attr['checked'] = null;
-                }
-
-                $html[] = ['label' => $index, 'input' => $this->generateTag('input', $attr)];
-            }
-        }
-        else if($input['type'] == 'textarea') {
-            $html = $this->generateTag('textarea', $input['attributes'], $input['value']);
-        }
-        else {
-            $html = $this->generateTag('input', $input['attributes']);
-        }
-
-        return $html;
-    }
-
     public function generateInputs()
     {
         foreach ($this->items as $form) {
@@ -461,27 +436,6 @@ class Forms
 
             if(array_key_exists('required', $input['attributes']) && $value === '') {
                 throw new \Exception("{$input['name']} is required");
-            }
-            else if(!empty($value)) {
-                if($input['type'] == 'time') {
-                    $format = str_replace('/', '\/', $input['attributes']['pattern']);
-                    if(preg_match("/$format/", $value) == 0) {
-                        throw new \Exception("{$input['name']} is not a valid time");
-                    }
-                }
-                else if($input['type'] == 'select' || $input['type'] == 'radio') {
-                    $exist = false;
-
-                    // Use the correct value type
-                    if($key = array_search($value, $input['value'])) {
-                        $value = $input['value'][$key];
-                        $exist = true;
-                    }
-
-                    if(!$exist) {
-                        throw new \Error("$value doesn't exist");
-                    }
-                }
             }
 
             $updated = false;

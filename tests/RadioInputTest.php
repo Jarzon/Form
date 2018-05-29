@@ -47,12 +47,12 @@ class RadioInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']->html[0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']->html[0]['html']);
 
         $forms->selected('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']->html[0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']->html[0]['html']);
     }
 }

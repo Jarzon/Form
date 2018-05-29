@@ -74,7 +74,7 @@ class Input
         return $this->html;
     }
 
-    public function setHtml(string $html)
+    public function setHtml($html)
     {
         $this->html = $html;
     }
@@ -157,6 +157,7 @@ class Input
 
         $updated = false;
 
+        // TODO: Move that into another function so it's gonna work for ListBasedInputs and file
         if($value !== $this->value) {
             $updated = true;
         }
@@ -165,7 +166,7 @@ class Input
             $this->value($value);
         }
 
-        if((array_key_exists('required', $this->attributes) && !$update) || $updated) {
+        if($updated || (array_key_exists('required', $this->attributes) && !$update)) {
             return $value;
         }
 
