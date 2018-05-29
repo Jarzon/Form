@@ -146,6 +146,22 @@ class Input
         return $html;
     }
 
+    public function passValidation($value) : bool
+    {
+        return true;
+    }
+
+    public function isUpdated($value) : bool
+    {
+        $updated = false;
+
+        if($value !== $this->value) {
+            $updated = true;
+        }
+
+        return $updated;
+    }
+
     public function validation($value = null, $update = false)
     {
         if($value == '' && array_key_exists('required', $this->attributes)) {
@@ -155,13 +171,8 @@ class Input
             $this->passValidation($value);
         }
 
-        $updated = false;
-
-        // TODO: Move that into another function so it's gonna work for ListBasedInputs and file
-        if($value !== $this->value) {
-            $updated = true;
-        }
-
+        $updated = $this->isUpdated($value);
+        
         if($updated) {
             $this->value($value);
         }
