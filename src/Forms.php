@@ -1,6 +1,19 @@
 <?php
 namespace Jarzon;
 
+use Jarzon\Input\ColorInput;
+use Jarzon\Input\EmailInput;
+use Jarzon\Input\FloatInput;
+use Jarzon\Input\HiddenInput;
+use Jarzon\Input\NumberInput;
+use Jarzon\Input\PasswordInput;
+use Jarzon\Input\RangeInput;
+use Jarzon\Input\SearchInput;
+use Jarzon\Input\TelInput;
+use Jarzon\Input\TextareaInput;
+use Jarzon\Input\TextInput;
+use Jarzon\Input\UrlInput;
+
 class Forms
 {
     public $forms = [];
