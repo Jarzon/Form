@@ -6,33 +6,33 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
-class EmailInputTest extends TestCase
+class UrlInputTest extends TestCase
 {
     /**
      * @expectedException     \Exception
-     * @expectedExceptionMessage test is not a valid email
+     * @expectedExceptionMessage test is not a valid url
      */
-    public function testInvalidEmail()
+    public function testInvalidUrl()
     {
         $forms = new Form(['test' => 'asdf']);
 
         $forms
-            ->email('test');
+            ->url('test');
 
         $forms->validation();
     }
 
-    public function testGetFormsEmail()
+    public function testGetFormsUrl()
     {
         $forms = new Form(['test' => 'a']);
 
         $forms
-            ->email('test')
+            ->url('test')
             ->min(4)
             ->max(10);
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="url" minlength="4" maxlength="10">', $content['test']->html);
     }
 }

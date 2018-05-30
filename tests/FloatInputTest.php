@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class FloatInputTest extends TestCase
 {
     public function testGetFormsFloat()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->float('test')
@@ -19,6 +19,6 @@ class FloatInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="number" step="0.01" min="4" max="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="number" step="0.01" min="4" max="10">', $content['test']->html);
     }
 }

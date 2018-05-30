@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class TextInputTest extends TestCase
 {
@@ -14,13 +14,13 @@ class TextInputTest extends TestCase
      */
     public function testLengthLowerThatMin()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
             ->min(4);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     /**
@@ -29,7 +29,7 @@ class TextInputTest extends TestCase
      */
     public function testLengthNull()
     {
-        $forms = new Forms(['test' => '']);
+        $forms = new Form(['test' => '']);
 
         $forms
             ->text('test')
@@ -37,7 +37,7 @@ class TextInputTest extends TestCase
             ->max(10)
             ->required();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     /**
@@ -46,18 +46,18 @@ class TextInputTest extends TestCase
      */
     public function testLengthHigherThatMax()
     {
-        $forms = new Forms(['test' => '123456789ab']);
+        $forms = new Form(['test' => '123456789ab']);
 
         $forms
             ->text('test')
             ->max(10);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testGetFormsText()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
@@ -71,21 +71,15 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue">', $content['test']['html']);
-        $this->assertEquals('<input name="test2" type="text">', $content['test2']['html']);
+        $this->assertEquals('<input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue">', $content['test']->html);
+        $this->assertEquals('<input name="test2" type="text">', $content['test2']->html);
 
-        $this->assertEquals('test', $content['test']['label']);
+        $this->assertEquals('test', $content['test']->label);
 
         $html = '';
 
         foreach ($content as $form) {
-            if($form['type'] == 'radio') {
-                foreach ($form['html'] as $radio) {
-                    $html .= "<label>{$radio['input']}<br>{$radio['label']}</label>";
-                }
-            } else {
-                $html .= "<label>{$form['label']}<br>{$form['html']}</label>";
-            }
+            $html .= "<label>{$form->label}<br>{$form->html}</label>";
         }
 
         $this->assertEquals('<label>test<br><input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"></label><label>test2<br><input name="test2" type="text"></label>', $html);
@@ -93,7 +87,7 @@ class TextInputTest extends TestCase
 
     public function testFormLabel()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
@@ -103,12 +97,12 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals(false, isset($content['test']['label']));
+        $this->assertEquals(null, $content['test']->label);
     }
 
     public function testUpdateValue()
     {
-        $forms = new Forms(['test' => 'good']);
+        $forms = new Form(['test' => 'good']);
 
         $forms
             ->text('test')
@@ -118,18 +112,18 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="wrong" minlength="4" maxlength="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="text" value="wrong" minlength="4" maxlength="10">', $content['test']->html);
 
-        $forms->verification();
+        $forms->validation();
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->html);
     }
 
     public function testUpdateUnexistingValue()
     {
-        $forms = new Forms(['test' => 'good']);
+        $forms = new Form(['test' => 'good']);
 
         $forms
             ->text('test')
@@ -141,6 +135,6 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->html);
     }
 }

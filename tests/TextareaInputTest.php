@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class TextareaInputTest extends TestCase
 {
     public function testGetFormsTextarea()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->textarea('test')
@@ -19,6 +19,6 @@ class TextareaInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<textarea name="test" minlength="0" maxlength="500"></textarea>', $content['test']['html']);
+        $this->assertEquals('<textarea name="test" minlength="0" maxlength="500"></textarea>', $content['test']->html);
     }
 }

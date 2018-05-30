@@ -4,18 +4,18 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class TimeInputTest extends TestCase
 {
     public function testValidTime()
     {
-        $forms = new Forms(['test' => '22:00']);
+        $forms = new Form(['test' => '22:00']);
 
         $forms
             ->time('test');
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals(['test' => '22:00'], $values);
     }
@@ -26,22 +26,23 @@ class TimeInputTest extends TestCase
      */
     public function testInvalidTime()
     {
-        $forms = new Forms(['test' => '00h00']);
+        $forms = new Form(['test' => '00h00']);
 
         $forms
-            ->time('test');
+            ->time('test')
+            ->pattern();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testGetFormsTime() {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->time('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="time" pattern="[0-9]{2}:[0-9]{2}">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="time">', $content['test']->html);
     }
 }

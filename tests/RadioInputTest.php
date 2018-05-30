@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class RadioInputTest extends TestCase
 {
@@ -14,32 +14,32 @@ class RadioInputTest extends TestCase
      */
     public function testRadioValueException()
     {
-        $forms = new Forms(['test' => '123456789ab']);
+        $forms = new Form(['test' => '123456789ab']);
 
         $forms
             ->radio('test')
             ->value(['test' => 'test']);
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testRadioValue()
     {
-        $forms = new Forms(['test' => 'testy']);
+        $forms = new Form(['test' => 'testy']);
 
         $forms
             ->radio('test')
             ->value(['test' => 'test', 'testy' => 'testy'])
             ->selected('test');
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals('testy', $values['test']);
     }
 
     public function testGetFormsRadio()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->radio('test')
@@ -47,12 +47,12 @@ class RadioInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']['html'][0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test">', $content['test']->html[0]['html']);
 
         $forms->selected('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']['html'][0]['input']);
+        $this->assertEquals('<input type="radio" name="test" value="test" checked>', $content['test']->html[0]['html']);
     }
 }

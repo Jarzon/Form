@@ -6,17 +6,17 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
-class SearchInputTest extends TestCase
+class HiddenInputTest extends TestCase
 {
-    public function testGetFormsSearch()
+    public function testGetFormsHidden()
     {
         $forms = new Form(['test' => 'a']);
 
         $forms
-            ->search('test');
+            ->hidden('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="search">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="hidden">', $content['test']->html);
     }
 }

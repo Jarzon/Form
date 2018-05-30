@@ -4,18 +4,18 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class DateInputTest extends TestCase
 {
     public function testValidDate()
     {
-        $forms = new Forms(['test' => '12/04/2014']);
+        $forms = new Form(['test' => '12/04/2014']);
 
         $forms
             ->date('test');
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals(['test' => '12/04/2014'], $values);
     }
@@ -26,22 +26,23 @@ class DateInputTest extends TestCase
      */
     public function testInvalidDate()
     {
-        $forms = new Forms(['test' => '00/00/0000']);
+        $forms = new Form(['test' => '00/00/0000']);
 
         $forms
-            ->date('test');
+            ->date('test')
+            ->pattern();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testGetFormsDate() {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->date('test');
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" pattern="(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="date">', $content['test']->html);
     }
 }

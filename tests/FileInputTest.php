@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -34,16 +34,15 @@ class FileInputTest extends TestCase
     public function testFileFormMissingEnctype()
     {
         $_FILES = [];
+        $_POST = ['test' => ''];
 
-        $forms = new Forms(['test' => '']);
+        $forms = new Form($_POST);
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
-
-        $this->assertEquals('', $values['test']);
+        $values = $forms->validation();
     }
 
     /**
@@ -60,14 +59,14 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg'])
+            ->accept(['.jpg', '.jpeg'])
             ->required();
 
-        $forms->verification();
+        $forms->validation();
     }
 
     public function testFileEmpty()
@@ -80,13 +79,13 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals([], $values);
     }
@@ -103,13 +102,13 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', __DIR__.'/files/dest')
-            ->types(['.jpg', '.jpeg']);
+            ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertEquals([
             'test' => [
@@ -134,13 +133,13 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ];
 
-        $forms = new Forms(['test' => 'test.txt']);
+        $forms = new Form(['test' => 'test.txt']);
 
         $forms
             ->file('test', vfsStream::url('root/data'))
-            ->types(['.txt', '.text']);
+            ->accept(['.txt', '.text']);
 
-        $values = $forms->verification();
+        $values = $forms->validation();
 
         $this->assertTrue(file_exists('vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709'));
 
@@ -155,15 +154,15 @@ class FileInputTest extends TestCase
 
     public function testGetFormsFile()
     {
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')
-            ->types(['.jpg', '.jpeg'])
+            ->accept(['.jpg', '.jpeg'])
             ->multiple();
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="file" accept=".jpg, .jpeg" multiple>', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="file" accept=".jpg, .jpeg" multiple>', $content['test']->html);
     }
 }

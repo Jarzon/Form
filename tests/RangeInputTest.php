@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Jarzon\Form;
 
 class RangeInputTest extends TestCase
 {
     public function testGetFormsRange()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->range('test')
@@ -19,6 +19,6 @@ class RangeInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="range" min="0" max="500">', $content['test']['html']);
+        $this->assertEquals('<input name="test" type="range" min="0" max="500">', $content['test']->html);
     }
 }
