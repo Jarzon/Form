@@ -36,6 +36,13 @@ class Forms
         }
     }
 
+    public function getForms() : array
+    {
+        $this->generateInputs();
+
+        return $this->items;
+    }
+
     public function generateInputs()
     {
         foreach ($this->items as $form) {
@@ -43,7 +50,32 @@ class Forms
         }
     }
 
-    public function addItem(object $object, ?string $key = null)
+    public function validation()
+    {
+        $values = [];
+
+        foreach($this->items as $key => $input) {
+            $value = null;
+
+            if($this->keyExists($key) && isset($this->post[$key])) {
+                $value = $this->post[$key];
+            }
+
+            $result = $input->validation($value, $this->update);
+
+            if($result !== null) {
+                $values[$key] = $result;
+            }
+        }
+
+        return $values;
+    }
+
+    /*
+     * Collection methods
+     */
+
+    protected function addItem(object $object, ?string $key = null)
     {
         if ($key === null) {
             $this->items[] = $object;
@@ -92,6 +124,10 @@ class Forms
     {
         return count($this->items);
     }
+
+    /*
+     * Input types
+     */
 
     public function hidden(string $name)
     {
@@ -219,6 +255,10 @@ class Forms
         return $this;
     }
 
+    /*
+     * Input attributes
+     */
+
     public function required(bool $required = true)
     {
         $this->lastRow->required($required);
@@ -338,33 +378,5 @@ class Forms
         $this->lastRow->deleteAttribute($attribute);
 
         return $this;
-    }
-
-    public function validation()
-    {
-        $values = [];
-
-        foreach($this->items as $key => $input) {
-            $value = null;
-
-            if($this->keyExists($key) && isset($this->post[$key])) {
-                $value = $this->post[$key];
-            }
-
-            $result = $input->validation($value, $this->update);
-
-            if($result !== null) {
-                $values[$key] = $result;
-            }
-        }
-
-        return $values;
-    }
-
-    public function getForms() : array
-    {
-        $this->generateInputs();
-
-        return $this->items;
     }
 }
