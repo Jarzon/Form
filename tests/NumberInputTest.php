@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Form;
+use Jarzon\Form;
 
 class NumberInputTest extends TestCase
 {
