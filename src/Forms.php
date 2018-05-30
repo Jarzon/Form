@@ -262,13 +262,7 @@ class Forms
 
     public function id(?string $id = null)
     {
-        if($id === null) $id = $this->lastRow['name'];
-
-        if($this->lastRow['type'] == 'radio') {
-            $this->lastRow['id'] = $id;
-        } else {
-            $this->lastRow['attributes']['id'] = $id;
-        }
+        $this->lastRow->id($id);
 
         return $this;
     }

@@ -93,6 +93,13 @@ class Input
         $this->setAttribute('class', $classes);
     }
 
+    public function id(?string $id = null)
+    {
+        if($id === null) $id = $this->name;
+
+        $this->setAttribute('id', $id);
+    }
+
     public function label($label = false)
     {
         if($label) {
