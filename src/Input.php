@@ -118,59 +118,34 @@ class Input
 
     public function placeholder(?string $placeholder = null)
     {
-        if($placeholder !== null) {
-            $this->setAttribute('placeholder', $placeholder);
-        } else {
-            $this->deleteAttribute('placeholder');
-        }
+        $this->setAttribute('placeholder', $placeholder);
     }
 
     public function spellcheck(?bool $placeholder = null)
     {
-        if($placeholder !== null) {
-            $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
-        } else {
-            $this->deleteAttribute('spellcheck');
-        }
+        $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
     }
 
     public function autocomplete(?string $value = null)
     {
-        if($value !== null) {
-            $this->setAttribute('autocomplete', $value);
-        } else {
-            $this->deleteAttribute('autocomplete');
-        }
+        $this->setAttribute('autocomplete', $value);
     }
 
     public function tabindex(?int $index = null)
     {
-        if($index !== null) {
-            $this->setAttribute('tabindex', $index);
-        } else {
-            $this->deleteAttribute('tabindex');
-        }
+        $this->setAttribute('tabindex', $index);
     }
 
     public function pattern(?string $pattern = null)
     {
         $this->pattern = $pattern;
 
-        if($pattern !== null) {
-            $this->setAttribute('pattern', $pattern);
-        } else {
-            $this->deleteAttribute('pattern');
-        }
+        $this->setAttribute('pattern', $pattern);
     }
 
     public function required(bool $required = true)
     {
-        if(!isset($this->attributes['required'])) {
-            $this->setAttribute('required', null);
-        }
-        else {
-            $this->deleteAttribute('required');
-        }
+        $this->setAttribute('required', null);
     }
 
     public function generateTag(string $tag, array $attributes, $content = false) : string
