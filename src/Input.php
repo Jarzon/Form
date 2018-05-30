@@ -5,7 +5,7 @@ class Input
 {
     protected $name = '';
     protected $value = '';
-    public $label = '';
+    public $label = null;
     public $html = '';
     protected $attributes = [];
 
@@ -100,13 +100,9 @@ class Input
         $this->setAttribute('id', $id);
     }
 
-    public function label($label = false)
+    public function label($label = null)
     {
-        if($label) {
-            $this->setLabel($label);
-        } else {
-            $this->setLabel(null);
-        }
+        $this->setLabel($label);
     }
 
     public function value($value = '')

@@ -357,7 +357,7 @@ class Forms
         return $this;
     }
 
-    public function label($label = false)
+    public function label($label = null)
     {
         $this->lastRow->label($label);
 
