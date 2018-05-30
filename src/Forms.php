@@ -14,6 +14,7 @@ class Forms
     protected $post = [];
     protected $update = false;
 
+    /** @var $lastRow Input */
     protected $lastRow;
 
     public function __construct(array $post)
@@ -218,20 +219,6 @@ class Forms
         return $this;
     }
 
-    public function min(int $min = 0)
-    {
-        $this->lastRow->min($min);
-
-        return $this;
-    }
-
-    public function max(int $max = PHP_INT_MAX)
-    {
-        $this->lastRow->max($max);
-
-        return $this;
-    }
-
     public function required(bool $required = true)
     {
         $this->lastRow->required($required);
@@ -246,13 +233,6 @@ class Forms
         return $this;
     }
 
-    public function accept(array $types = [])
-    {
-        $this->lastRow->accept($types);
-
-        return $this;
-    }
-
     public function class(?string $classes = null)
     {
         $this->lastRow->class($classes);
@@ -263,6 +243,27 @@ class Forms
     public function id(?string $id = null)
     {
         $this->lastRow->id($id);
+
+        return $this;
+    }
+
+    public function min(int $min = 0)
+    {
+        $this->lastRow->min($min);
+
+        return $this;
+    }
+
+    public function max(int $max = PHP_INT_MAX)
+    {
+        $this->lastRow->max($max);
+
+        return $this;
+    }
+
+    public function accept(array $types = [])
+    {
+        $this->lastRow->accept($types);
 
         return $this;
     }

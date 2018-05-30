@@ -236,4 +236,9 @@ class Input
     {
         $this->setHtml($this->generateTag('input', $this->attributes));
     }
+
+    public function __call($name, $arguments)
+    {
+        throw new \Exception("Illegal $name attribute on $this->name");
+    }
 }
