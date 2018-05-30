@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -36,7 +36,7 @@ class FileInputTest extends TestCase
         $_FILES = [];
         $_POST = ['test' => ''];
 
-        $forms = new Forms($_POST);
+        $forms = new Form($_POST);
 
         $forms
             ->file('test', '/')
@@ -59,7 +59,7 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')
@@ -79,7 +79,7 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')
@@ -102,7 +102,7 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ];
 
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', __DIR__.'/files/dest')
@@ -133,7 +133,7 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ];
 
-        $forms = new Forms(['test' => 'test.txt']);
+        $forms = new Form(['test' => 'test.txt']);
 
         $forms
             ->file('test', vfsStream::url('root/data'))
@@ -154,7 +154,7 @@ class FileInputTest extends TestCase
 
     public function testGetFormsFile()
     {
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->file('test', '/')

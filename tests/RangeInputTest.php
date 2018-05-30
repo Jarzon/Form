@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class RangeInputTest extends TestCase
 {
     public function testGetFormsRange()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->range('test')

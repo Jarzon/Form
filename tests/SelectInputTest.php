@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class SelectInputTest extends TestCase
 {
     public function testGetFormsSelect()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->select('test')
@@ -24,7 +24,7 @@ class SelectInputTest extends TestCase
 
     public function testUpdateValuesSelect()
     {
-        $forms = new Forms(['fruits' => 'oranges']);
+        $forms = new Form(['fruits' => 'oranges']);
 
         $forms
             ->select('fruits')

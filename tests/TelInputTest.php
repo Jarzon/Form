@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class TelInputTest extends TestCase
 {
     public function testGetFormsColor()
     {
-        $forms = new Forms(['test' => '012-345-6789']);
+        $forms = new Form(['test' => '012-345-6789']);
 
         $forms
             ->tel('test');

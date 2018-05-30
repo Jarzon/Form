@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class EmailInputTest extends TestCase
 {
@@ -14,7 +14,7 @@ class EmailInputTest extends TestCase
      */
     public function testInvalidEmail()
     {
-        $forms = new Forms(['test' => 'asdf']);
+        $forms = new Form(['test' => 'asdf']);
 
         $forms
             ->email('test');
@@ -24,7 +24,7 @@ class EmailInputTest extends TestCase
 
     public function testGetFormsEmail()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->email('test')

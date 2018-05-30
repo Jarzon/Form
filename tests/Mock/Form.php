@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Mock;
 
-Class Forms extends \Jarzon\Forms
+Class Form extends \Jarzon\Form
 {
     public function file(string $name, string $destination = '/tmp/', string $ext = '')
     {

@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class DateInputTest extends TestCase
 {
     public function testValidDate()
     {
-        $forms = new Forms(['test' => '12/04/2014']);
+        $forms = new Form(['test' => '12/04/2014']);
 
         $forms
             ->date('test');
@@ -26,7 +26,7 @@ class DateInputTest extends TestCase
      */
     public function testInvalidDate()
     {
-        $forms = new Forms(['test' => '00/00/0000']);
+        $forms = new Form(['test' => '00/00/0000']);
 
         $forms
             ->date('test')
@@ -36,7 +36,7 @@ class DateInputTest extends TestCase
     }
 
     public function testGetFormsDate() {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->date('test');

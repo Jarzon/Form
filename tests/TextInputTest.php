@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class TextInputTest extends TestCase
 {
@@ -14,7 +14,7 @@ class TextInputTest extends TestCase
      */
     public function testLengthLowerThatMin()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
@@ -29,7 +29,7 @@ class TextInputTest extends TestCase
      */
     public function testLengthNull()
     {
-        $forms = new Forms(['test' => '']);
+        $forms = new Form(['test' => '']);
 
         $forms
             ->text('test')
@@ -46,7 +46,7 @@ class TextInputTest extends TestCase
      */
     public function testLengthHigherThatMax()
     {
-        $forms = new Forms(['test' => '123456789ab']);
+        $forms = new Form(['test' => '123456789ab']);
 
         $forms
             ->text('test')
@@ -57,7 +57,7 @@ class TextInputTest extends TestCase
 
     public function testGetFormsText()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
@@ -87,7 +87,7 @@ class TextInputTest extends TestCase
 
     public function testFormLabel()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
@@ -102,7 +102,7 @@ class TextInputTest extends TestCase
 
     public function testUpdateValue()
     {
-        $forms = new Forms(['test' => 'good']);
+        $forms = new Form(['test' => 'good']);
 
         $forms
             ->text('test')
@@ -123,7 +123,7 @@ class TextInputTest extends TestCase
 
     public function testUpdateUnexistingValue()
     {
-        $forms = new Forms(['test' => 'good']);
+        $forms = new Form(['test' => 'good']);
 
         $forms
             ->text('test')

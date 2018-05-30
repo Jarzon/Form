@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class TimeInputTest extends TestCase
 {
     public function testValidTime()
     {
-        $forms = new Forms(['test' => '22:00']);
+        $forms = new Form(['test' => '22:00']);
 
         $forms
             ->time('test');
@@ -26,7 +26,7 @@ class TimeInputTest extends TestCase
      */
     public function testInvalidTime()
     {
-        $forms = new Forms(['test' => '00h00']);
+        $forms = new Form(['test' => '00h00']);
 
         $forms
             ->time('test')
@@ -36,7 +36,7 @@ class TimeInputTest extends TestCase
     }
 
     public function testGetFormsTime() {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->time('test');

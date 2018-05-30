@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class PasswordInputTest extends TestCase
 {
     public function testGetFormsColor()
     {
-        $forms = new Forms(['test' => 'df65g4651geg']);
+        $forms = new Form(['test' => 'df65g4651geg']);
 
         $forms
             ->password('test');

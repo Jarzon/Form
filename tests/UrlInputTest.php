@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class UrlInputTest extends TestCase
 {
@@ -14,7 +14,7 @@ class UrlInputTest extends TestCase
      */
     public function testInvalidUrl()
     {
-        $forms = new Forms(['test' => 'asdf']);
+        $forms = new Form(['test' => 'asdf']);
 
         $forms
             ->url('test');
@@ -24,7 +24,7 @@ class UrlInputTest extends TestCase
 
     public function testGetFormsUrl()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->url('test')

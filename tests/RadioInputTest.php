@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class RadioInputTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RadioInputTest extends TestCase
      */
     public function testRadioValueException()
     {
-        $forms = new Forms(['test' => '123456789ab']);
+        $forms = new Form(['test' => '123456789ab']);
 
         $forms
             ->radio('test')
@@ -25,7 +25,7 @@ class RadioInputTest extends TestCase
 
     public function testRadioValue()
     {
-        $forms = new Forms(['test' => 'testy']);
+        $forms = new Form(['test' => 'testy']);
 
         $forms
             ->radio('test')
@@ -39,7 +39,7 @@ class RadioInputTest extends TestCase
 
     public function testGetFormsRadio()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Form(['test' => 'a']);
 
         $forms
             ->radio('test')

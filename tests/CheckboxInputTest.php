@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mock\Forms;
+use Tests\Mock\Form;
 
 class CheckboxInputTest extends TestCase
 {
     public function testCheckboxChecked()
     {
-        $forms = new Forms(['test' => '1234']);
+        $forms = new Form(['test' => '1234']);
 
         $forms
             ->checkbox('test')
@@ -23,7 +23,7 @@ class CheckboxInputTest extends TestCase
 
     public function testCheckboxUnchecked()
     {
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->checkbox('test')
@@ -36,7 +36,7 @@ class CheckboxInputTest extends TestCase
 
     public function testCheckboxCheckedBool()
     {
-        $forms = new Forms(['test' => '1234']);
+        $forms = new Form(['test' => '1234']);
 
         $forms
             ->checkbox('test')
@@ -49,7 +49,7 @@ class CheckboxInputTest extends TestCase
 
     public function testCheckboxUncheckedBool()
     {
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->checkbox('test')
@@ -62,7 +62,7 @@ class CheckboxInputTest extends TestCase
 
     public function testGetFormsCheckbox()
     {
-        $forms = new Forms([]);
+        $forms = new Form([]);
 
         $forms
             ->checkbox('test')
@@ -82,7 +82,7 @@ class CheckboxInputTest extends TestCase
 
     public function testUpdateValuesCheckbox()
     {
-        $forms = new Forms(['fruits' => 'apples']);
+        $forms = new Form(['fruits' => 'apples']);
 
         $forms
             ->checkbox('fruits')

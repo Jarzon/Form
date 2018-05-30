@@ -7,7 +7,7 @@ use Jarzon\Input\{
     SelectInput, TelInput, TextareaInput, TextInput, TimeInput, UrlInput
 };
 
-class Forms
+class Form
 {
     protected $inputs = [];
     protected $post = [];
