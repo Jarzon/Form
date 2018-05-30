@@ -31,7 +31,7 @@ class Input
         return $this->name;
     }
 
-    public function setValue(string $value)
+    public function setValue(?string $value)
     {
         $this->value = $value;
     }
@@ -51,7 +51,7 @@ class Input
         return $this->label;
     }
 
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, $value = null)
     {
         $this->attributes[$name] = $value;
     }
@@ -63,10 +63,15 @@ class Input
 
     public function deleteAttribute(string $name)
     {
-        if(!isset($this->attributes[$name])) {
+        if(!$this->hasAttribute($name)) {
             throw new \Exception("Trying to delete input attribute $name and it doesn't exist");
         }
         unset($this->attributes[$name]);
+    }
+
+    public function hasAttribute(string $name) : bool
+    {
+        return array_key_exists($name, $this->attributes);
     }
 
     public function getHtml() : string

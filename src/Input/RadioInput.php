@@ -47,9 +47,4 @@ class RadioInput extends ListBasedInput
 
         return true;
     }
-
-    public function validation($value = null, $update = false)
-    {
-        return parent::validation($value, $update);
-    }
 }

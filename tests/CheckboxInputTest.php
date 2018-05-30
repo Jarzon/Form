@@ -62,7 +62,7 @@ class CheckboxInputTest extends TestCase
 
     public function testGetFormsCheckbox()
     {
-        $forms = new Forms(['test' => 'a']);
+        $forms = new Forms([]);
 
         $forms
             ->checkbox('test')
@@ -72,6 +72,12 @@ class CheckboxInputTest extends TestCase
         $content = $forms->getForms();
 
         $this->assertEquals('<input name="test" type="checkbox" value="test" checked>', $content['test']->html);
+
+        $forms->validation();
+
+        $content = $forms->getForms();
+
+        $this->assertEquals('<input name="test" type="checkbox" value="test">', $content['test']->html);
     }
 
     public function testUpdateValuesCheckbox()

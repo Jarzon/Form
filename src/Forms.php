@@ -35,26 +35,6 @@ class Forms
         }
     }
 
-    public function updateValue(string $name, $value) {
-        if(isset($this->forms[$name])) {
-            $form =& $this->forms[$name];
-
-            if($form['type'] == 'checkbox') {
-                if($form['selected'] && $value === '') {
-                    unset($form['attributes']['checked']);
-                }
-                elseif (!$form['selected'] && $value !== '') {
-                    $form['attributes']['checked'] = null;
-                }
-            }
-            if($form['type'] == 'select' || $form['type'] == 'radio') {
-                $form['selected'] = $value;
-            }
-        }
-
-        return;
-    }
-
     public function generateInputs()
     {
         foreach ($this->items as $form) {
@@ -380,39 +360,6 @@ class Forms
 
             if($result !== null) {
                 $values[$key] = $result;
-            }
-        }
-
-        return $values;
-    }
-
-    public function verification() : array
-    {
-        $values = [];
-
-        foreach($this->forms as $input) {
-            $value = '';
-
-            if($input['type'] === 'checkbox') {
-                if(isset($this->post[$input['name']])) {
-                    $value = $input['value'];
-                } else {
-                    $value = false;
-                }
-            }
-            else if(isset($this->post[$input['name']])) {
-                $value = $this->post[$input['name']];
-            }
-
-            if($input['type'] == 'select' || $input['type'] == 'radio') {
-                if($value != $input['selected']) {
-                    $updated = true;
-                }
-            }
-            else if($input['type'] === 'checkbox') {
-                if(($input['selected'] && $value === '') || (!$input['selected'] && $value !== '')) {
-                    $updated = true;
-                }
             }
         }
 
