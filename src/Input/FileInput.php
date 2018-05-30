@@ -27,7 +27,7 @@ class FileInput extends TextBasedInput
     public function multiple(bool $multiple)
     {
         if($multiple) {
-            $this->setAttribute('multiple', null);
+            $this->setAttribute('multiple');
         } else {
             $this->deleteAttribute('multiple');
         }

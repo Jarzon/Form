@@ -1,13 +1,11 @@
 <?php
 namespace Jarzon;
 
-class Input
+class Input extends Tag
 {
     protected $name = '';
     protected $value = '';
     public $label = null;
-    public $html = '';
-    protected $attributes = [];
 
     protected $min = null;
     protected $max = null;
@@ -16,6 +14,7 @@ class Input
 
     public function __construct(string $name)
     {
+        $this->setTag('input');
         $this->setName($name);
         $this->setLabel($name);
     }
@@ -49,39 +48,6 @@ class Input
     public function getLabel()
     {
         return $this->label;
-    }
-
-    public function setAttribute(string $name, $value = null)
-    {
-        $this->attributes[$name] = $value;
-    }
-
-    public function getAttribute(string $name)
-    {
-        return $this->attributes[$name];
-    }
-
-    public function deleteAttribute(string $name)
-    {
-        if(!$this->hasAttribute($name)) {
-            throw new \Exception("Trying to delete input attribute $name and it doesn't exist");
-        }
-        unset($this->attributes[$name]);
-    }
-
-    public function hasAttribute(string $name) : bool
-    {
-        return array_key_exists($name, $this->attributes);
-    }
-
-    public function getHtml() : string
-    {
-        return $this->html;
-    }
-
-    public function setHtml($html)
-    {
-        $this->html = $html;
     }
 
     public function class(?string $classes = null)
@@ -144,27 +110,6 @@ class Input
         $this->setAttribute('required', null);
     }
 
-    public function generateTag(string $tag, array $attributes, $content = false) : string
-    {
-        $attr = '';
-
-        foreach($attributes as $attribute => $value) {
-            if($value === null) {
-                $attr .= " $attribute";
-            } else {
-                $attr .= " $attribute=\"$value\"";
-            }
-        }
-
-        $html = "<$tag$attr>";
-
-        if($content !== false) {
-            $html .= "$content</$tag>";
-        }
-
-        return $html;
-    }
-
     public function passValidation($value) : bool
     {
         return true;
@@ -201,11 +146,6 @@ class Input
         }
 
         return null;
-    }
-
-    public function generateInput()
-    {
-        $this->setHtml($this->generateTag('input', $this->attributes));
     }
 
     public function __call($name, $arguments)

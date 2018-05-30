@@ -2,9 +2,25 @@
 namespace Jarzon;
 
 use Jarzon\Input\{
-    CheckboxInput, ColorInput, DateInput, EmailInput, FileInput, FloatInput,
-    HiddenInput, NumberInput, PasswordInput, RadioInput, RangeInput, SearchInput,
-    SelectInput, TelInput, TextareaInput, TextInput, TimeInput, UrlInput
+    CheckboxInput,
+    ColorInput,
+    DateInput,
+    EmailInput,
+    FileInput,
+    FloatInput,
+    HiddenInput,
+    NumberInput,
+    PasswordInput,
+    RadioInput,
+    RangeInput,
+    SearchInput,
+    SelectInput,
+    SubmitInput,
+    TelInput,
+    TextareaInput,
+    TextInput,
+    TimeInput,
+    UrlInput
 };
 
 class Form
@@ -19,6 +35,8 @@ class Form
     public function __construct(array $post)
     {
         $this->post = $post;
+
+        $this->addInput(new FormTag(), 'form');
     }
 
     public function updateValues($values = []) {
@@ -42,10 +60,10 @@ class Form
         return $this->inputs;
     }
 
-    public function generateInputs()
+    protected function generateInputs()
     {
         foreach ($this->inputs as $form) {
-            $form->generateInput();
+            $form->generateHtml();
         }
     }
 
@@ -54,6 +72,10 @@ class Form
         $values = [];
 
         foreach($this->inputs as $key => $input) {
+            if(!is_subclass_of($input, 'Jarzon\Input')) {
+                continue;
+            }
+
             $value = null;
 
             if($this->keyExists($key) && isset($this->post[$key])) {
@@ -74,7 +96,7 @@ class Form
      * Collection methods
      */
 
-    protected function addInput(object $object, ?string $key = null)
+    protected function addInput(object $object, ?string $key = null, bool $lastRow = true)
     {
         if ($key === null) {
             $this->inputs[] = $object;
@@ -87,7 +109,7 @@ class Form
 
         $this->inputs[$key] = $object;
 
-        $this->lastRow =& $this->inputs[$key];
+        if($lastRow) $this->lastRow =& $this->inputs[$key];
     }
 
     public function deleteInput(string $key)
@@ -127,6 +149,17 @@ class Form
     /*
      * Input types
      */
+
+    public function submit(string $name = null)
+    {
+        if($name === null) {
+            $name = 'submit';
+        }
+        $this->addInput(new SubmitInput($name), $name);
+        $this->addInput(new FormTag(true), '/form', false);
+
+        return $this;
+    }
 
     public function hidden(string $name)
     {
@@ -251,12 +284,28 @@ class Form
     {
         $this->addInput(new FileInput($name, $destination, $ext), $name);
 
+        $this->getInput('Form')->setAttribute('enctype', 'multipart/form-data');
+
         return $this;
     }
 
     /*
      * Input attributes
      */
+
+    public function method(string $method)
+    {
+        $this->getInput('Form')->setAttribute('method', $method);
+
+        return $this;
+    }
+
+    public function action(string $url)
+    {
+        $this->getInput('Form')->setAttribute('action', $url);
+
+        return $this;
+    }
 
     public function required(bool $required = true)
     {

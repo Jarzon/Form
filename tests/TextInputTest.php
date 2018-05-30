@@ -67,7 +67,9 @@ class TextInputTest extends TestCase
             ->attributes(['custom-attr' => 'customValue']);
 
         $forms
-            ->text('test2');
+            ->text('test2')
+
+            ->submit();
 
         $content = $forms->getForms();
 
@@ -79,10 +81,11 @@ class TextInputTest extends TestCase
         $html = '';
 
         foreach ($content as $form) {
-            $html .= "<label>{$form->label}<br>{$form->html}</label>";
+            if(isset($form->label)) $html .= "<label>{$form->label}<br>{$form->html}</label>";
+            else $html .= $form->html;
         }
 
-        $this->assertEquals('<label>test<br><input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"></label><label>test2<br><input name="test2" type="text"></label>', $html);
+        $this->assertEquals('<form><label>test<br><input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"></label><label>test2<br><input name="test2" type="text"></label><input type="submit" name="submit"></form>', $html);
     }
 
     public function testFormLabel()

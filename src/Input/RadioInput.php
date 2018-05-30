@@ -8,10 +8,11 @@ class RadioInput extends ListBasedInput
     public function __construct(string $name)
     {
         parent::__construct($name);
+
         $this->setAttribute('type', 'text');
     }
 
-    public function generateInput()
+    public function generateHtml()
     {
         $html = [];
 
@@ -22,7 +23,7 @@ class RadioInput extends ListBasedInput
                 $attr['checked'] = null;
             }
 
-            $html[] = ['label' => $index, 'html' => $this->generateTag('input', $attr)];
+            $html[] = ['label' => $index, 'html' => $this->generateTag($this->tag, $attr)];
         }
 
         $this->setHtml($html);

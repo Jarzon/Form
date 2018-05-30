@@ -10,9 +10,10 @@ class SelectInput extends ListBasedInput
     public function __construct(string $name)
     {
         parent::__construct($name);
+        $this->setTag('select');
     }
 
-    public function generateInput()
+    public function generateHtml()
     {
         $content = '';
 
@@ -26,6 +27,6 @@ class SelectInput extends ListBasedInput
             $content .= $this->generateTag('option', $attr, $index);
         }
 
-        $this->setHtml($this->generateTag('select', $this->attributes, $content));
+        $this->setHtml($this->generateTag($this->tag, $this->attributes, $content));
     }
 }

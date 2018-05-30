@@ -8,6 +8,7 @@ class TextareaInput extends TextBasedInput
     public function __construct(string $name)
     {
         parent::__construct($name);
+        $this->setTag('textarea');
     }
 
     public function value($value = '')
@@ -15,8 +16,8 @@ class TextareaInput extends TextBasedInput
         $this->setValue($value);
     }
 
-    public function generateInput()
+    public function generateHtml()
     {
-        $this->setHtml($this->generateTag('textarea', $this->attributes, $this->value));
+        $this->setHtml($this->generateTag($this->tag, $this->attributes, $this->value));
     }
 }
