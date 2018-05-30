@@ -34,16 +34,15 @@ class FileInputTest extends TestCase
     public function testFileFormMissingEnctype()
     {
         $_FILES = [];
+        $_POST = ['test' => ''];
 
-        $forms = new Forms(['test' => '']);
+        $forms = new Forms($_POST);
 
         $forms
             ->file('test', '/')
             ->accept(['.jpg', '.jpeg']);
 
         $values = $forms->validation();
-
-        $this->assertEquals('', $values['test']);
     }
 
     /**
