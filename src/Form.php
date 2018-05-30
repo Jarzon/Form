@@ -9,8 +9,7 @@ use Jarzon\Input\{
 
 class Forms
 {
-    public $forms = [];
-    protected $items = [];
+    protected $inputs = [];
     protected $post = [];
     protected $update = false;
 
@@ -31,7 +30,7 @@ class Forms
 
         foreach ($values as $name => $value) {
             if($this->keyExists($name)) {
-                $this->getItem($name)->value($value);
+                $this->getInput($name)->value($value);
             }
         }
     }
@@ -40,12 +39,12 @@ class Forms
     {
         $this->generateInputs();
 
-        return $this->items;
+        return $this->inputs;
     }
 
     public function generateInputs()
     {
-        foreach ($this->items as $form) {
+        foreach ($this->inputs as $form) {
             $form->generateInput();
         }
     }
@@ -54,7 +53,7 @@ class Forms
     {
         $values = [];
 
-        foreach($this->items as $key => $input) {
+        foreach($this->inputs as $key => $input) {
             $value = null;
 
             if($this->keyExists($key) && isset($this->post[$key])) {
@@ -75,54 +74,54 @@ class Forms
      * Collection methods
      */
 
-    protected function addItem(object $object, ?string $key = null)
+    protected function addInput(object $object, ?string $key = null)
     {
         if ($key === null) {
-            $this->items[] = $object;
+            $this->inputs[] = $object;
             return;
         }
 
-        if (isset($this->items[$key])) {
+        if (isset($this->inputs[$key])) {
             throw new \Exception("Key $key already in use.");
         }
 
-        $this->items[$key] = $object;
+        $this->inputs[$key] = $object;
 
-        $this->lastRow =& $this->items[$key];
+        $this->lastRow =& $this->inputs[$key];
     }
 
-    public function deleteItem(string $key)
+    public function deleteInput(string $key)
     {
-        if (!isset($this->items[$key]))
+        if (!isset($this->inputs[$key]))
         {
             throw new \Exception("Invalid key $key.");
         }
 
-        unset($this->items[$key]);
+        unset($this->inputs[$key]);
     }
 
     public function keyExists(string $key) : bool
     {
-        return isset($this->items[$key]);
+        return isset($this->inputs[$key]);
     }
 
-    public function getItem($key)
+    public function getInput($key)
     {
-        if (!isset($this->items[$key])) {
+        if (!isset($this->inputs[$key])) {
             throw new \Exception("Invalid key $key.");
         }
 
-        return $this->items[$key];
+        return $this->inputs[$key];
     }
 
     public function keys() : array
     {
-        return array_keys($this->items);
+        return array_keys($this->inputs);
     }
 
     public function length() : int
     {
-        return count($this->items);
+        return count($this->inputs);
     }
 
     /*
@@ -131,126 +130,126 @@ class Forms
 
     public function hidden(string $name)
     {
-        $this->addItem(new HiddenInput($name), $name);
+        $this->addInput(new HiddenInput($name), $name);
 
         return $this;
     }
 
     public function text(string $name)
     {
-        $this->addItem(new TextInput($name), $name);
+        $this->addInput(new TextInput($name), $name);
 
         return $this;
     }
 
     public function textarea(string $name)
     {
-        $this->addItem(new TextareaInput($name), $name);
+        $this->addInput(new TextareaInput($name), $name);
 
         return $this;
     }
 
     public function password(string $name)
     {
-        $this->addItem(new PasswordInput($name), $name);
+        $this->addInput(new PasswordInput($name), $name);
 
         return $this;
     }
 
     public function email(string $name)
     {
-        $this->addItem(new EmailInput($name), $name);
+        $this->addInput(new EmailInput($name), $name);
 
         return $this;
     }
 
     public function url(string $name)
     {
-        $this->addItem(new UrlInput($name), $name);
+        $this->addInput(new UrlInput($name), $name);
 
         return $this;
     }
 
     public function search(string $name)
     {
-        $this->addItem(new SearchInput($name), $name);
+        $this->addInput(new SearchInput($name), $name);
 
         return $this;
     }
 
     public function tel(string $name)
     {
-        $this->addItem(new TelInput($name), $name);
+        $this->addInput(new TelInput($name), $name);
 
         return $this;
     }
 
     public function color(string $name)
     {
-        $this->addItem(new ColorInput($name), $name);
+        $this->addInput(new ColorInput($name), $name);
 
         return $this;
     }
 
     public function number(string $name)
     {
-        $this->addItem(new NumberInput($name), $name);
+        $this->addInput(new NumberInput($name), $name);
 
         return $this;
     }
 
     public function float(string $name)
     {
-        $this->addItem(new FloatInput($name), $name);
+        $this->addInput(new FloatInput($name), $name);
 
         return $this;
     }
 
     public function range(string $name)
     {
-        $this->addItem(new RangeInput($name), $name);
+        $this->addInput(new RangeInput($name), $name);
 
         return $this;
     }
 
     public function date(string $name)
     {
-        $this->addItem(new DateInput($name), $name);
+        $this->addInput(new DateInput($name), $name);
 
         return $this;
     }
 
     public function time(string $name)
     {
-        $this->addItem(new TimeInput($name), $name);
+        $this->addInput(new TimeInput($name), $name);
 
         return $this;
     }
 
     public function select(string $name)
     {
-        $this->addItem(new SelectInput($name), $name);
+        $this->addInput(new SelectInput($name), $name);
 
         return $this;
     }
 
     public function radio(string $name)
     {
-        $this->addItem(new RadioInput($name), $name);
+        $this->addInput(new RadioInput($name), $name);
 
         return $this;
     }
 
     public function checkbox(string $name)
     {
-        $this->addItem(new CheckboxInput($name), $name);
+        $this->addInput(new CheckboxInput($name), $name);
 
         return $this;
     }
 
     public function file(string $name, string $destination = '/tmp/', string $ext = '')
     {
-        $this->addItem(new FileInput($name, $destination, $ext), $name);
+        $this->addInput(new FileInput($name, $destination, $ext), $name);
 
         return $this;
     }
