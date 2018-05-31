@@ -13,7 +13,7 @@ class CheckboxInput extends ListBasedInput
 
     public function value($value = '')
     {
-        $this->setValue($value);
+        $this->value = $value;
 
         $this->setAttribute('value', $value);
     }

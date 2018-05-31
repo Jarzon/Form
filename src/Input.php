@@ -30,11 +30,6 @@ class Input extends Tag
         return $this->name;
     }
 
-    public function setValue(?string $value)
-    {
-        $this->value = $value;
-    }
-
     public function getValue()
     {
         return $this->value;
@@ -75,7 +70,7 @@ class Input extends Tag
 
     public function value($value = '')
     {
-        $this->setValue($value);
+        $this->value = $value;
 
         $this->setAttribute('value', $value);
     }

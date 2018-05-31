@@ -13,7 +13,7 @@ class TextareaInput extends TextBasedInput
 
     public function value($value = '')
     {
-        $this->setValue($value);
+        $this->value = $value;
     }
 
     public function generateHtml()
