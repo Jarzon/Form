@@ -298,7 +298,7 @@ class Form
     {
         $this->addInput(new FileInput($name, $destination, $ext), $name);
 
-        $this->getInput('Form')->setAttribute('enctype', 'multipart/form-data');
+        $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
 
         return $this;
     }
@@ -309,14 +309,14 @@ class Form
 
     public function method(string $method)
     {
-        $this->getInput('Form')->setAttribute('method', $method);
+        $this->getInput('form')->setAttribute('method', $method);
 
         return $this;
     }
 
     public function action(string $url)
     {
-        $this->getInput('Form')->setAttribute('action', $url);
+        $this->getInput('form')->setAttribute('action', $url);
 
         return $this;
     }
