@@ -3,9 +3,10 @@ namespace Jarzon;
 
 class Input extends Tag
 {
-    protected $name = '';
+    public $name = '';
     protected $value = '';
     public $label = null;
+    public $class = null;
 
     protected $min = null;
     protected $max = null;
@@ -55,6 +56,8 @@ class Input extends Tag
         if($classes === null) {
             $classes = $this->name;
         }
+
+        $this->class = $classes;
 
         $this->setAttribute('class', $classes);
     }
