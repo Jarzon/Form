@@ -39,7 +39,13 @@ class Form
         $this->addInput(new FormTag(), 'form');
     }
 
-    public function updateValues($values = []) {
+    public function submitted() : bool
+    {
+        return array_key_exists('submit', $this->post);
+    }
+
+    public function updateValues($values = [])
+    {
         if(empty($values)) {
             $values = $this->post;
         } else {
@@ -155,7 +161,12 @@ class Form
         if($name === null) {
             $name = 'submit';
         }
-        $this->addInput(new SubmitInput($name), $name);
+
+        if($this->keyExists('submit')) {
+            throw new \Exception('The class only support one submit button');
+        }
+
+        $this->addInput(new SubmitInput($name), 'submit');
 
         if($this->keyExists('form')) {
             $this->addInput(new FormTag(true), '/form', false);
