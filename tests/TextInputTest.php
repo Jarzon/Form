@@ -61,6 +61,7 @@ class TextInputTest extends TestCase
 
         $forms
             ->text('test')
+            ->label('Test:')
             ->min(4)
             ->max(10)
             ->class('testClass secondClass')
@@ -73,30 +74,29 @@ class TextInputTest extends TestCase
 
         $content = $forms->getForms();
 
-        $this->assertEquals('<input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="text" id="test" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue">', $content['test']->html);
         $this->assertEquals('<input name="test2" type="text">', $content['test2']->html);
 
-        $this->assertEquals('test', $content['test']->label);
+        $this->assertEquals('<label for="test">Test:</label>', $content['test']->label);
 
         $html = '';
 
         foreach ($content as $form) {
-            if(isset($form->label)) $html .= "<label>{$form->label}<br>{$form->html}</label>";
+            if(isset($form->label)) $html .= "{$form->label}{$form->html}";
             else $html .= $form->html;
         }
 
-        $this->assertEquals('<form><label>test<br><input name="test" type="text" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"></label><label>test2<br><input name="test2" type="text"></label><input type="submit" name="submit"></form>', $html);
+        $this->assertEquals('<form><label for="test">Test:</label><input name="test" type="text" id="test" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"><input name="test2" type="text"><input type="submit" name="submit"></form>', $html);
     }
 
-    public function testFormLabel()
+    public function testNoLabel()
     {
         $forms = new Form(['test' => 'a']);
 
         $forms
             ->text('test')
             ->min(4)
-            ->max(10)
-            ->label(false);
+            ->max(10);
 
         $content = $forms->getForms();
 

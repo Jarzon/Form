@@ -9,7 +9,5 @@ class SubmitInput extends Input
     {
         $this->setAttribute('type', 'submit');
         parent::__construct($name);
-
-        $this->setLabel(null);
     }
 }

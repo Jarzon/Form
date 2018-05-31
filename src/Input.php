@@ -17,7 +17,6 @@ class Input extends Tag
     {
         $this->setTag('input');
         $this->setName($name);
-        $this->setLabel($name);
     }
 
     public function setName(string $name)
@@ -39,11 +38,6 @@ class Input extends Tag
     public function getValue()
     {
         return $this->value;
-    }
-
-    public function setLabel(?string $label)
-    {
-        $this->label = $label;
     }
 
     public function getLabel()
@@ -71,7 +65,12 @@ class Input extends Tag
 
     public function label($label = null)
     {
-        $this->setLabel($label);
+        if($label !== null) {
+            $label = $this->generateTag('label', ['for' => $this->name], $label);
+            $this->id();
+        }
+
+        $this->label = $label;
     }
 
     public function value($value = '')
