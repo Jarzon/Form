@@ -156,7 +156,10 @@ class Form
             $name = 'submit';
         }
         $this->addInput(new SubmitInput($name), $name);
-        $this->addInput(new FormTag(true), '/form', false);
+
+        if($this->keyExists('form')) {
+            $this->addInput(new FormTag(true), '/form', false);
+        }
 
         return $this;
     }
