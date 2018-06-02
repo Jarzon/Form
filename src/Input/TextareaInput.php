@@ -14,6 +14,8 @@ class TextareaInput extends TextBasedInput
     public function value($value = '')
     {
         $this->value = $value;
+
+        return $this;
     }
 
     public function generateHtml()

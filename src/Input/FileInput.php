@@ -22,6 +22,8 @@ class FileInput extends TextBasedInput
     public function accept($types) {
         $this->accept = $types;
         $this->setAttribute('accept', implode(', ', $types));
+
+        return $this;
     }
 
     public function multiple(bool $multiple)
@@ -31,6 +33,8 @@ class FileInput extends TextBasedInput
         } else {
             $this->deleteAttribute('multiple');
         }
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

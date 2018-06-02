@@ -18,6 +18,8 @@ class DateInput extends TextBasedInput
         }
 
         parent::pattern($pattern);
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

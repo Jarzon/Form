@@ -62,6 +62,8 @@ class Input extends Tag
         $this->class = $classes;
 
         $this->setAttribute('class', $classes);
+
+        return $this;
     }
 
     public function id(?string $id = null)
@@ -90,6 +92,8 @@ class Input extends Tag
         }
 
         $this->label = $label;
+
+        return $this;
     }
 
     public function value($value = '')
@@ -97,26 +101,36 @@ class Input extends Tag
         $this->value = $value;
 
         $this->setAttribute('value', $value);
+
+        return $this;
     }
 
     public function placeholder(?string $placeholder = null)
     {
         $this->setAttribute('placeholder', $placeholder);
+
+        return $this;
     }
 
     public function spellcheck(?bool $placeholder = null)
     {
         $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
+
+        return $this;
     }
 
     public function autocomplete(?string $value = null)
     {
         $this->setAttribute('autocomplete', $value);
+
+        return $this;
     }
 
     public function tabindex(?int $index = null)
     {
         $this->setAttribute('tabindex', $index);
+
+        return $this;
     }
 
     public function pattern(?string $pattern = null)
@@ -124,11 +138,15 @@ class Input extends Tag
         $this->pattern = $pattern;
 
         $this->setAttribute('pattern', $pattern);
+
+        return $this;
     }
 
     public function required(bool $required = true)
     {
         $this->setAttribute('required', null);
+
+        return $this;
     }
 
     public function passValidation($value) : bool

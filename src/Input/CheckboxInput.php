@@ -26,6 +26,8 @@ class CheckboxInput extends ListBasedInput
         }
 
         $this->selected = $selected;
+
+        return $this;
     }
 
     public function validation($value = null, $update = false)
