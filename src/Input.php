@@ -5,7 +5,8 @@ class Input extends Tag
 {
     public $name = '';
     protected $value = '';
-    public $label = null;
+    protected $label = null;
+    protected $labelHtml = null;
     public $class = null;
 
     protected $min = null;
@@ -17,6 +18,23 @@ class Input extends Tag
     {
         $this->setTag('input');
         $this->setName($name);
+    }
+
+    public function __get($name)
+    {
+        if($name === 'label') {
+            $this->generateLabel();
+            return $this->labelHtml;
+        }
+        else if($name === 'html') {
+            $this->generateHtml();
+            return $this->getHtml();
+        }
+        else if($name === 'row') {
+            $this->generateLabel();
+            $this->generateHtml();
+            return $this->labelHtml.$this->getHtml();
+        }
     }
 
     public function setName(string $name)
@@ -35,11 +53,6 @@ class Input extends Tag
         return $this->value;
     }
 
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
     public function class(?string $classes = null)
     {
         if($classes === null) {
@@ -56,12 +69,23 @@ class Input extends Tag
         if($id === null) $id = $this->name;
 
         $this->setAttribute('id', $id);
+
+        return $this;
+    }
+
+    public function generateLabel()
+    {
+        $label = '';
+        if($this->label !== null) {
+            $this->labelHtml = $this->generateTag('label', ['for' => $this->name], $this->label);
+        }
+
+        return $label;
     }
 
     public function label($label = null)
     {
         if($label !== null) {
-            $label = $this->generateTag('label', ['for' => $this->name], $label);
             $this->id();
         }
 

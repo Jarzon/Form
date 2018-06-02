@@ -3,9 +3,21 @@ namespace Jarzon;
 
 class Tag
 {
-    public $tag = '';
+    protected $tag = '';
     protected $attributes = [];
-    public $html = '';
+    protected $html = null;
+
+    public function __get($name)
+    {
+        if($name === 'html') {
+            $this->generateHtml();
+            return $this->getHtml();
+        }
+        else if($name === 'row') {
+            $this->generateHtml();
+            return $this->getHtml();
+        }
+    }
 
     public function generateTag(string $tag, array $attributes, $content = false) : string
     {
@@ -61,7 +73,7 @@ class Tag
         return array_key_exists($name, $this->attributes);
     }
 
-    public function getHtml() : string
+    public function getHtml()
     {
         return $this->html;
     }

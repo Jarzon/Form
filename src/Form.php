@@ -39,6 +39,15 @@ class Form
         $this->addInput(new FormTag(), 'form');
     }
 
+    public function __invoke(string $name)
+    {
+        if($this->keyExists($name)) {
+            return $this->getInput($name);
+        }
+
+        return null;
+    }
+
     public function submitted() : bool
     {
         return array_key_exists('submit', $this->post);
@@ -61,16 +70,7 @@ class Form
 
     public function getForms() : array
     {
-        $this->generateInputs();
-
         return $this->inputs;
-    }
-
-    protected function generateInputs()
-    {
-        foreach ($this->inputs as $form) {
-            $form->generateHtml();
-        }
     }
 
     public function validation()
