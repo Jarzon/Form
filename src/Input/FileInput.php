@@ -37,6 +37,12 @@ class FileInput extends TextBasedInput
         return $this;
     }
 
+    public function value($value = '') {
+        $this->value = $value;
+
+        return $this;
+    }
+
     public function passValidation($value = null): bool
     {
         if(empty($_FILES[$this->name]) && isset($_POST[$this->name])) {
@@ -122,8 +128,6 @@ class FileInput extends TextBasedInput
                 throw new \Error('unknown upload error');
         }
     }
-
-    public function value($value = ''){}
 
     private function fileMove(string $tmp_name, string $dest, string $ext = '')
     {
