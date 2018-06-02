@@ -23,17 +23,13 @@ class Input extends Tag
     public function __get($name)
     {
         if($name === 'label') {
-            $this->generateLabel();
-            return $this->labelHtml;
+            return $this->getLabel();
         }
         else if($name === 'html') {
-            $this->generateHtml();
             return $this->getHtml();
         }
         else if($name === 'row') {
-            $this->generateLabel();
-            $this->generateHtml();
-            return $this->labelHtml.$this->getHtml();
+            return $this->getRow();
         }
     }
 
@@ -83,6 +79,17 @@ class Input extends Tag
         }
 
         return $label;
+    }
+
+    public function getRow()
+    {
+        return $this->getLabel().$this->getHtml();
+    }
+
+    public function getLabel()
+    {
+        $this->generateLabel();
+        return $this->labelHtml;
     }
 
     public function label($label = null)

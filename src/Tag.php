@@ -9,12 +9,7 @@ class Tag
 
     public function __get($name)
     {
-        if($name === 'html') {
-            $this->generateHtml();
-            return $this->getHtml();
-        }
-        else if($name === 'row') {
-            $this->generateHtml();
+        if($name === 'html' || $name === 'row') {
             return $this->getHtml();
         }
     }
@@ -75,6 +70,7 @@ class Tag
 
     public function getHtml()
     {
+        $this->generateHtml();
         return $this->html;
     }
 
