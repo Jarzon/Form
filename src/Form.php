@@ -163,7 +163,7 @@ class Form
         }
 
         if($this->keyExists('submit')) {
-            throw new \Exception('The class only support one submit button');
+            throw new \Error('The class only support one submit button');
         }
 
         $this->addInput(new SubmitInput($name), 'submit');
