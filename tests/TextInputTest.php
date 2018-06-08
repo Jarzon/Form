@@ -85,7 +85,7 @@ class TextInputTest extends TestCase
             $html .= "{$form->label}{$form->html}";
         }
 
-        $this->assertEquals('<form><label for="test">Test:</label><input name="test" type="text" id="test" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"><input name="test2" type="text"><input type="submit" name="submit"></form>', $html);
+        $this->assertEquals('<form method="POST"><label for="test">Test:</label><input name="test" type="text" id="test" minlength="4" maxlength="10" class="testClass secondClass" custom-attr="customValue"><input name="test2" type="text"><input type="submit" name="submit"></form>', $html);
     }
 
     public function testNoLabel()

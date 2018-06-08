@@ -9,8 +9,15 @@ class FormTag extends Tag
 
         if($endingTag) {
             $tag = "/$tag";
+        } else {
+            $this->method('POST');
         }
 
         $this->setTag($tag);
+    }
+
+    public function method(string $method)
+    {
+        $this->setAttribute('method', $method);
     }
 }

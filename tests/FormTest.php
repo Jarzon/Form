@@ -32,7 +32,7 @@ class FormTest extends TestCase
             $output .= $tag->html;
         }
 
-        $this->assertEquals('<form><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
+        $this->assertEquals('<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
     }
 
     public function testInputRowAttribute()
@@ -59,7 +59,7 @@ class FormTest extends TestCase
             $output .= $tag->row;
         }
 
-        $this->assertEquals('<form><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
+        $this->assertEquals('<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
     }
 
     public function testFormSubmited()
