@@ -10,4 +10,9 @@ class SubmitInput extends Input
         $this->setAttribute('type', 'submit');
         parent::__construct($name);
     }
+
+    public function validation($value = null, $update = false)
+    {
+        return null;
+    }
 }
