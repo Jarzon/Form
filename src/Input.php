@@ -31,6 +31,9 @@ class Input extends Tag
         else if($name === 'row') {
             return $this->getRow();
         }
+        else if($name === 'value') {
+            return $this->getValue();
+        }
     }
 
     public function setName(string $name)
