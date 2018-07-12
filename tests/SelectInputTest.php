@@ -8,7 +8,7 @@ use Jarzon\Form;
 
 class SelectInputTest extends TestCase
 {
-    public function testGetFormsSelect()
+    public function testGetForms()
     {
         $forms = new Form(['test' => 'a']);
 
@@ -22,7 +22,22 @@ class SelectInputTest extends TestCase
         $this->assertEquals('<select name="test"><option value="test" selected>test</option></select>', $content['test']->html);
     }
 
-    public function testUpdateValuesSelect()
+    public function testGetFormsUpdateEmptyString()
+    {
+        $forms = new Form(['test' => '']);
+
+        $forms
+            ->select('test')
+            ->value(['empty string' => '', 'test2' => 'test']);
+
+        $forms->validation();
+
+        $content = $forms->getForms();
+
+        $this->assertEquals('<select name="test"><option value="" selected>empty string</option><option value="test">test2</option></select>', $content['test']->html);
+    }
+
+    public function testUpdateValues()
     {
         $forms = new Form(['fruits' => 'oranges']);
 
@@ -39,6 +54,5 @@ class SelectInputTest extends TestCase
         $content = $forms->getForms();
 
         $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges" selected>oranges</option></select>', $content['fruits']->html);
-
     }
 }
