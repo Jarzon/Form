@@ -4,7 +4,7 @@ namespace Jarzon;
 class Input extends Tag
 {
     public $name = '';
-    protected $value = '';
+    protected $value = null;
     protected $label = null;
     protected $labelHtml = null;
     public $class = null;

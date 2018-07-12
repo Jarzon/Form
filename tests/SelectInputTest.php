@@ -22,7 +22,7 @@ class SelectInputTest extends TestCase
         $this->assertEquals('<select name="test"><option value="test" selected>test</option></select>', $content['test']->html);
     }
 
-    public function testGetFormsUpdateEmptyString()
+    public function testValueEmptyString()
     {
         $forms = new Form(['test' => '']);
 
@@ -30,11 +30,9 @@ class SelectInputTest extends TestCase
             ->select('test')
             ->value(['empty string' => '', 'test2' => 'test']);
 
-        $forms->validation();
+        $values = $forms->validation();
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<select name="test"><option value="" selected>empty string</option><option value="test">test2</option></select>', $content['test']->html);
+        $this->assertEquals('', $values['test']);
     }
 
     public function testUpdateValues()
