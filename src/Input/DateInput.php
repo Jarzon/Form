@@ -1,9 +1,9 @@
 <?php
 namespace Jarzon\Input;
 
-use Jarzon\TextBasedInput;
+use Jarzon\Input;
 
-class DateInput extends TextBasedInput
+class DateInput extends Input
 {
     public function __construct(string $name)
     {
@@ -11,28 +11,38 @@ class DateInput extends TextBasedInput
         $this->setAttribute('type', 'date');
     }
 
-    public function pattern(?string $pattern = null)
+    public function min(string $min)
     {
-        if($pattern === null) {
-            $pattern = '(0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)\d\d';
-        }
+        $this->setAttribute('min', $min);
 
-        parent::pattern($pattern);
+        $this->min = $min;
+    }
 
-        return $this;
+    public function max(string $max)
+    {
+        $this->setAttribute('max', $max);
+
+        $this->max = $max;
     }
 
     public function passValidation($value = null): bool
     {
-        parent::passValidation($value);
+        if(preg_match('/[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/', $value) == 0) {
+            throw new \Exception("{$this->name} is not a valid date");
+        }
 
-        if($this->pattern !== null) {
-            $format = str_replace('/', '\/', $this->pattern);
-            if(preg_match("/$format/", $value) == 0) {
-                throw new \Exception("{$this->name} is not a valid date");
-            }
+        $date = $this->convertDate($value);
+        if(!empty($this->max) && $date > $this->convertDate($this->max)) {
+            throw new \Exception("{$this->name} is higher that {$this->max}");
+        }
+        else if(!empty($this->min) && $date < $this->convertDate($this->min)) {
+            throw new \Exception("{$this->name} is lower that {$this->min}");
         }
 
         return true;
+    }
+
+    protected function convertDate($date) {
+        return strtotime($date);
     }
 }

@@ -3,7 +3,7 @@ namespace Jarzon;
 
 class DigitBasedInput extends Input
 {
-    public function min(int $min = 0)
+    public function min(int $min = PHP_INT_MAX)
     {
         $this->setAttribute('min', $min);
 

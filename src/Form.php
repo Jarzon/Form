@@ -349,16 +349,16 @@ class Form
         return $this;
     }
 
-    public function min(int $min = 0)
+    public function min(...$min)
     {
-        $this->lastRow->min($min);
+        $this->lastRow->min(...$min);
 
         return $this;
     }
 
-    public function max(int $max = PHP_INT_MAX)
+    public function max(...$max)
     {
-        $this->lastRow->max($max);
+        $this->lastRow->max(...$max);
 
         return $this;
     }
