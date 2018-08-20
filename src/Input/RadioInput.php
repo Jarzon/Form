@@ -9,7 +9,7 @@ class RadioInput extends ListBasedInput
     {
         parent::__construct($name);
 
-        $this->setAttribute('type', 'text');
+        $this->setAttribute('type', 'radio');
     }
 
     public function generateHtml()
@@ -17,7 +17,9 @@ class RadioInput extends ListBasedInput
         $html = [];
 
         foreach($this->values as $index => $attrValue) {
-            $attr = ['type' => 'radio', 'name' => $this->name, 'value' => $attrValue];
+            $attr = $this->attributes;
+
+            $attr['value'] = $attrValue;
 
             if($this->selected === $attrValue) {
                 $attr['checked'] = null;
@@ -27,6 +29,17 @@ class RadioInput extends ListBasedInput
         }
 
         $this->setHtml($html);
+    }
+
+    public function getRow()
+    {
+        $output = [];
+
+        foreach ($this->getHtml() as $radio) {
+            $output[] = $this->generateTag('label', [], $radio['label'].$radio['html']);
+        }
+
+        return implode('', $output);
     }
 
     public function passValidation($value = null): bool
