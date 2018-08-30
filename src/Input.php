@@ -178,7 +178,7 @@ class Input extends Tag
     public function validation($value = null, $update = false)
     {
         if($value == '' && array_key_exists('required', $this->attributes)) {
-            throw new \Exception("{$this->name} is required");
+            throw new ValidationException("{$this->name} is required");
         }
         else if($value !== null) {
             $this->passValidation($value);

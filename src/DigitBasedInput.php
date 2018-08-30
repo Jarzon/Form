@@ -20,10 +20,10 @@ class DigitBasedInput extends Input
     public function passValidation($value = null) : bool
     {
         if($this->max !== null && $value > $this->max) {
-            throw new \Exception("{$this->name} is too high");
+            throw new ValidationException("{$this->name} is too high");
         }
         else if($this->min !== null && $value < $this->min) {
-            throw new \Exception("{$this->name} is too low");
+            throw new ValidationException("{$this->name} is too low");
         }
 
         return true;

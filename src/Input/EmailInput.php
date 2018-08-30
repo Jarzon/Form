@@ -16,7 +16,7 @@ class EmailInput extends TextBasedInput
         parent::passValidation($value);
 
         if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception("$this->name is not a valid email");
+            throw new ValidationException("$this->name is not a valid email");
         }
 
         return true;

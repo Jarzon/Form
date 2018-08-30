@@ -21,10 +21,10 @@ class TextBasedInput extends Input
     {
         $numberChars = mb_strlen($value);
         if(!empty($this->max) && $numberChars > $this->max) {
-            throw new \Exception("{$this->name} is too long");
+            throw new ValidationException("{$this->name} is too long");
         }
         else if(!empty($this->min) && $numberChars < $this->min) {
-            throw new \Exception("{$this->name} is too short");
+            throw new ValidationException("{$this->name} is too short");
         }
 
         return true;
