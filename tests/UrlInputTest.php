@@ -9,7 +9,7 @@ use Jarzon\Form;
 class UrlInputTest extends TestCase
 {
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is not a valid url
      */
     public function testInvalidUrl()

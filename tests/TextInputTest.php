@@ -9,7 +9,7 @@ use Jarzon\Form;
 class TextInputTest extends TestCase
 {
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is too short
      */
     public function testLengthLowerThatMin()
@@ -24,7 +24,7 @@ class TextInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is required
      */
     public function testLengthNull()
@@ -41,7 +41,7 @@ class TextInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is too long
      */
     public function testLengthHigherThatMax()

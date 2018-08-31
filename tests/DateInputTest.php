@@ -21,7 +21,7 @@ class DateInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is not a valid date
      */
     public function testInvalidDate()
@@ -35,7 +35,7 @@ class DateInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is lower that 2000-01-01
      */
     public function testMinDate()
@@ -50,7 +50,7 @@ class DateInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is higher that 2000-01-01
      */
     public function testMaxDate()

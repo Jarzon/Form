@@ -9,7 +9,7 @@ use Jarzon\Form;
 class EmailInputTest extends TestCase
 {
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is not a valid email
      */
     public function testInvalidEmail()

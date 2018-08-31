@@ -29,7 +29,7 @@ class TimeInput extends TextBasedInput
         if($this->pattern !== null) {
             $format = str_replace('/', '\/', $this->pattern);
             if(preg_match("/$format/", $value) == 0) {
-                throw new ValidationException("{$this->name} is not a valid time");
+                throw new \Jarzon\ValidationException("{$this->name} is not a valid time");
             }
         }
 

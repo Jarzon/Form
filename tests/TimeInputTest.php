@@ -21,7 +21,7 @@ class TimeInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is not a valid time
      */
     public function testInvalidTime()

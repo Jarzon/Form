@@ -46,7 +46,7 @@ class FileInputTest extends TestCase
     }
 
     /**
-     * @expectedException     \Exception
+     * @expectedException     \Jarzon\ValidationException
      * @expectedExceptionMessage test is required
      */
     public function testFileEmptyRequired()
