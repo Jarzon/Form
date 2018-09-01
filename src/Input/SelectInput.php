@@ -16,7 +16,8 @@ class SelectInput extends ListBasedInput
         $return = parent::__get($name);
         if($return) {
             return $return;
-        } else if($name === 'values') {
+        }
+        else if($name === 'values') {
             return $this->values;
         }
     }
