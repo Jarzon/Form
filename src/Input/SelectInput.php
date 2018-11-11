@@ -5,6 +5,8 @@ use Jarzon\ListBasedInput;
 
 class SelectInput extends ListBasedInput
 {
+    protected $selected = '';
+
     public function __construct(string $name)
     {
         parent::__construct($name);
@@ -29,7 +31,7 @@ class SelectInput extends ListBasedInput
         foreach($this->values as $index => $attrValue) {
             $attr = ['value' => $attrValue];
 
-            if($this->selected === $attrValue) {
+            if($this->getSelected() === $attrValue) {
                 $attr['selected'] = null;
             }
 

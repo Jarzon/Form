@@ -13,13 +13,16 @@ class ListBasedInput extends Input
             return $return;
         }
         else if($name === 'selected') {
-            return $this->selected;
+            return $this->getSelected();
         }
     }
 
-
     public function selected($selected) {
         $this->selected = $selected;
+    }
+
+    public function getSelected() {
+        return $this->selected;
     }
 
     public function value($values = [])
