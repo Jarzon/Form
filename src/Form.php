@@ -384,9 +384,9 @@ class Form
         return $this;
     }
 
-    public function pattern(?string $pattern = null)
+    public function pattern(?string $pattern = null, ?string $message = null)
     {
-        $this->lastRow->pattern($pattern);
+        $this->lastRow->pattern($pattern, $message);
 
         return $this;
     }
