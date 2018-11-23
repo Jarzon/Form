@@ -6,6 +6,7 @@ class Input extends Tag
     public $name = '';
     protected $value = null;
     protected $label = null;
+    protected $isRequired = false;
     protected $labelHtml = null;
     public $class = null;
 
@@ -155,6 +156,7 @@ class Input extends Tag
     public function required(bool $required = true)
     {
         $this->setAttribute('required', null);
+        $this->isRequired = true;
 
         return $this;
     }
@@ -177,10 +179,10 @@ class Input extends Tag
 
     public function validation($value = null, $update = false)
     {
-        if($value == '' && array_key_exists('required', $this->attributes)) {
+        if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required");
         }
-        else if($value !== null) {
+        else if($value !== '') {
             $this->passValidation($value);
         }
 
@@ -190,7 +192,7 @@ class Input extends Tag
             $this->value($value);
         }
 
-        if($updated || (array_key_exists('required', $this->attributes) && !$update)) {
+        if($updated || ($this->isRequired && !$update)) {
             return $value;
         }
 
