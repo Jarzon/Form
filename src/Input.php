@@ -111,7 +111,7 @@ class Input extends Tag
     {
         $this->value = $value;
 
-        $this->setAttribute('value', $value);
+        $this->setAttribute('value', htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE));
 
         return $this;
     }
