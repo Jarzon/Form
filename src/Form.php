@@ -27,14 +27,16 @@ class Form
 {
     protected $inputs = [];
     protected $post = [];
+    protected $files = [];
     protected $update = false;
 
     /** @var $lastRow Input */
     protected $lastRow;
 
-    public function __construct(array $post)
+    public function __construct(array $post, array $files = [])
     {
         $this->post = $post;
+        $this->files = $files;
 
         $this->addInput(new FormTag(), 'form');
     }
@@ -296,7 +298,7 @@ class Form
 
     public function file(string $name, string $destination = '/tmp/', string $ext = '')
     {
-        $this->addInput(new FileInput($name, $destination, $ext), $name);
+        $this->addInput(new FileInput($name, $destination, $ext, $this->post, $this->files), $name);
 
         $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
 

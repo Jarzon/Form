@@ -8,8 +8,10 @@ class FileInput extends TextBasedInput
     protected $destination;
     protected $ext;
     protected $accept;
+    protected $post = [];
+    protected $files = [];
 
-    public function __construct(string $name, string $destination, string $ext)
+    public function __construct(string $name, string $destination, string $ext, array $post, array $files)
     {
         parent::__construct($name);
 
@@ -17,6 +19,9 @@ class FileInput extends TextBasedInput
 
         $this->destination = $destination;
         $this->ext = $ext;
+
+        $this->post = $post;
+        $this->files = $files;
     }
 
     public function accept($types) {
@@ -45,7 +50,7 @@ class FileInput extends TextBasedInput
 
     public function passValidation($value = null): bool
     {
-        if(empty($_FILES[$this->name]) && isset($_POST[$this->name])) {
+        if(!isset($this->files[$this->name]) && isset($this->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
         }
 
@@ -67,8 +72,8 @@ class FileInput extends TextBasedInput
     {
         parent::validation($value, $update);
 
-        if(isset($_FILES[$this->name]) && $_FILES[$this->name]['error'] !== UPLOAD_ERR_NO_FILE) {
-            $value = $_FILES[$this->name];
+        if(isset($this->files[$this->name]) && $this->files[$this->name]['error'] !== UPLOAD_ERR_NO_FILE) {
+            $value = $this->files[$this->name];
         } else {
             return;
         }

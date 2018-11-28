@@ -33,10 +33,7 @@ class FileInputTest extends TestCase
      */
     public function testFileFormMissingEnctype()
     {
-        $_FILES = [];
-        $_POST = ['test' => ''];
-
-        $forms = new Form($_POST);
+        $forms = new Form(['test' => 's'], []);
 
         $forms
             ->file('test', '/')
@@ -51,15 +48,13 @@ class FileInputTest extends TestCase
      */
     public function testFileEmptyRequired()
     {
-        $_FILES['test'] = [
+        $forms = new Form([], ['test' => [
             'name' => '',
             'type' => '',
             'tmp_name' => '',
             'size' => 4,
             'error' => UPLOAD_ERR_NO_FILE,
-        ];
-
-        $forms = new Form([]);
+        ]]);
 
         $forms
             ->file('test', '/')
@@ -71,15 +66,13 @@ class FileInputTest extends TestCase
 
     public function testFileEmpty()
     {
-        $_FILES['test'] = [
+        $forms = new Form([], ['test' => [
             'name' => '',
             'type' => '',
             'tmp_name' => '',
             'size' => 4,
             'error' => UPLOAD_ERR_NO_FILE,
-        ];
-
-        $forms = new Form([]);
+        ]]);
 
         $forms
             ->file('test', '/')
@@ -94,15 +87,13 @@ class FileInputTest extends TestCase
     {
         file_put_contents(__DIR__.'/files/da39a3ee5e6b4b0d3255bfef95601890afd80709', '');
 
-        $_FILES['test'] = [
+        $forms = new Form([], ['test' => [
             'name' => 'test',
             'type' => 'jpg',
             'tmp_name' => __DIR__.'/files/da39a3ee5e6b4b0d3255bfef95601890afd80709',
             'size' => 4,
             'error' => UPLOAD_ERR_OK,
-        ];
-
-        $forms = new Form([]);
+        ]]);
 
         $forms
             ->file('test', __DIR__.'/files/dest')
@@ -125,15 +116,13 @@ class FileInputTest extends TestCase
 
     public function testFileValue()
     {
-        $_FILES['test'] = [
+        $forms = new Form(['test' => 'test.txt'], ['test' => [
             'name' => 'test.txt',
             'type' => 'text',
             'tmp_name' => vfsStream::url('root/temp/test.txt'),
             'size' => 4,
             'error' => UPLOAD_ERR_OK,
-        ];
-
-        $forms = new Form(['test' => 'test.txt']);
+        ]]);
 
         $forms
             ->file('test', vfsStream::url('root/data'))
@@ -154,7 +143,7 @@ class FileInputTest extends TestCase
 
     public function testGetFormsFile()
     {
-        $forms = new Form([]);
+        $forms = new Form([], []);
 
         $forms
             ->file('test', '/')

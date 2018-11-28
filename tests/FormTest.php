@@ -64,9 +64,7 @@ class FormTest extends TestCase
 
     public function testFormSubmited()
     {
-        $_POST = ['username' => 'Joe Doe', 'submit' => 'Save'];
-
-        $forms = new Form($_POST);
+        $forms = new Form(['username' => 'Joe Doe', 'submit' => 'Save']);
 
         $forms
             ->text('username')
