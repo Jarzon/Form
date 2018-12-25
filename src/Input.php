@@ -3,6 +3,9 @@ namespace Jarzon;
 
 class Input extends Tag
 {
+    protected $form;
+    protected $repeat = null;
+
     public $name = '';
     protected $value = null;
     protected $label = null;
@@ -15,10 +18,12 @@ class Input extends Tag
 
     protected $pattern = null;
 
-    public function __construct(string $name)
+    public function __construct(string $name, $form)
     {
         $this->setTag('input');
         $this->setName($name);
+
+        $this->form = $form;
     }
 
     public function __get($name)
@@ -177,8 +182,24 @@ class Input extends Tag
         return $updated;
     }
 
-    public function validation($value = null, $update = false)
+    public function getPostValue()
     {
+        if(isset($this->form->post[$this->name])) {
+            if($this->repeat) {
+                return $this->form->post[str_replace('[]', '', $this->name)];
+            }
+
+            return $this->form->post[$this->name];
+        }
+
+        return null;
+    }
+
+    public function validation()
+    {
+        $update = $this->form->update;
+        $value = $this->getPostValue();
+
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required");
         }

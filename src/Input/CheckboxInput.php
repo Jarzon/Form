@@ -5,9 +5,9 @@ use Jarzon\ListBasedInput;
 
 class CheckboxInput extends ListBasedInput
 {
-    public function __construct(string $name)
+    public function __construct(string $name, $form)
     {
-        parent::__construct($name);
+        parent::__construct($name, $form);
         $this->setAttribute('type', 'checkbox');
     }
 
@@ -30,8 +30,10 @@ class CheckboxInput extends ListBasedInput
         return $this;
     }
 
-    public function validation($value = null, $update = false)
+    public function validation()
     {
+        $value = $this->getPostValue();
+
         if($value !== null) {
             $value = $this->value;
         } else {

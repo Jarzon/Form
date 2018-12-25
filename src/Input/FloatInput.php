@@ -5,16 +5,15 @@ use Jarzon\DigitBasedInput;
 
 class FloatInput extends DigitBasedInput
 {
-    public function __construct(string $name)
+    public function __construct(string $name, $form)
     {
-        parent::__construct($name);
+        parent::__construct($name, $form);
         $this->setAttribute('type', 'number');
         $this->setAttribute('step', 0.01);
     }
 
-
-    public function validation($value = null, $update = false)
+    public function validation()
     {
-        return (float)parent::validation($value, $update);
+        return (float)parent::validation();
     }
 }

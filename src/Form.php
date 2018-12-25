@@ -26,9 +26,9 @@ use Jarzon\Input\{
 class Form
 {
     protected $inputs = [];
-    protected $post = [];
-    protected $files = [];
-    protected $update = false;
+    public $post = [];
+    public $files = [];
+    public $update = false;
 
     /** @var $lastRow Input */
     protected $lastRow;
@@ -80,17 +80,11 @@ class Form
         $values = [];
 
         foreach($this->inputs as $key => $input) {
-            if(!is_subclass_of($input, 'Jarzon\Input')) {
+            if(!is_subclass_of($input, 'Jarzon\Input') || !$this->keyExists($key)) {
                 continue;
             }
 
-            $value = null;
-
-            if($this->keyExists($key) && isset($this->post[$key])) {
-                $value = $this->post[$key];
-            }
-
-            $result = $input->validation($value, $this->update);
+            $result = $input->validation();
 
             if($result !== null) {
                 $values[$key] = $result;
@@ -179,126 +173,126 @@ class Form
 
     public function hidden(string $name)
     {
-        $this->addInput(new HiddenInput($name), $name);
+        $this->addInput(new HiddenInput($name, $this), $name);
 
         return $this;
     }
 
     public function text(string $name)
     {
-        $this->addInput(new TextInput($name), $name);
+        $this->addInput(new TextInput($name, $this), $name);
 
         return $this;
     }
 
     public function textarea(string $name)
     {
-        $this->addInput(new TextareaInput($name), $name);
+        $this->addInput(new TextareaInput($name, $this), $name);
 
         return $this;
     }
 
     public function password(string $name)
     {
-        $this->addInput(new PasswordInput($name), $name);
+        $this->addInput(new PasswordInput($name, $this), $name);
 
         return $this;
     }
 
     public function email(string $name)
     {
-        $this->addInput(new EmailInput($name), $name);
+        $this->addInput(new EmailInput($name, $this), $name);
 
         return $this;
     }
 
     public function url(string $name)
     {
-        $this->addInput(new UrlInput($name), $name);
+        $this->addInput(new UrlInput($name, $this), $name);
 
         return $this;
     }
 
     public function search(string $name)
     {
-        $this->addInput(new SearchInput($name), $name);
+        $this->addInput(new SearchInput($name, $this), $name);
 
         return $this;
     }
 
     public function tel(string $name)
     {
-        $this->addInput(new TelInput($name), $name);
+        $this->addInput(new TelInput($name, $this), $name);
 
         return $this;
     }
 
     public function color(string $name)
     {
-        $this->addInput(new ColorInput($name), $name);
+        $this->addInput(new ColorInput($name, $this), $name);
 
         return $this;
     }
 
     public function number(string $name)
     {
-        $this->addInput(new NumberInput($name), $name);
+        $this->addInput(new NumberInput($name, $this), $name);
 
         return $this;
     }
 
     public function float(string $name)
     {
-        $this->addInput(new FloatInput($name), $name);
+        $this->addInput(new FloatInput($name, $this), $name);
 
         return $this;
     }
 
     public function range(string $name)
     {
-        $this->addInput(new RangeInput($name), $name);
+        $this->addInput(new RangeInput($name, $this), $name);
 
         return $this;
     }
 
     public function date(string $name)
     {
-        $this->addInput(new DateInput($name), $name);
+        $this->addInput(new DateInput($name, $this), $name);
 
         return $this;
     }
 
     public function time(string $name)
     {
-        $this->addInput(new TimeInput($name), $name);
+        $this->addInput(new TimeInput($name, $this), $name);
 
         return $this;
     }
 
     public function select(string $name)
     {
-        $this->addInput(new SelectInput($name), $name);
+        $this->addInput(new SelectInput($name, $this), $name);
 
         return $this;
     }
 
     public function radio(string $name)
     {
-        $this->addInput(new RadioInput($name), $name);
+        $this->addInput(new RadioInput($name, $this), $name);
 
         return $this;
     }
 
     public function checkbox(string $name)
     {
-        $this->addInput(new CheckboxInput($name), $name);
+        $this->addInput(new CheckboxInput($name, $this), $name);
 
         return $this;
     }
 
     public function file(string $name, string $destination = '/tmp/', string $ext = '')
     {
-        $this->addInput(new FileInput($name, $destination, $ext, $this->post, $this->files), $name);
+        $this->addInput(new FileInput($name, $this, $destination, $ext), $name);
 
         $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
 

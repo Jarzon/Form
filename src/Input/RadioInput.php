@@ -5,9 +5,9 @@ use Jarzon\ListBasedInput;
 
 class RadioInput extends ListBasedInput
 {
-    public function __construct(string $name)
+    public function __construct(string $name, $form)
     {
-        parent::__construct($name);
+        parent::__construct($name, $form);
 
         $this->setAttribute('type', 'radio');
     }
@@ -16,9 +16,11 @@ class RadioInput extends ListBasedInput
     {
         $html = [];
 
+        $count = 0;
         foreach($this->values as $index => $attrValue) {
             $attr = $this->attributes;
 
+            $attr['id'] = "{$this->name}_$count";
             $attr['value'] = $attrValue;
 
             if($this->selected === $attrValue) {
@@ -26,6 +28,7 @@ class RadioInput extends ListBasedInput
             }
 
             $html[] = ['label' => $index, 'html' => $this->generateTag($this->tag, $attr)];
+            $count++;
         }
 
         $this->setHtml($html);
