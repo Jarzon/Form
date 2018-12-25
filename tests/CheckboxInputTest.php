@@ -8,94 +8,107 @@ use Jarzon\Form;
 
 class CheckboxInputTest extends TestCase
 {
-    public function testCheckboxChecked()
+    public function testChecked()
     {
-        $forms = new Form(['test' => '1234']);
+        $form = new Form(['test' => '1234']);
 
-        $forms
+        $form
             ->checkbox('test')
             ->value('testy');
 
-        $params = $forms->validation();
+        $values = $form->validation();
 
-        $this->assertEquals('testy', $params['test']);
+        $this->assertEquals('testy', $values['test']);
     }
 
-    public function testCheckboxUnchecked()
+    public function testUnchecked()
     {
-        $forms = new Form([]);
+        $form = new Form([]);
 
-        $forms
+        $form
             ->checkbox('test')
             ->value('testy');
 
-        $params = $forms->validation();
+        $values = $form->validation();
 
-        $this->assertEquals(false, $params['test']);
+        $this->assertEquals(false, $values['test']);
     }
 
-    public function testCheckboxCheckedBool()
+    public function testCheckedBool()
     {
-        $forms = new Form(['test' => '1234']);
+        $form = new Form(['test' => '1234']);
 
-        $forms
+        $form
             ->checkbox('test')
             ->value(true);
 
-        $params = $forms->validation();
+        $values = $form->validation();
 
-        $this->assertEquals(true, $params['test']);
+        $this->assertEquals(true, $values['test']);
     }
 
-    public function testCheckboxUncheckedBool()
+    public function testUncheckedBool()
     {
-        $forms = new Form([]);
+        $form = new Form([]);
 
-        $forms
+        $form
             ->checkbox('test')
             ->value(true);
 
-        $params = $forms->validation();
+        $values = $form->validation();
 
-        $this->assertEquals(false, $params['test']);
+        $this->assertEquals(false, $values['test']);
     }
 
-    public function testGetFormsCheckbox()
+    public function testGetInputs()
     {
-        $forms = new Form([]);
+        $form = new Form([]);
 
-        $forms
+        $form
             ->checkbox('test')
             ->value('test')
             ->selected();
 
-        $content = $forms->getForms();
+        $content = $form->getForms();
 
         $this->assertEquals('<input name="test" type="checkbox" value="test" checked>', $content['test']->html);
 
-        $forms->validation();
+        $form->validation();
 
-        $content = $forms->getForms();
+        $content = $form->getForms();
 
         $this->assertEquals('<input name="test" type="checkbox" value="test">', $content['test']->html);
     }
 
-    public function testUpdateValuesCheckbox()
+    public function testUpdateValues()
     {
-        $forms = new Form(['fruits' => 'apples']);
+        $form = new Form(['fruits' => 'apples']);
 
-        $forms
+        $form
             ->checkbox('fruits')
             ->value('apples');
 
-        $content = $forms->getForms();
+        $content = $form->getForms();
 
         $this->assertEquals('<input name="fruits" type="checkbox" value="apples">', $content['fruits']->html);
 
-        $forms->validation();
+        $form->validation();
 
-        $content = $forms->getForms();
+        $content = $form->getForms();
 
         $this->assertEquals('<input name="fruits" type="checkbox" value="apples" checked>', $content['fruits']->html);
+    }
+
+    public function testRepeated()
+    {
+        $form = new Form(['test' => ['1234', null]]);
+
+        $form->repeat()
+            ->checkbox('test')
+            ->value('testy');
+
+        $values = $form->validation();
+
+        $this->assertEquals(['testy', null], $values['test']);
     }
 }

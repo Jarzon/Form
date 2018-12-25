@@ -14,6 +14,16 @@ class NumberInput extends DigitBasedInput
 
     public function validation()
     {
-        return (int)parent::validation();
+        $value = parent::validation();
+
+        if($this->form->repeat) {
+            foreach ($value as $i => $v) {
+                $value[$i] = (int)$v;
+            }
+
+            return $value;
+        }
+
+        return (int)$value;
     }
 }

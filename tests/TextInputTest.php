@@ -139,4 +139,16 @@ class TextInputTest extends TestCase
 
         $this->assertEquals('<input name="test" type="text" value="good" minlength="4" maxlength="10">', $content['test']->html);
     }
+
+    public function testRepeated()
+    {
+        $form = new Form(['test' => ['1234', 'NaN']]);
+
+        $form->repeat()
+            ->text('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals(['1234', 'NaN'], $values['test']);
+    }
 }

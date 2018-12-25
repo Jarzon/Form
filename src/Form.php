@@ -29,6 +29,7 @@ class Form
     public $post = [];
     public $files = [];
     public $update = false;
+    public $repeat = false;
 
     /** @var $lastRow Input */
     protected $lastRow;
@@ -434,6 +435,13 @@ class Form
     public function deleteAttribute($attribute)
     {
         $this->lastRow->deleteAttribute($attribute);
+
+        return $this;
+    }
+
+    public function repeat()
+    {
+        $this->repeat = true;
 
         return $this;
     }

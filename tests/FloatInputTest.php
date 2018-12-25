@@ -21,4 +21,16 @@ class FloatInputTest extends TestCase
 
         $this->assertEquals('<input name="test" type="number" step="0.01" min="4" max="10">', $content['test']->html);
     }
+
+    public function testRepeated()
+    {
+        $form = new Form(['test' => ['1234', 'NaN']]);
+
+        $form->repeat()
+            ->float('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals([1234.0, 0.0], $values['test']);
+    }
 }

@@ -17,11 +17,13 @@ class ListBasedInput extends Input
         }
     }
 
-    public function selected($selected) {
+    public function selected($selected)
+    {
         $this->selected = $selected;
     }
 
-    public function getSelected() {
+    public function getSelected()
+    {
         return $this->selected;
     }
 
@@ -34,10 +36,8 @@ class ListBasedInput extends Input
         }
     }
 
-    public function passValidation($value = null) : bool
+    public function passValidation($value = null): bool
     {
-
-
         return true;
     }
 }

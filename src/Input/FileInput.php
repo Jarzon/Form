@@ -65,13 +65,14 @@ class FileInput extends TextBasedInput
 
     public function validation()
     {
+        // TODO: support repeat
         parent::validation();
 
-        if(isset($this->form->files[$this->name]) && $this->form->files[$this->name]['error'] !== UPLOAD_ERR_NO_FILE) {
-            $value = $this->form->files[$this->name];
-        } else {
+        if(!isset($this->form->files[$this->name]) || $this->form->files[$this->name]['error'] === UPLOAD_ERR_NO_FILE) {
             return;
         }
+
+        $value = $this->form->files[$this->name];
 
         $infos = [];
 

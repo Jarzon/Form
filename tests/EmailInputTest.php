@@ -35,4 +35,20 @@ class EmailInputTest extends TestCase
 
         $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">', $content['test']->html);
     }
+
+    /**
+     * @expectedException     \Jarzon\ValidationException
+     * @expectedExceptionMessage test is not a valid email
+     */
+    public function testRepeatedInvalidEmail()
+    {
+        $form = new Form(['test' => ['test@exemple.com', 'NaN']]);
+
+        $form->repeat()
+            ->email('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals(['1234', 'NaN'], $values['test']);
+    }
 }

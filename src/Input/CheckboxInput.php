@@ -34,6 +34,29 @@ class CheckboxInput extends ListBasedInput
     {
         $value = $this->getPostValue();
 
+        if($this->form->repeat) {
+            $values = [];
+            // Iterate over the column for the current $input
+            $n = 0;
+            foreach($value as $v) {
+                if(!isset($values[$n])) {
+                    $values[] = [];
+                }
+
+                if($v !== null) {
+                    $v = $this->value;
+                } else {
+                    $v = false;
+                }
+
+                $values[$n] = $v;
+
+                $n++;
+            }
+
+            return $values;
+        }
+
         if($value !== null) {
             $value = $this->value;
         } else {

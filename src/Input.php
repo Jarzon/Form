@@ -3,8 +3,8 @@ namespace Jarzon;
 
 class Input extends Tag
 {
+    /** @var Form */
     protected $form;
-    protected $repeat = null;
 
     public $name = '';
     protected $value = null;
@@ -184,21 +184,44 @@ class Input extends Tag
 
     public function getPostValue()
     {
-        if(isset($this->form->post[$this->name])) {
-            if($this->repeat) {
-                return $this->form->post[str_replace('[]', '', $this->name)];
-            }
+        $name = $this->name;
 
-            return $this->form->post[$this->name];
+        if($this->form->repeat) {
+            $name = str_replace('[]', '', $name);
         }
 
-        return null;
+        return $this->form->post[$this->name]?? null;
     }
 
     public function validation()
     {
         $update = $this->form->update;
         $value = $this->getPostValue();
+
+        if($this->form->repeat) {
+
+            $values = [];
+            // Iterate over the column for the current $input
+            $n = 0;
+            foreach($value as $v) {
+                if(!isset($v[$n])) {
+                    $values[] = [];
+                }
+
+                if($v == '' && $this->isRequired) {
+                    throw new ValidationException("{$this->name} is required");
+                }
+                else if($v !== '') {
+                    $this->passValidation($v);
+                }
+
+                $values[$n] = $v;
+
+                $n++;
+            }
+
+            return $values;
+        }
 
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required");

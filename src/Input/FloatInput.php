@@ -14,6 +14,16 @@ class FloatInput extends DigitBasedInput
 
     public function validation()
     {
-        return (float)parent::validation();
+        $value = parent::validation();
+
+        if($this->form->repeat) {
+            foreach ($value as $i => $v) {
+                $value[$i] = (float)$v;
+            }
+
+            return $value;
+        }
+
+        return (float)$value;
     }
 }
