@@ -101,7 +101,7 @@ class CheckboxInputTest extends TestCase
 
     public function testRepeated()
     {
-        $form = new Form(['test' => ['1234', null]]);
+        $form = new Form(['test' => [['1234', null]]]);
 
         $form->repeat()
             ->checkbox('test')
@@ -109,6 +109,8 @@ class CheckboxInputTest extends TestCase
 
         $values = $form->validation();
 
-        $this->assertEquals(['testy', null], $values['test']);
+        var_dump($values);
+
+        $this->assertEquals([0 => ['test' => 'testy']], $values);
     }
 }

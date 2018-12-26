@@ -31,6 +31,6 @@ class FloatInputTest extends TestCase
 
         $values = $form->validation();
 
-        $this->assertEquals([1234.0, 0.0], $values['test']);
+        $this->assertEquals([['test' => 1234.0], ['test' => 0.0]], $values);
     }
 }

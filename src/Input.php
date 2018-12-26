@@ -20,10 +20,10 @@ class Input extends Tag
 
     public function __construct(string $name, $form)
     {
+        $this->form = $form;
+
         $this->setTag('input');
         $this->setName($name);
-
-        $this->form = $form;
     }
 
     public function __get($name)
@@ -45,6 +45,11 @@ class Input extends Tag
     public function setName(string $name)
     {
         $this->setAttribute('name', $name);
+
+        if($this->form->repeat) {
+            $name = str_replace('[]', '', $name);
+        }
+
         $this->name = $name;
     }
 
@@ -184,12 +189,6 @@ class Input extends Tag
 
     public function getPostValue()
     {
-        $name = $this->name;
-
-        if($this->form->repeat) {
-            $name = str_replace('[]', '', $name);
-        }
-
         return $this->form->post[$this->name]?? null;
     }
 

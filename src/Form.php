@@ -87,6 +87,18 @@ class Form
 
             $result = $input->validation();
 
+            if($this->repeat) {
+                foreach ($result as $i => $v) {
+                    if(!isset($values[$i])) {
+                        $values[$i] = [];
+                    }
+
+                    $values[$i][$key] = $v;
+                }
+
+                continue;
+            }
+
             if($result !== null) {
                 $values[$key] = $result;
             }
@@ -108,6 +120,10 @@ class Form
 
         if (isset($this->inputs[$key])) {
             throw new \Exception("Key $key already in use.");
+        }
+
+        if($this->repeat) {
+            $key = str_replace('[]', '', $key);
         }
 
         $this->inputs[$key] = $object;

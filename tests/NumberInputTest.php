@@ -31,6 +31,6 @@ class NumberInputTest extends TestCase
 
         $values = $form->validation();
 
-        $this->assertEquals([1234, 0], $values['test']);
+        $this->assertEquals([['test' => 1234], ['test' => 0]], $values);
     }
 }
