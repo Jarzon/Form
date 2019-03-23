@@ -31,7 +31,15 @@ class SelectInput extends ListBasedInput
         foreach($this->values as $index => $attrValue) {
             $attr = ['value' => $attrValue];
 
-            if($this->getSelected() === $attrValue) {
+            $selectedValue = $this->getSelected();
+
+            if(is_integer($attrValue)) {
+                $selectedValue = (int)$selectedValue;
+            } else if (is_float($attrValue)) {
+                $selectedValue = (float)$selectedValue;
+            }
+
+            if($selectedValue === $attrValue) {
                 $attr['selected'] = null;
             }
 
