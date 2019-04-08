@@ -39,7 +39,7 @@ class RadioInput extends ListBasedInput
         $output = [];
 
         foreach ($this->getHtml() as $radio) {
-            $output[] = $this->generateTag('label', [], $radio['label'].$radio['html']);
+            $output[] = $radio['html'] . $this->generateTag('label', [], $radio['label']);
         }
 
         return implode('', $output);
