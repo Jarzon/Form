@@ -6,6 +6,7 @@ use Jarzon\ListBasedInput;
 class SelectInput extends ListBasedInput
 {
     protected $selected = '';
+    protected $groups = [];
 
     public function __construct(string $name, $form)
     {
@@ -24,28 +25,50 @@ class SelectInput extends ListBasedInput
         }
     }
 
+    public function group(string $name, array $options)
+    {
+        $this->groups[$name] = $options;
+    }
+
     public function generateHtml()
     {
         $content = '';
 
-        foreach($this->values as $index => $attrValue) {
-            $attr = ['value' => $attrValue];
+        foreach($this->values as $name => $attrValue) {
+            $content .= $this->generateOption($name, $attrValue);
+        }
 
-            $selectedValue = $this->getSelected();
+        if(!empty($this->groups)) {
+            foreach($this->groups as $groupName => $options) {
+                $groupContent = '';
 
-            if(is_integer($attrValue)) {
-                $selectedValue = (int)$selectedValue;
-            } else if (is_float($attrValue)) {
-                $selectedValue = (float)$selectedValue;
+                foreach($options as $name => $option) {
+                    $groupContent .= $this->generateOption($name, $option);
+                }
+
+                $content .= $this->generateTag('optgroup', ['label' => $groupName], $groupContent);
             }
-
-            if($selectedValue === $attrValue) {
-                $attr['selected'] = null;
-            }
-
-            $content .= $this->generateTag('option', $attr, $index);
         }
 
         $this->setHtml($this->generateTag($this->tag, $this->attributes, $content));
+    }
+
+    public function generateOption($name, $value)
+    {
+        $attr = ['value' => $value];
+
+        $selectedValue = $this->getSelected();
+
+        if(is_integer($value)) {
+            $selectedValue = (int)$selectedValue;
+        } else if (is_float($value)) {
+            $selectedValue = (float)$selectedValue;
+        }
+
+        if($selectedValue === $value) {
+            $attr['selected'] = null;
+        }
+
+        return $this->generateTag('option', $attr, $name);
     }
 }

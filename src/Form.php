@@ -461,4 +461,11 @@ class Form
 
         return $this;
     }
+
+    public function group(string $name, array $values)
+    {
+        $this->lastRow->group($name, $values);
+
+        return $this;
+    }
 }
