@@ -151,4 +151,36 @@ class TextInputTest extends TestCase
 
         $this->assertEquals([['test' => '1234'], ['test' => 'NaN']], $values);
     }
+
+    public function shouldNotReturnValueWhenItsTheSameAsUpdateValues()
+    {
+        $forms = new Form(['test' => 'good']);
+
+        $forms
+            ->text('test')
+            ->value('wrong')
+            ->min(4)
+            ->max(10);
+
+        $forms->updateValues(['test' => 'good']);
+
+        $values = $forms->validation();
+
+        $this->assertEquals([], $values);
+    }
+
+    public function shouldReturnValueWhenItsTheSameAsDefaultValue()
+    {
+        $forms = new Form(['test' => 'test']);
+
+        $forms
+            ->text('test')
+            ->value('wrong')
+            ->min(4)
+            ->max(10);
+
+        $values = $forms->validation();
+
+        $this->assertEquals(['test' => 'test'], $values);
+    }
 }

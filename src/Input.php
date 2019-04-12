@@ -180,7 +180,7 @@ class Input extends Tag
     {
         $updated = false;
 
-        if($value !== $this->value) {
+        if($value !== $this->value || ($this->value !== null && !$this->form->update)) {
             $updated = true;
         }
 
