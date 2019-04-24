@@ -322,14 +322,21 @@ class Form
 
     public function method(string $method)
     {
-        $this->getInput('form')->setAttribute('method', $method);
+        $this->getInput('form')->method($method);
 
         return $this;
     }
 
     public function action(string $url)
     {
-        $this->getInput('form')->setAttribute('action', $url);
+        $this->getInput('form')->action($url);
+
+        return $this;
+    }
+
+    public function target(string $target)
+    {
+        $this->getInput('form')->target($target);
 
         return $this;
     }

@@ -20,4 +20,14 @@ class FormTag extends Tag
     {
         $this->setAttribute('method', $method);
     }
+
+    public function action(string $url)
+    {
+        $this->setAttribute('action', $url);
+    }
+
+    public function target(string $target)
+    {
+        $this->setAttribute('target', $target);
+    }
 }
