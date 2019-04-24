@@ -18,6 +18,8 @@ class Input extends Tag
 
     protected $pattern = null;
 
+    protected $isLabelGenerated = false;
+
     public function __construct(string $name, $form)
     {
         $this->form = $form;
@@ -92,6 +94,8 @@ class Input extends Tag
             $this->labelHtml = $this->generateTag('label', ['for' => $this->name], $this->label);
         }
 
+        $this->isLabelGenerated = true;
+
         return $label;
     }
 
@@ -102,7 +106,7 @@ class Input extends Tag
 
     public function getLabel()
     {
-        $this->generateLabel();
+        if(!$this->isLabelGenerated()) $this->generateLabel();
         return $this->labelHtml;
     }
 
@@ -114,7 +118,19 @@ class Input extends Tag
 
         $this->label = $label;
 
+        $this->resetIsLabelGenerated();
+
         return $this;
+    }
+
+    public function isLabelGenerated()
+    {
+        return $this->isLabelGenerated;
+    }
+
+    public function resetIsLabelGenerated()
+    {
+        $this->isLabelGenerated = false;
     }
 
     public function value($value = '')

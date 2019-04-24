@@ -25,7 +25,7 @@ class CheckboxInput extends ListBasedInput
             $this->deleteAttribute('checked');
         }
 
-        $this->selected = $selected;
+        parent::selected($selected);
 
         return $this;
     }

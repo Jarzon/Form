@@ -7,6 +7,8 @@ class Tag
     protected $attributes = [];
     protected $html = null;
 
+    protected $isHtmlGenerated = false;
+
     public function __get($name)
     {
         if($name === 'html' || $name === 'row') {
@@ -43,11 +45,13 @@ class Tag
     public function generateHtml()
     {
         $this->setHtml($this->generateTag($this->tag, $this->attributes));
+        $this->isHtmlGenerated = true;
     }
 
     public function setAttribute(string $name, $value = null)
     {
         $this->attributes[$name] = $value;
+        $this->resetIsHtmlGenerated();
     }
 
     public function getAttribute(string $name)
@@ -70,12 +74,22 @@ class Tag
 
     public function getHtml()
     {
-        $this->generateHtml();
+        if(!$this->isHtmlGenerated()) $this->generateHtml();
         return $this->html;
     }
 
     public function setHtml($html)
     {
         $this->html = $html;
+    }
+
+    public function isHtmlGenerated()
+    {
+        return $this->isHtmlGenerated;
+    }
+
+    public function resetIsHtmlGenerated()
+    {
+        $this->isHtmlGenerated = false;
     }
 }

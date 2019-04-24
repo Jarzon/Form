@@ -45,7 +45,7 @@ class FormTagTest extends TestCase
         $form = new Form(['test' => 'a']);
 
         $form
-            ->target('/targetPage.php')
+            ->target('_self')
 
             ->textarea('test')
             ->min(0)

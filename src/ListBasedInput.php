@@ -20,6 +20,8 @@ class ListBasedInput extends Input
     public function selected($selected)
     {
         $this->selected = $selected;
+
+        $this->resetIsHtmlGenerated();
     }
 
     public function getSelected()
