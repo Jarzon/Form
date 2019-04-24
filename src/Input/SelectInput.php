@@ -14,17 +14,6 @@ class SelectInput extends ListBasedInput
         $this->setTag('select');
     }
 
-    public function __get($name)
-    {
-        $return = parent::__get($name);
-        if($return) {
-            return $return;
-        }
-        else if($name === 'values') {
-            return $this->values;
-        }
-    }
-
     public function group(string $name, array $options)
     {
         $this->groups[$name] = $options;

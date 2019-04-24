@@ -30,17 +30,9 @@ class Input extends Tag
 
     public function __get($name)
     {
-        if($name === 'label') {
-            return $this->getLabel();
-        }
-        else if($name === 'html') {
-            return $this->getHtml();
-        }
-        else if($name === 'row') {
-            return $this->getRow();
-        }
-        else if($name === 'value') {
-            return $this->getValue();
+        $method = 'get' . ucfirst($name);
+        if(method_exists($this, $method)) {
+            return $this->$method();
         }
     }
 

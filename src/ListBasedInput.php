@@ -6,17 +6,6 @@ class ListBasedInput extends Input
     protected $values = [];
     protected $selected = [];
 
-    public function __get($name)
-    {
-        $return = parent::__get($name);
-        if($return) {
-            return $return;
-        }
-        else if($name === 'selected') {
-            return $this->getSelected();
-        }
-    }
-
     public function selected($selected)
     {
         $this->selected = $selected;

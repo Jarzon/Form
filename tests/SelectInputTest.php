@@ -21,6 +21,11 @@ class SelectInputTest extends TestCase
             '<select name="test"><option value="test" selected>test</option></select>',
             $form->getInput('test')->html
         );
+
+        $this->assertEquals(
+            'test',
+            $form->getInput('test')->selected
+        );
     }
 
     public function testValueEmptyString()
