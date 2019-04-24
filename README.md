@@ -8,6 +8,7 @@ composer require jarzon/form
 
 ## Usage
 
+Build the form
 ```php
 <?php
 $form = new Jarzon\Form($_POST);
@@ -17,6 +18,7 @@ $form
   ->text('name')
   ->min(2)
   ->max(100)
+  ->required()
   ->placeholder('Joe Doe')
 
   ->number('age')
@@ -24,16 +26,10 @@ $form
   ->max(100)
   
   ->submit();
+```
 
-
-// List all the inputs in the view
-foreach ($form->getForms() as $i):?>
-    <?=$i->row?>
-<?php endforeach;
-
-// Or build the form manually
-?>
-
+Show the form in the view
+```php
 <?=$form('form')->html?>
 
     <div><?=$form('name')->label('Name:')->row?></div>
@@ -43,21 +39,23 @@ foreach ($form->getForms() as $i):?>
     <?=$form('submit')->value('Save')->html?>
 
 <?=$form('/form')->html?>
+```
 
+Process the form values
+```php
 <?php
-// You can also use static method like so
-$form->getInput('name')->getRow();
-
 // On submit validate the form values
 if($form->submitted()) {
     try {
-        // Does the inputs validation based on their types
+        // Does the validation based on the inputs types, min/max, required
         if($values = $form->validation()) {
-            // Do what you want with values
+            // Do what you want with the returned values
+            echo "Your name is {$values['name']}";
         }
     }
-    catch (Exception $e) {
-        // ->validation() throw Exception if the is invalid values
+    catch (\Jarzon\Form\ValidationException $e) {
+        // ->validation() throw a custom Exception if there is an invalid value
+        echo "Error: {$e->getMessage()}";
     }
 }
 ```
