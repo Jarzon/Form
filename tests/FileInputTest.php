@@ -33,13 +33,13 @@ class FileInputTest extends TestCase
      */
     public function testFileFormMissingEnctype()
     {
-        $forms = new Form(['test' => 's'], []);
+        $form = new Form(['test' => 's'], []);
 
-        $forms
+        $form
             ->file('test', '/')
             ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->validation();
+        $form->validation();
     }
 
     /**
@@ -48,7 +48,7 @@ class FileInputTest extends TestCase
      */
     public function testFileEmptyRequired()
     {
-        $forms = new Form([], ['test' => [
+        $form = new Form([], ['test' => [
             'name' => '',
             'type' => '',
             'tmp_name' => '',
@@ -56,17 +56,17 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ]]);
 
-        $forms
+        $form
             ->file('test', '/')
             ->accept(['.jpg', '.jpeg'])
             ->required();
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testFileEmpty()
     {
-        $forms = new Form([], ['test' => [
+        $form = new Form([], ['test' => [
             'name' => '',
             'type' => '',
             'tmp_name' => '',
@@ -74,11 +74,11 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE,
         ]]);
 
-        $forms
+        $form
             ->file('test', '/')
             ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals([], $values);
     }
@@ -87,7 +87,7 @@ class FileInputTest extends TestCase
     {
         file_put_contents(__DIR__.'/files/da39a3ee5e6b4b0d3255bfef95601890afd80709', '');
 
-        $forms = new Form([], ['test' => [
+        $form = new Form([], ['test' => [
             'name' => 'test',
             'type' => 'jpg',
             'tmp_name' => __DIR__.'/files/da39a3ee5e6b4b0d3255bfef95601890afd80709',
@@ -95,11 +95,11 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ]]);
 
-        $forms
+        $form
             ->file('test', __DIR__.'/files/dest')
             ->accept(['.jpg', '.jpeg']);
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals([
             'test' => [
@@ -116,7 +116,7 @@ class FileInputTest extends TestCase
 
     public function testFileValue()
     {
-        $forms = new Form(['test' => 'test.txt'], ['test' => [
+        $form = new Form(['test' => 'test.txt'], ['test' => [
             'name' => 'test.txt',
             'type' => 'text',
             'tmp_name' => vfsStream::url('root/temp/test.txt'),
@@ -124,11 +124,11 @@ class FileInputTest extends TestCase
             'error' => UPLOAD_ERR_OK,
         ]]);
 
-        $forms
+        $form
             ->file('test', vfsStream::url('root/data'))
             ->accept(['.txt', '.text']);
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertTrue(file_exists('vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709'));
 
@@ -143,15 +143,16 @@ class FileInputTest extends TestCase
 
     public function testGetFormsFile()
     {
-        $forms = new Form([], []);
+        $form = new Form([], []);
 
-        $forms
+        $form
             ->file('test', '/')
             ->accept(['.jpg', '.jpeg'])
             ->multiple();
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="file" accept=".jpg, .jpeg" multiple>', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="file" accept=".jpg, .jpeg" multiple>',
+            $form->getInput('test')->html
+        );
     }
 }

@@ -10,13 +10,13 @@ class ColorInputTest extends TestCase
 {
     public function testGetFormsColor()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->color('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="color">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="color">',
+            $form->getInput('test')->html
+        );
     }
 }

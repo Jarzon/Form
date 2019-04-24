@@ -10,47 +10,49 @@ class SelectInputTest extends TestCase
 {
     public function testGetForms()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->select('test')
             ->value(['test' => 'test'])
             ->selected('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<select name="test"><option value="test" selected>test</option></select>', $content['test']->html);
+        $this->assertEquals(
+            '<select name="test"><option value="test" selected>test</option></select>',
+            $form->getInput('test')->html
+        );
     }
 
     public function testValueEmptyString()
     {
-        $forms = new Form(['test' => '']);
+        $form = new Form(['test' => '']);
 
-        $forms
+        $form
             ->select('test')
             ->value(['empty string' => '', 'test2' => 'test']);
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals('', $values['test']);
     }
 
     public function testUpdateValues()
     {
-        $forms = new Form(['fruits' => 'oranges']);
+        $form = new Form(['fruits' => 'oranges']);
 
-        $forms
+        $form
             ->select('fruits')
             ->value(['apples' => 'apples', 'oranges' => 'oranges']);
 
-        $content = $forms->getForms();
+        $this->assertEquals(
+            '<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>',
+            $form->getInput('fruits')->html
+        );
 
-        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>', $content['fruits']->html);
+        $form->validation();
 
-        $forms->validation();
-
-        $content = $forms->getForms();
-
-        $this->assertEquals('<select name="fruits"><option value="apples">apples</option><option value="oranges" selected>oranges</option></select>', $content['fruits']->html);
+        $this->assertEquals(
+            '<select name="fruits"><option value="apples">apples</option><option value="oranges" selected>oranges</option></select>',
+            $form->getInput('fruits')->html);
     }
 }

@@ -10,12 +10,12 @@ class TimeInputTest extends TestCase
 {
     public function testValidTime()
     {
-        $forms = new Form(['test' => '22:00']);
+        $form = new Form(['test' => '22:00']);
 
-        $forms
+        $form
             ->time('test');
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals(['test' => '22:00'], $values);
     }
@@ -26,23 +26,24 @@ class TimeInputTest extends TestCase
      */
     public function testInvalidTime()
     {
-        $forms = new Form(['test' => '00h00']);
+        $form = new Form(['test' => '00h00']);
 
-        $forms
+        $form
             ->time('test')
             ->pattern();
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testGetFormsTime() {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->time('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="time">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="time">',
+            $form->getInput('test')->html
+        );
     }
 }

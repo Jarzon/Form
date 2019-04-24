@@ -14,26 +14,26 @@ class EmailInputTest extends TestCase
      */
     public function testInvalidEmail()
     {
-        $forms = new Form(['test' => 'asdf']);
+        $form = new Form(['test' => 'asdf']);
 
-        $forms
+        $form
             ->email('test');
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testGetFormsEmail()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->email('test')
             ->min(4)
             ->max(10);
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">',
+            $form->getInput('test')->html
+        );
     }
 
     /**

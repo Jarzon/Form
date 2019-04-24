@@ -10,14 +10,14 @@ class NumberInputTest extends TestCase
 {
     public function testGetFormsNumber()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->number('test')
             ->min(4)
             ->max(10);
 
-        $content = $forms->getForms();
+        $content = $form->getForms();
 
         $this->assertEquals('<input name="test" type="number" step="1" min="4" max="10">', $content['test']->html);
     }

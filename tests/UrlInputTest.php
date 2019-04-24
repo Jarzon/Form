@@ -14,25 +14,26 @@ class UrlInputTest extends TestCase
      */
     public function testInvalidUrl()
     {
-        $forms = new Form(['test' => 'asdf']);
+        $form = new Form(['test' => 'asdf']);
 
-        $forms
+        $form
             ->url('test');
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testGetFormsUrl()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->url('test')
             ->min(4)
             ->max(10);
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="url" minlength="4" maxlength="10">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="url" minlength="4" maxlength="10">',
+            $form->getInput('test')->html
+        );
     }
 }

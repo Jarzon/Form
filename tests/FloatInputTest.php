@@ -10,16 +10,17 @@ class FloatInputTest extends TestCase
 {
     public function testGetFormsFloat()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->float('test')
             ->min(4)
             ->max(10);
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="number" step="0.01" min="4" max="10">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="number" step="0.01" min="4" max="10">',
+            $form->getInput('test')->html
+        );
     }
 
     public function testRepeated()

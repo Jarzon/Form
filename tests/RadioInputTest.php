@@ -14,45 +14,47 @@ class RadioInputTest extends TestCase
      */
     public function testRadioValueException()
     {
-        $forms = new Form(['test' => '123456789ab']);
+        $form = new Form(['test' => '123456789ab']);
 
-        $forms
+        $form
             ->radio('test')
             ->value(['test' => 'test']);
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testRadioValue()
     {
-        $forms = new Form(['test' => 'testy']);
+        $form = new Form(['test' => 'testy']);
 
-        $forms
+        $form
             ->radio('test')
             ->value(['test' => 'test', 'testy' => 'testy'])
             ->selected('test');
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals('testy', $values['test']);
     }
 
     public function testGetFormsRadio()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->radio('test')
             ->value(['test' => 'test']);
 
-        $content = $forms->getForms();
+        $this->assertEquals(
+            '<input name="test" type="radio" id="test_0" value="test">',
+            $form->getInput('test')->html[0]['html']
+        );
 
-        $this->assertEquals('<input name="test" type="radio" id="test_0" value="test">', $content['test']->html[0]['html']);
+        $form->selected('test');
 
-        $forms->selected('test');
-
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="radio" id="test_0" value="test" checked>', $content['test']->html[0]['html']);
+        $this->assertEquals(
+            '<input name="test" type="radio" id="test_0" value="test" checked>',
+            $form->getInput('test')->html[0]['html']
+        );
     }
 }

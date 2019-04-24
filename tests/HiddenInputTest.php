@@ -10,13 +10,11 @@ class HiddenInputTest extends TestCase
 {
     public function testGetFormsHidden()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->hidden('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="hidden">', $content['test']->html);
+        $this->assertEquals('<input name="test" type="hidden">', $form->getInput('test')->html);
     }
 }

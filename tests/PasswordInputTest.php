@@ -10,13 +10,14 @@ class PasswordInputTest extends TestCase
 {
     public function testGetFormsColor()
     {
-        $forms = new Form(['test' => 'df65g4651geg']);
+        $form = new Form(['test' => 'df65g4651geg']);
 
-        $forms
+        $form
             ->password('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="password">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="password">',
+            $form->getInput('test')->html
+        );
     }
 }

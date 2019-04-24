@@ -69,15 +69,17 @@ class CheckboxInputTest extends TestCase
             ->value('test')
             ->selected();
 
-        $content = $form->getForms();
-
-        $this->assertEquals('<input name="test" type="checkbox" value="test" checked>', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="checkbox" value="test" checked>',
+            $form->getInput('test')->html
+        );
 
         $form->validation();
 
-        $content = $form->getForms();
-
-        $this->assertEquals('<input name="test" type="checkbox" value="test">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="checkbox" value="test">',
+            $form->getInput('test')->html
+        );
     }
 
     public function testUpdateValues()
@@ -88,15 +90,17 @@ class CheckboxInputTest extends TestCase
             ->checkbox('fruits')
             ->value('apples');
 
-        $content = $form->getForms();
-
-        $this->assertEquals('<input name="fruits" type="checkbox" value="apples">', $content['fruits']->html);
+        $this->assertEquals(
+            '<input name="fruits" type="checkbox" value="apples">',
+            $form->getInput('fruits')->html
+        );
 
         $form->validation();
 
-        $content = $form->getForms();
-
-        $this->assertEquals('<input name="fruits" type="checkbox" value="apples" checked>', $content['fruits']->html);
+        $this->assertEquals(
+            '<input name="fruits" type="checkbox" value="apples" checked>',
+            $form->getInput('fruits')->html
+        );
     }
 
     public function testRepeated()

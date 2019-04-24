@@ -10,15 +10,16 @@ class RangeInputTest extends TestCase
 {
     public function testGetFormsRange()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->range('test')
             ->min(0)
             ->max(500);
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="range" min="0" max="500">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="range" min="0" max="500">',
+            $form->getInput('test')->html
+        );
     }
 }

@@ -10,9 +10,9 @@ class FormTest extends TestCase
 {
     public function testGetFormHtml()
     {
-        $forms = new Form([]);
+        $form = new Form([]);
 
-        $forms
+        $form
             ->text('username')
             ->min(4)
             ->max(10)
@@ -24,7 +24,7 @@ class FormTest extends TestCase
             ->submit()
             ->value('Save');
 
-        $tags = $forms->getForms();
+        $tags = $form->getForms();
 
         $output = '';
 
@@ -32,14 +32,17 @@ class FormTest extends TestCase
             $output .= $tag->html;
         }
 
-        $this->assertEquals('<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
+        $this->assertEquals(
+            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>',
+            $output
+        );
     }
 
     public function testInputRowAttribute()
     {
-        $forms = new Form([]);
+        $form = new Form([]);
 
-        $forms
+        $form
             ->text('username')
             ->min(4)
             ->max(10)
@@ -51,7 +54,7 @@ class FormTest extends TestCase
             ->submit()
             ->value('Save');
 
-        $tags = $forms->getForms();
+        $tags = $form->getForms();
 
         $output = '';
 
@@ -59,22 +62,25 @@ class FormTest extends TestCase
             $output .= $tag->row;
         }
 
-        $this->assertEquals('<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>', $output);
+        $this->assertEquals(
+            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>',
+            $output
+        );
     }
 
     public function testFormSubmited()
     {
-        $forms = new Form(['username' => 'Joe Doe', 'submit' => 'Save']);
+        $form = new Form(['username' => 'Joe Doe', 'submit' => 'Save']);
 
-        $forms
+        $form
             ->text('username')
             ->min(4)
             ->max(10)
 
             ->submit()->value('Save');
 
-        $tags = $forms->getForms();
+        $form->getForms();
 
-        $this->assertEquals(true, $forms->submitted());
+        $this->assertEquals(true, $form->submitted());
     }
 }

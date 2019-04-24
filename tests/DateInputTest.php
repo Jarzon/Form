@@ -10,12 +10,12 @@ class DateInputTest extends TestCase
 {
     public function testValidDate()
     {
-        $forms = new Form(['test' => '2014-12-04']);
+        $form = new Form(['test' => '2014-12-04']);
 
-        $forms
+        $form
             ->date('test');
 
-        $values = $forms->validation();
+        $values = $form->validation();
 
         $this->assertEquals(['test' => '2014-12-04'], $values);
     }
@@ -26,12 +26,12 @@ class DateInputTest extends TestCase
      */
     public function testInvalidDate()
     {
-        $forms = new Form(['test' => '0000-00-00']);
+        $form = new Form(['test' => '0000-00-00']);
 
-        $forms
+        $form
             ->date('test');
 
-        $forms->validation();
+        $form->validation();
     }
 
     /**
@@ -40,13 +40,13 @@ class DateInputTest extends TestCase
      */
     public function testMinDate()
     {
-        $forms = new Form(['test' => '1991-01-01']);
+        $form = new Form(['test' => '1991-01-01']);
 
-        $forms
+        $form
             ->date('test')
             ->min('2000-01-01');
 
-        $forms->validation();
+        $form->validation();
     }
 
     /**
@@ -55,37 +55,38 @@ class DateInputTest extends TestCase
      */
     public function testMaxDate()
     {
-        $forms = new Form(['test' => '2005-01-01']);
+        $form = new Form(['test' => '2005-01-01']);
 
-        $forms
+        $form
             ->date('test')
             ->max('2000-01-01');
 
-        $forms->validation();
+        $form->validation();
     }
 
     public function testDate()
     {
-        $forms = new Form(['test' => '2005-12-28']);
+        $form = new Form(['test' => '2005-12-28']);
 
-        $forms
+        $form
             ->date('test')
             ->min('2000-01-01')
             ->max('2010-01-01');
 
-        $result = $forms->validation();
+        $result = $form->validation();
 
         $this->assertEquals($result, ['test' => '2005-12-28']);
     }
 
     public function testGetFormsDate() {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->date('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="date">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="date">',
+            $form->getInput('test')->html
+        );
     }
 }

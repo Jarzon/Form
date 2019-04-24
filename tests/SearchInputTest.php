@@ -10,13 +10,14 @@ class SearchInputTest extends TestCase
 {
     public function testGetFormsSearch()
     {
-        $forms = new Form(['test' => 'a']);
+        $form = new Form(['test' => 'a']);
 
-        $forms
+        $form
             ->search('test');
 
-        $content = $forms->getForms();
-
-        $this->assertEquals('<input name="test" type="search">', $content['test']->html);
+        $this->assertEquals(
+            '<input name="test" type="search">',
+            $form->getInput('test')->html
+        );
     }
 }
