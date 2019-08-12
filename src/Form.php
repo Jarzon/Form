@@ -4,6 +4,7 @@ namespace Jarzon;
 use Jarzon\Input\{
     CheckboxInput,
     ColorInput,
+    CurrencyInput,
     DateInput,
     EmailInput,
     FileInput,
@@ -261,6 +262,13 @@ class Form
     public function float(string $name)
     {
         $this->addInput(new FloatInput($name, $this), $name);
+
+        return $this;
+    }
+
+    public function currency(string $name)
+    {
+        $this->addInput(new CurrencyInput($name, $this), $name);
 
         return $this;
     }
