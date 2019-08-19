@@ -140,6 +140,8 @@ class Form
         }
 
         unset($this->inputs[$key]);
+
+        return $this;
     }
 
     public function keyExists(string $key) : bool
