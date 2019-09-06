@@ -52,7 +52,7 @@ class Form
         return null;
     }
 
-    public function submitted() : bool
+    public function submitted(): bool
     {
         return array_key_exists('submit', $this->post);
     }
@@ -72,12 +72,12 @@ class Form
         }
     }
 
-    public function getForms() : array
+    public function getForms(): array
     {
         return $this->inputs;
     }
 
-    public function validation()
+    public function validation(): array
     {
         $values = [];
 
@@ -112,7 +112,7 @@ class Form
      * Collection methods
      */
 
-    protected function addInput(object $object, ?string $key = null, bool $lastRow = true)
+    protected function addInput(object $object, ?string $key = null, bool $lastRow = true): void
     {
         if ($key === null) {
             $this->inputs[] = $object;
@@ -132,7 +132,7 @@ class Form
         if($lastRow) $this->lastRow =& $this->inputs[$key];
     }
 
-    public function deleteInput(string $key)
+    public function deleteInput(string $key): Form
     {
         if (!isset($this->inputs[$key]))
         {
@@ -149,7 +149,7 @@ class Form
         return isset($this->inputs[$key]);
     }
 
-    public function getInput($key)
+    public function getInput($key): Tag
     {
         if (!isset($this->inputs[$key])) {
             throw new \Exception("Invalid key $key.");
@@ -158,12 +158,12 @@ class Form
         return $this->inputs[$key];
     }
 
-    public function keys() : array
+    public function keys(): array
     {
         return array_keys($this->inputs);
     }
 
-    public function length() : int
+    public function length(): int
     {
         return count($this->inputs);
     }
@@ -172,7 +172,7 @@ class Form
      * Input types
      */
 
-    public function submit(string $name = null)
+    public function submit(string $name = null): Form
     {
         if($name === null) {
             $name = 'submit';
@@ -191,133 +191,133 @@ class Form
         return $this;
     }
 
-    public function hidden(string $name)
+    public function hidden(string $name): Form
     {
         $this->addInput(new HiddenInput($name, $this), $name);
 
         return $this;
     }
 
-    public function text(string $name)
+    public function text(string $name): Form
     {
         $this->addInput(new TextInput($name, $this), $name);
 
         return $this;
     }
 
-    public function textarea(string $name)
+    public function textarea(string $name): Form
     {
         $this->addInput(new TextareaInput($name, $this), $name);
 
         return $this;
     }
 
-    public function password(string $name)
+    public function password(string $name): Form
     {
         $this->addInput(new PasswordInput($name, $this), $name);
 
         return $this;
     }
 
-    public function email(string $name)
+    public function email(string $name): Form
     {
         $this->addInput(new EmailInput($name, $this), $name);
 
         return $this;
     }
 
-    public function url(string $name)
+    public function url(string $name): Form
     {
         $this->addInput(new UrlInput($name, $this), $name);
 
         return $this;
     }
 
-    public function search(string $name)
+    public function search(string $name): Form
     {
         $this->addInput(new SearchInput($name, $this), $name);
 
         return $this;
     }
 
-    public function tel(string $name)
+    public function tel(string $name): Form
     {
         $this->addInput(new TelInput($name, $this), $name);
 
         return $this;
     }
 
-    public function color(string $name)
+    public function color(string $name): Form
     {
         $this->addInput(new ColorInput($name, $this), $name);
 
         return $this;
     }
 
-    public function number(string $name)
+    public function number(string $name): Form
     {
         $this->addInput(new NumberInput($name, $this), $name);
 
         return $this;
     }
 
-    public function float(string $name)
+    public function float(string $name): Form
     {
         $this->addInput(new FloatInput($name, $this), $name);
 
         return $this;
     }
 
-    public function currency(string $name)
+    public function currency(string $name): Form
     {
         $this->addInput(new CurrencyInput($name, $this), $name);
 
         return $this;
     }
 
-    public function range(string $name)
+    public function range(string $name): Form
     {
         $this->addInput(new RangeInput($name, $this), $name);
 
         return $this;
     }
 
-    public function date(string $name)
+    public function date(string $name): Form
     {
         $this->addInput(new DateInput($name, $this), $name);
 
         return $this;
     }
 
-    public function time(string $name)
+    public function time(string $name): Form
     {
         $this->addInput(new TimeInput($name, $this), $name);
 
         return $this;
     }
 
-    public function select(string $name)
+    public function select(string $name): Form
     {
         $this->addInput(new SelectInput($name, $this), $name);
 
         return $this;
     }
 
-    public function radio(string $name)
+    public function radio(string $name): Form
     {
         $this->addInput(new RadioInput($name, $this), $name);
 
         return $this;
     }
 
-    public function checkbox(string $name)
+    public function checkbox(string $name): Form
     {
         $this->addInput(new CheckboxInput($name, $this), $name);
 
         return $this;
     }
 
-    public function file(string $name, string $destination = '/tmp/', string $ext = '')
+    public function file(string $name, string $destination = '/tmp/', string $ext = ''): Form
     {
         $this->addInput(new FileInput($name, $this, $destination, $ext), $name);
 
@@ -330,133 +330,147 @@ class Form
      * Input attributes
      */
 
-    public function method(string $method)
+    public function method(string $method): Form
     {
         $this->getInput('form')->method($method);
 
         return $this;
     }
 
-    public function action(string $url)
+    public function action(string $url): Form
     {
         $this->getInput('form')->action($url);
 
         return $this;
     }
 
-    public function target(string $target)
+    public function target(string $target): Form
     {
         $this->getInput('form')->target($target);
 
         return $this;
     }
 
-    public function required(bool $required = true)
+    public function required(bool $required = true): Form
     {
         $this->lastRow->required($required);
 
         return $this;
     }
 
-    public function value($value = '')
+    public function value($value = ''): Form
     {
         $this->lastRow->value($value);
 
         return $this;
     }
 
-    public function class(?string $classes = null)
+    public function class(?string $classes = null): Form
     {
         $this->lastRow->class($classes);
 
         return $this;
     }
 
-    public function id(?string $id = null)
+    public function id(?string $id = null): Form
     {
         $this->lastRow->id($id);
 
         return $this;
     }
 
-    public function min(...$min)
+    public function min(...$min): Form
     {
         $this->lastRow->min(...$min);
 
         return $this;
     }
 
-    public function max(...$max)
+    public function max(...$max): Form
     {
         $this->lastRow->max(...$max);
 
         return $this;
     }
 
-    public function accept(array $types = [])
+    public function accept(array $types = []): Form
     {
         $this->lastRow->accept($types);
 
         return $this;
     }
 
-    public function selected($selected = true)
+    public function selected($selected = true): Form
     {
         $this->lastRow->selected($selected);
 
         return $this;
     }
 
-    public function multiple(bool $multiple = true)
+    public function disabled($disabled = true): Form
+    {
+        $this->lastRow->disabled($disabled);
+
+        return $this;
+    }
+
+    public function readonly($readonly = true): Form
+    {
+        $this->lastRow->readonly($readonly);
+
+        return $this;
+    }
+
+    public function multiple(bool $multiple = true): Form
     {
         $this->lastRow->multiple($multiple);
 
         return $this;
     }
 
-    public function pattern(?string $pattern = null, ?string $message = null)
+    public function pattern(?string $pattern = null, ?string $message = null): Form
     {
         $this->lastRow->pattern($pattern, $message);
 
         return $this;
     }
 
-    public function placeholder(?string $placeholder = null)
+    public function placeholder(?string $placeholder = null): Form
     {
         $this->lastRow->placeholder($placeholder);
 
         return $this;
     }
 
-    public function spellcheck(?bool $placeholder = null)
+    public function spellcheck(?bool $placeholder = null): Form
     {
         $this->lastRow->spellcheck($placeholder);
 
         return $this;
     }
 
-    public function autocomplete(?string $value = null)
+    public function autocomplete(?string $value = null): Form
     {
         $this->lastRow->autocomplete($value);
 
         return $this;
     }
 
-    public function tabindex(?int $index = null)
+    public function tabindex(?int $index = null): Form
     {
         $this->lastRow->tabindex($index);
 
         return $this;
     }
 
-    public function label($label = null)
+    public function label($label = null): Form
     {
         $this->lastRow->label($label);
 
         return $this;
     }
 
-    public function attributes($attributes = [])
+    public function attributes($attributes = []): Form
     {
         foreach ($attributes as $name => $value) {
             $this->lastRow->setAttribute($name, $value);
@@ -465,21 +479,21 @@ class Form
         return $this;
     }
 
-    public function deleteAttribute($attribute)
+    public function deleteAttribute($attribute): Form
     {
         $this->lastRow->deleteAttribute($attribute);
 
         return $this;
     }
 
-    public function repeat()
+    public function repeat(): Form
     {
         $this->repeat = true;
 
         return $this;
     }
 
-    public function group(string $name, array $values)
+    public function group(string $name, array $values): Form
     {
         $this->lastRow->group($name, $values);
 

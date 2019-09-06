@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\TextBasedInput;
 
 class TimeInput extends TextBasedInput
@@ -11,7 +12,7 @@ class TimeInput extends TextBasedInput
         $this->setAttribute('type', 'time');
     }
 
-    public function pattern(?string $pattern = null)
+    public function pattern(?string $pattern = null): Input
     {
         if($pattern === null) {
             $pattern = '[0-9]{2}:[0-9]{2}';
@@ -20,6 +21,8 @@ class TimeInput extends TextBasedInput
         $this->pattern = $pattern;
 
         $this->setAttribute('pattern', $pattern);
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

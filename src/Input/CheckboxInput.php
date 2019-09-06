@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\ListBasedInput;
 
 class CheckboxInput extends ListBasedInput
@@ -11,11 +12,13 @@ class CheckboxInput extends ListBasedInput
         $this->setAttribute('type', 'checkbox');
     }
 
-    public function value($value = '')
+    public function value($value = ''): Input
     {
         $this->value = $value;
 
         $this->setAttribute('value', $value);
+
+        return $this;
     }
 
     public function selected($selected = true) {

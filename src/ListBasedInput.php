@@ -18,13 +18,15 @@ class ListBasedInput extends Input
         return $this->selected;
     }
 
-    public function value($values = [])
+    public function value($values = []): Input
     {
         if(is_array($values)) {
             $this->values = $values;
         } else {
             $this->selected($values);
         }
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

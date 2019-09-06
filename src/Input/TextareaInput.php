@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\TextBasedInput;
 
 class TextareaInput extends TextBasedInput
@@ -11,7 +12,7 @@ class TextareaInput extends TextBasedInput
         $this->setTag('textarea');
     }
 
-    public function value($value = '')
+    public function value($value = ''): Input
     {
         $this->value = $value;
 

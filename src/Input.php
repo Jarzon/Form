@@ -10,6 +10,8 @@ class Input extends Tag
     protected $value = null;
     protected $label = null;
     protected $isRequired = false;
+    protected $isDisabled = false;
+    protected $isReadonly = false;
     protected $labelHtml = null;
     public $class = null;
 
@@ -47,7 +49,7 @@ class Input extends Tag
         $this->name = $name;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -57,7 +59,7 @@ class Input extends Tag
         return $this->value;
     }
 
-    public function class(?string $classes = null)
+    public function class(?string $classes = null): Input
     {
         if($classes === null) {
             $classes = $this->name;
@@ -70,7 +72,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function id(?string $id = null)
+    public function id(?string $id = null): Input
     {
         if($id === null) $id = $this->name;
 
@@ -79,7 +81,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function generateLabel()
+    public function generateLabel(): string
     {
         $label = '';
         if($this->label !== null) {
@@ -102,7 +104,7 @@ class Input extends Tag
         return $this->labelHtml;
     }
 
-    public function label($label = null)
+    public function label($label = null): Input
     {
         if($label !== null) {
             $this->id();
@@ -115,17 +117,17 @@ class Input extends Tag
         return $this;
     }
 
-    public function isLabelGenerated()
+    public function isLabelGenerated(): bool
     {
         return $this->isLabelGenerated;
     }
 
-    public function resetIsLabelGenerated()
+    public function resetIsLabelGenerated(): void
     {
         $this->isLabelGenerated = false;
     }
 
-    public function value($value = '')
+    public function value($value = ''): Input
     {
         $this->value = $value;
 
@@ -134,35 +136,35 @@ class Input extends Tag
         return $this;
     }
 
-    public function placeholder(?string $placeholder = null)
+    public function placeholder(?string $placeholder = null): Input
     {
         $this->setAttribute('placeholder', $placeholder);
 
         return $this;
     }
 
-    public function spellcheck(?bool $placeholder = null)
+    public function spellcheck(?bool $placeholder = null): Input
     {
         $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
 
         return $this;
     }
 
-    public function autocomplete(?string $value = null)
+    public function autocomplete(?string $value = null): Input
     {
         $this->setAttribute('autocomplete', $value);
 
         return $this;
     }
 
-    public function tabindex(?int $index = null)
+    public function tabindex(?int $index = null): Input
     {
         $this->setAttribute('tabindex', $index);
 
         return $this;
     }
 
-    public function pattern(?string $pattern = null)
+    public function pattern(?string $pattern = null): Input
     {
         $this->pattern = $pattern;
 
@@ -171,10 +173,44 @@ class Input extends Tag
         return $this;
     }
 
-    public function required(bool $required = true)
+    public function required(bool $required = true): Input
     {
-        $this->setAttribute('required', null);
-        $this->isRequired = true;
+        if($required && !$this->isRequired) {
+            $this->setAttribute('required', null);
+        }
+        else if(!$required && $this->isRequired) {
+            $this->deleteAttribute('required');
+        }
+
+        $this->isRequired = $required;
+
+        return $this;
+    }
+
+    public function disabled(bool $disabled = true): Input
+    {
+        if($disabled && !$this->isDisabled) {
+            $this->setAttribute('required', null);
+        }
+        else if(!$disabled && $this->isDisabled) {
+            $this->deleteAttribute('required');
+        }
+
+        $this->isDisabled = $disabled;
+
+        return $this;
+    }
+
+    public function readonly(bool $readonly = true): Input
+    {
+        if($readonly && !$this->isReadonly) {
+            $this->setAttribute('required', null);
+        }
+        else if(!$readonly && $this->isReadonly) {
+            $this->deleteAttribute('required');
+        }
+
+        $this->isReadonly = $readonly;
 
         return $this;
     }

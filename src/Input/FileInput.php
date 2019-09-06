@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\TextBasedInput;
 
 class FileInput extends TextBasedInput
@@ -37,7 +38,8 @@ class FileInput extends TextBasedInput
         return $this;
     }
 
-    public function value($value = '') {
+    public function value($value = ''): Input
+    {
         $this->value = $value;
 
         return $this;
