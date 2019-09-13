@@ -190,10 +190,10 @@ class Input extends Tag
     public function disabled(bool $disabled = true): Input
     {
         if($disabled && !$this->isDisabled) {
-            $this->setAttribute('required', null);
+            $this->setAttribute('disabled', null);
         }
         else if(!$disabled && $this->isDisabled) {
-            $this->deleteAttribute('required');
+            $this->deleteAttribute('disabled');
         }
 
         $this->isDisabled = $disabled;
@@ -204,10 +204,10 @@ class Input extends Tag
     public function readonly(bool $readonly = true): Input
     {
         if($readonly && !$this->isReadonly) {
-            $this->setAttribute('required', null);
+            $this->setAttribute('readonly', null);
         }
         else if(!$readonly && $this->isReadonly) {
-            $this->deleteAttribute('required');
+            $this->deleteAttribute('readonly');
         }
 
         $this->isReadonly = $readonly;

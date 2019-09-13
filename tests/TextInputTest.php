@@ -153,6 +153,34 @@ class TextInputTest extends TestCase
         $this->assertEquals([['test' => '1234'], ['test' => 'NaN']], $values);
     }
 
+    public function testDisabled()
+    {
+        $form = new Form(['test' => ['1234', 'NaN']]);
+
+        $form
+            ->text('test')
+            ->disabled();
+
+        $this->assertEquals(
+            '<input name="test" type="text" disabled>',
+            $form->getInput('test')->html
+        );
+    }
+
+    public function testReadonly()
+    {
+        $form = new Form(['test' => ['1234', 'NaN']]);
+
+        $form
+            ->text('test')
+            ->readonly();
+
+        $this->assertEquals(
+            '<input name="test" type="text" readonly>',
+            $form->getInput('test')->html
+        );
+    }
+
     public function shouldNotReturnValueWhenItsTheSameAsUpdateValues()
     {
         $form = new Form(['test' => 'good']);
