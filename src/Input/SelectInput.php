@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\ListBasedInput;
 
 class SelectInput extends ListBasedInput
@@ -59,5 +60,22 @@ class SelectInput extends ListBasedInput
         }
 
         return $this->generateTag('option', $attr, $name);
+    }
+
+    public function isUpdated($value): bool
+    {
+        return $value != $this->selected || ($this->value !== null && !$this->form->update);
+    }
+
+    public function value($values = []): Input
+    {
+        if(is_array($values)) {
+            $this->selected = $values[array_key_first($values)];
+            $this->values = $values;
+        } else {
+            $this->selected($values);
+        }
+
+        return $this;
     }
 }

@@ -34,11 +34,24 @@ class SelectInputTest extends TestCase
 
         $form
             ->select('test')
-            ->value(['empty string' => '', 'test2' => 'test']);
+            ->value(['test2' => 'test', 'empty string' => '']);
 
         $values = $form->validation();
 
         $this->assertEquals('', $values['test']);
+    }
+
+    public function testFirstValueIsSelected()
+    {
+        $form = new Form(['test' => 'test']);
+
+        $form
+            ->select('test')
+            ->value(['test2' => 'test', 'empty string' => '']);
+
+        $values = $form->validation();
+
+        $this->assertEquals(0, count($values));
     }
 
     public function testUpdateValues()
@@ -50,7 +63,7 @@ class SelectInputTest extends TestCase
             ->value(['apples' => 'apples', 'oranges' => 'oranges']);
 
         $this->assertEquals(
-            '<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>',
+            '<select name="fruits"><option value="apples" selected>apples</option><option value="oranges">oranges</option></select>',
             $form->getInput('fruits')->html
         );
 
