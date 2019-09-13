@@ -181,7 +181,7 @@ class TextInputTest extends TestCase
         );
     }
 
-    public function shouldNotReturnValueWhenItsTheSameAsUpdateValues()
+    public function testShouldNotValueWhenSameAsUpdateValues()
     {
         $form = new Form(['test' => 'good']);
 
@@ -198,7 +198,7 @@ class TextInputTest extends TestCase
         $this->assertEquals([], $values);
     }
 
-    public function shouldReturnValueWhenItsTheSameAsDefaultValue()
+    public function testShouldReturnSameAsDefaultValue()
     {
         $form = new Form(['test' => 'test']);
 
@@ -211,5 +211,17 @@ class TextInputTest extends TestCase
         $values = $form->validation();
 
         $this->assertEquals(['test' => 'test'], $values);
+    }
+
+    public function testShouldNotReturnEmptyString()
+    {
+        $form = new Form(['test' => '']);
+
+        $form
+            ->text('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals([], $values);
     }
 }

@@ -220,15 +220,9 @@ class Input extends Tag
         return true;
     }
 
-    public function isUpdated($value) : bool
+    public function isUpdated($value): bool
     {
-        $updated = false;
-
-        if($value !== $this->value || ($this->value !== null && !$this->form->update)) {
-            $updated = true;
-        }
-
-        return $updated;
+        return $value != $this->value || ($this->value !== null && !$this->form->update);
     }
 
     public function getPostValue()
