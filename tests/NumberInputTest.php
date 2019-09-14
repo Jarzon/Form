@@ -33,4 +33,28 @@ class NumberInputTest extends TestCase
 
         $this->assertEquals([['test' => 1234], ['test' => 0]], $values);
     }
+
+    public function testIsUpdated()
+    {
+        $form = new Form(['test' => '10']);
+
+        $form
+            ->number('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals(['test' => '10'], $values);
+    }
+
+    public function testIsNotUpdated()
+    {
+        $form = new Form(['test' => '0']);
+
+        $form
+            ->number('test');
+
+        $values = $form->validation();
+
+        $this->assertEquals([], $values);
+    }
 }

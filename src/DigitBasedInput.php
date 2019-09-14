@@ -3,6 +3,8 @@ namespace Jarzon;
 
 class DigitBasedInput extends Input
 {
+    protected $value = 0;
+
     public function min(int $min = PHP_INT_MAX)
     {
         $this->setAttribute('min', $min);
@@ -27,5 +29,12 @@ class DigitBasedInput extends Input
         }
 
         return true;
+    }
+
+    public function isUpdated($value): bool
+    {
+        $value = (int)$value;
+
+        return $value !== $this->value || ($this->value !== 0 && !$this->form->update);
     }
 }

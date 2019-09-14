@@ -24,6 +24,7 @@ class FloatInput extends DigitBasedInput
             return $value;
         }
 
-        return (float)$value;
+        if($value !== null) return (float)$value;
+        else return null;
     }
 }

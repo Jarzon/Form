@@ -24,6 +24,7 @@ class NumberInput extends DigitBasedInput
             return $value;
         }
 
-        return (int)$value;
+        if($value !== null) return (int)$value;
+        else return null;
     }
 }
