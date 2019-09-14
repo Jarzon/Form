@@ -47,7 +47,8 @@ class SelectInputTest extends TestCase
 
         $form
             ->select('test')
-            ->value(['test2' => 'test', 'empty string' => '']);
+            ->value(['test2' => 'test', 'empty string' => ''])
+            ->selected('test');
 
         $values = $form->validation();
 
@@ -63,7 +64,7 @@ class SelectInputTest extends TestCase
             ->value(['apples' => 'apples', 'oranges' => 'oranges']);
 
         $this->assertEquals(
-            '<select name="fruits"><option value="apples" selected>apples</option><option value="oranges">oranges</option></select>',
+            '<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>',
             $form->getInput('fruits')->html
         );
 

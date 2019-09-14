@@ -6,7 +6,7 @@ use Jarzon\ListBasedInput;
 
 class SelectInput extends ListBasedInput
 {
-    protected $selected = '';
+    protected $selected = null;
     protected $groups = [];
 
     public function __construct(string $name, $form)
@@ -64,13 +64,12 @@ class SelectInput extends ListBasedInput
 
     public function isUpdated($value): bool
     {
-        return $value != $this->selected || ($this->value !== null && !$this->form->update);
+        return $value !== $this->selected || ($this->value !== null && !$this->form->update);
     }
 
     public function value($values = []): Input
     {
         if(is_array($values)) {
-            $this->selected = $values[array_key_first($values)];
             $this->values = $values;
         } else {
             $this->selected($values);
