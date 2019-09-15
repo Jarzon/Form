@@ -16,6 +16,11 @@ class FormTag extends Tag
         $this->setTag($tag);
     }
 
+    public function id(string $id)
+    {
+        $this->setAttribute('id', $id);
+    }
+
     public function method(string $method)
     {
         $this->setAttribute('method', $method);
