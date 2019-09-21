@@ -27,6 +27,7 @@ use Jarzon\Input\{
 class Form
 {
     protected $inputs = [];
+    protected $submitName = '';
     public $post = [];
     public $files = [];
     public $update = false;
@@ -52,9 +53,9 @@ class Form
         return null;
     }
 
-    public function submitted(): bool
+    public function submitted(string $name = null): bool
     {
-        return array_key_exists('submit', $this->post);
+        return array_key_exists($name ?? $this->submitName, $this->post);
     }
 
     public function updateValues($values = [])
@@ -184,9 +185,11 @@ class Form
 
         $this->addInput(new SubmitInput($name), 'submit');
 
-        if($this->keyExists('form')) {
+        if($this->keyExists('form') && !$this->keyExists('/form')) {
             $this->addInput(new FormTag(true), '/form', false);
         }
+
+        $this->submitName = $name;
 
         return $this;
     }
