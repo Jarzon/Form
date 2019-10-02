@@ -5,7 +5,7 @@ abstract class FormAbstract
 {
     protected $form;
 
-    public function __construct(array $form)
+    public function __construct()
     {
         $this->form = new Form($_POST, $_FILES);
     }
