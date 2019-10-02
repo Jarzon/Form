@@ -68,7 +68,12 @@ class Form
 
         foreach ($values as $name => $value) {
             if($this->keyExists($name)) {
-                $this->getInput($name)->value($value);
+                $input = $this->getInput($name);
+                if($input instanceof CheckboxInput) {
+                    $input->selected($value);
+                } else {
+                    $input->value($value);
+                }
             }
         }
     }

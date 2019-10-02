@@ -82,7 +82,7 @@ class CheckboxInputTest extends TestCase
         );
     }
 
-    public function testUpdateValues()
+    public function testValidation()
     {
         $form = new Form(['fruits' => 'apples']);
 
@@ -99,6 +99,27 @@ class CheckboxInputTest extends TestCase
 
         $this->assertEquals(
             '<input name="fruits" type="checkbox" value="apples" checked>',
+            $form->getInput('fruits')->html
+        );
+    }
+
+    public function testUpdateValues()
+    {
+        $form = new Form(['fruits' => true]);
+
+        $form
+            ->checkbox('fruits')
+            ->value(true);
+
+        $this->assertEquals(
+            '<input name="fruits" type="checkbox" value="1">',
+            $form->getInput('fruits')->html
+        );
+
+        $form->updateValues(['fruits' => true]);
+
+        $this->assertEquals(
+            '<input name="fruits" type="checkbox" value="1" checked>',
             $form->getInput('fruits')->html
         );
     }
