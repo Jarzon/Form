@@ -58,7 +58,7 @@ class Form
         return array_key_exists($name ?? $this->submitName, $this->post);
     }
 
-    public function updateValues($values = [])
+    public function updateValues($values = []): void
     {
         if(empty($values)) {
             $values = $this->post;
