@@ -1,5 +1,6 @@
 {
   "name": "jarzon/form",
+  "description": "Form generator/validator",
   "type": "project",
   "autoload": {
     "psr-4": {"Jarzon\\": "src/"}
