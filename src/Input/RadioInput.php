@@ -27,7 +27,7 @@ class RadioInput extends ListBasedInput
                 $attr['checked'] = null;
             }
 
-            $html[] = ['label' => $index, 'html' => $this->generateTag($this->tag, $attr)];
+            $html[] = ['label' => $index, 'id' => $attr['id'], 'html' => $this->generateTag($this->tag, $attr)];
             $count++;
         }
 
