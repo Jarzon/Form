@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
 class TextInputTest extends TestCase
 {
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is too short
-     */
     public function testLengthLowerThatMin()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is too short');
+
         $form = new Form(['test' => 'a']);
 
         $form
@@ -23,12 +23,11 @@ class TextInputTest extends TestCase
         $form->validation();
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is required
-     */
     public function testLengthNull()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is required');
+
         $form = new Form(['test' => '']);
 
         $form
@@ -40,12 +39,11 @@ class TextInputTest extends TestCase
         $form->validation();
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is too long
-     */
     public function testLengthHigherThatMax()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is too long');
+
         $form = new Form(['test' => '123456789ab']);
 
         $form

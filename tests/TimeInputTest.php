@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
@@ -20,12 +21,11 @@ class TimeInputTest extends TestCase
         $this->assertEquals(['test' => '22:00'], $values);
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid time
-     */
     public function testInvalidTime()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid time');
+
         $form = new Form(['test' => '00h00']);
 
         $form

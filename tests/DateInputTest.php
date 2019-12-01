@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
@@ -20,12 +21,11 @@ class DateInputTest extends TestCase
         $this->assertEquals(['test' => '2014-12-04'], $values);
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid date
-     */
     public function testInvalidDate()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid date');
+
         $form = new Form(['test' => '0000-00-00']);
 
         $form
@@ -34,12 +34,11 @@ class DateInputTest extends TestCase
         $form->validation();
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is lower that 2000-01-01
-     */
     public function testMinDate()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is lower that 2000-01-01');
+
         $form = new Form(['test' => '1991-01-01']);
 
         $form
@@ -49,12 +48,11 @@ class DateInputTest extends TestCase
         $form->validation();
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is higher that 2000-01-01
-     */
     public function testMaxDate()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is higher that 2000-01-01');
+
         $form = new Form(['test' => '2005-01-01']);
 
         $form

@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
 class EmailInputTest extends TestCase
 {
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid email
-     */
     public function testInvalidEmail()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid email');
+
         $form = new Form(['test' => 'asdf']);
 
         $form
@@ -36,12 +36,11 @@ class EmailInputTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid email
-     */
     public function testRepeatedInvalidEmail()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid email');
+
         $form = new Form(['test' => ['test@exemple.com', 'NaN']]);
 
         $form->repeat()

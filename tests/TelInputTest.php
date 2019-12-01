@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
@@ -21,12 +22,11 @@ class TelInputTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid phone number
-     */
     public function testInvalidNumber()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid phone number');
+
         $form = new Form(['test' => 'asdf']);
 
         $form

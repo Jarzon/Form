@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
 class UrlInputTest extends TestCase
 {
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is not a valid url
-     */
     public function testInvalidUrl()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is not a valid url');
+
         $form = new Form(['test' => 'asdf']);
 
         $form

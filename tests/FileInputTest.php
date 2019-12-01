@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Tests\Mock\Form;
 
@@ -16,7 +17,7 @@ class FileInputTest extends TestCase
      */
     private $root;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->root = vfsStream::setup('root', null, [
             'temp' => [
@@ -27,12 +28,11 @@ class FileInputTest extends TestCase
         ]);
     }
 
-    /**
-     * @expectedException     \Error
-     * @expectedExceptionMessage form seems to miss enctype attribute
-     */
     public function testFileFormMissingEnctype()
     {
+        $this->expectException(\Error::class);
+        $this->expectExceptionMessage('form seems to miss enctype attribute');
+
         $form = new Form(['test' => 's'], []);
 
         $form
@@ -42,12 +42,11 @@ class FileInputTest extends TestCase
         $form->validation();
     }
 
-    /**
-     * @expectedException     \Jarzon\ValidationException
-     * @expectedExceptionMessage test is required
-     */
     public function testFileEmptyRequired()
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('test is required');
+
         $form = new Form([], ['test' => [
             'name' => '',
             'type' => '',

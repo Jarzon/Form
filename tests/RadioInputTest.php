@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
 class RadioInputTest extends TestCase
 {
-    /**
-     * @expectedException     \Error
-     * @expectedExceptionMessage 123456789ab doesn't exist
-     */
     public function testRadioValueException()
     {
+        $this->expectException(\Error::class);
+        $this->expectExceptionMessage('123456789ab doesn\'t exist');
+
         $form = new Form(['test' => '123456789ab']);
 
         $form
