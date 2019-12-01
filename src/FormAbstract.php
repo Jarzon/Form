@@ -3,7 +3,7 @@ namespace Jarzon;
 
 abstract class FormAbstract
 {
-    protected $form;
+    protected Form $form;
 
     public function __construct()
     {
@@ -12,7 +12,7 @@ abstract class FormAbstract
 
     public function __invoke(string $name)
     {
-        return $this->form($name);
+        return ($this->form)($name);
     }
 
     public function updateValues($settings): void

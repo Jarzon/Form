@@ -26,14 +26,14 @@ use Jarzon\Input\{
 
 class Form
 {
-    protected $inputs = [];
-    protected $submitName = '';
-    public $post = [];
-    public $files = [];
-    public $update = false;
-    public $repeat = false;
+    protected array $inputs = [];
+    protected string $submitName = '';
+    public array $post = [];
+    public array $files = [];
+    public bool $update = false;
+    public bool $repeat = false;
 
-    /** @var $lastRow Input */
+    /** @var NumberInput|FileInput|SelectInput|TelInput */
     protected $lastRow;
 
     public function __construct(array $post, array $files = [])
@@ -44,13 +44,16 @@ class Form
         $this->addInput(new FormTag(), 'form');
     }
 
+    /**
+     * @return Input|FormTag
+     */
     public function __invoke(string $name)
     {
         if($this->keyExists($name)) {
             return $this->getInput($name);
         }
 
-        return null;
+        throw new \Exception("$name input doesn't exist");
     }
 
     public function submitted(string $name = null): bool
@@ -88,7 +91,7 @@ class Form
         $values = [];
 
         foreach($this->inputs as $key => $input) {
-            if(!is_subclass_of($input, 'Jarzon\Input') || !$this->keyExists($key)) {
+            if(!is_subclass_of($input, Input::class) || !$this->keyExists($key)) {
                 continue;
             }
 
@@ -155,7 +158,7 @@ class Form
         return isset($this->inputs[$key]);
     }
 
-    public function getInput($key): Tag
+    public function getInput($key)
     {
         if (!isset($this->inputs[$key])) {
             throw new \Exception("Invalid key $key.");

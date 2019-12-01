@@ -3,11 +3,11 @@ namespace Jarzon;
 
 class Tag
 {
-    protected $tag = '';
-    protected $attributes = [];
+    protected string $tag = '';
+    protected array $attributes = [];
     protected $html = null;
 
-    protected $isHtmlGenerated = false;
+    protected bool $isHtmlGenerated = false;
 
     public function __get($name)
     {

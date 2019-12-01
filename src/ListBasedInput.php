@@ -3,8 +3,8 @@ namespace Jarzon;
 
 class ListBasedInput extends Input
 {
-    protected $values = [];
-    protected $selected = [];
+    protected array $values = [];
+    protected $selected;
 
     public function selected($selected)
     {

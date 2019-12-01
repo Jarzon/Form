@@ -5,6 +5,9 @@ use Jarzon\Input;
 
 class DateInput extends Input
 {
+    public $min = null;
+    public $max = null;
+
     public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
@@ -32,10 +35,10 @@ class DateInput extends Input
         }
 
         $date = $this->convertDate($value);
-        if(!empty($this->max) && $date > $this->convertDate($this->max)) {
+        if($this->max !== null && $date > $this->convertDate($this->max)) {
             throw new \Jarzon\ValidationException("{$this->name} is higher that {$this->max}");
         }
-        else if(!empty($this->min) && $date < $this->convertDate($this->min)) {
+        else if($this->min !== null && $date < $this->convertDate($this->min)) {
             throw new \Jarzon\ValidationException("{$this->name} is lower that {$this->min}");
         }
 

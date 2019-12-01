@@ -6,21 +6,21 @@ class Input extends Tag
     /** @var Form */
     protected $form;
 
-    public $name = '';
+    public string $name = '';
     protected $value = null;
-    protected $label = null;
-    protected $isRequired = false;
-    protected $isDisabled = false;
-    protected $isReadonly = false;
-    protected $labelHtml = null;
-    public $class = null;
+    protected ?string $label = null;
+    protected bool $isRequired = false;
+    protected bool $isDisabled = false;
+    protected bool $isReadonly = false;
+    protected ?string $labelHtml = null;
+    public ?string $class = null;
 
     protected $min = null;
     protected $max = null;
 
-    protected $pattern = null;
+    protected ?string $pattern = null;
 
-    protected $isLabelGenerated = false;
+    protected bool $isLabelGenerated = false;
 
     public function __construct(string $name, $form)
     {
@@ -164,11 +164,14 @@ class Input extends Tag
         return $this;
     }
 
-    public function pattern(?string $pattern = null): Input
+    public function pattern(?string $pattern = null, ?string $message = null): Input
     {
         $this->pattern = $pattern;
 
         $this->setAttribute('pattern', $pattern);
+        if($message !== null) {
+            $this->setAttribute('title', $message);
+        }
 
         return $this;
     }
