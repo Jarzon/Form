@@ -1,42 +1,47 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Bind;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
 
 class SelectInput extends ListBasedInput
 {
     protected $selected = null;
-    protected $groups = [];
+    protected array $groups = [];
 
     public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
         $this->setTag('select');
+
+        $this->group(0);
     }
 
-    public function group(string $name, array $options)
+    public function group(string $name)
     {
-        $this->groups[$name] = $options;
+        $this->groups[$name] = new Bind();
     }
 
     public function generateHtml()
     {
         $content = '';
 
-        foreach($this->values as $name => $attrValue) {
-            $content .= $this->generateOption($name, $attrValue);
-        }
-
         if(!empty($this->groups)) {
             foreach($this->groups as $groupName => $options) {
                 $groupContent = '';
 
-                foreach($options as $name => $option) {
-                    $groupContent .= $this->generateOption($name, $option);
+                if($options instanceof Bind) {
+                    foreach($options->bindValues as $value) {
+                        $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $value->{$options->bindOptionAttributes['value']});
+                    }
                 }
 
-                $content .= $this->generateTag('optgroup', ['label' => $groupName], $groupContent);
+                if($groupName === 0) {
+                    $content .= $groupContent;
+                } else {
+                    $content .= $this->generateTag('optgroup', ['label' => $groupName], $groupContent);
+                }
             }
         }
 
@@ -67,13 +72,35 @@ class SelectInput extends ListBasedInput
         return $value !== $this->selected || ($this->value !== null && !$this->form->update);
     }
 
-    public function value($values = []): Input
+    protected function getLastOption()
     {
-        if(is_array($values)) {
-            $this->values = $values;
-        } else {
-            $this->selected($values);
-        }
+        return $this->groups[array_key_last($this->groups)];
+    }
+
+    public function bindOptionText(string $name): Input
+    {
+        $this->getLastOption()->bindOptionText($name);
+
+        return $this;
+    }
+
+    public function bindOptionValue(string $name): Input
+    {
+        $this->getLastOption()->bindOptionAttribute('value', $name);
+
+        return $this;
+    }
+
+    public function bindOptionAttribute(string $attribute, string $name): Input
+    {
+        $this->getLastOption()->bindOptionAttributes[$attribute] = $name;
+
+        return $this;
+    }
+
+    public function bindValues(array $values): Input
+    {
+        $this->getLastOption()->bindValues = $values;
 
         return $this;
     }

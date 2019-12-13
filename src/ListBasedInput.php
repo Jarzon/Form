@@ -3,7 +3,6 @@ namespace Jarzon;
 
 class ListBasedInput extends Input
 {
-    protected array $values = [];
     protected $selected;
 
     public function selected($selected)
@@ -18,13 +17,9 @@ class ListBasedInput extends Input
         return $this->selected;
     }
 
-    public function value($values = []): Input
+    public function value($value = ''): Input
     {
-        if(is_array($values)) {
-            $this->values = $values;
-        } else {
-            $this->selected($values);
-        }
+        $this->selected($value);
 
         return $this;
     }

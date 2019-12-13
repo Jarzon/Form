@@ -1,10 +1,13 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\ListBasedInput;
 
 class RadioInput extends ListBasedInput
 {
+    protected array $values;
+
     public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
@@ -63,5 +66,16 @@ class RadioInput extends ListBasedInput
         }
 
         return true;
+    }
+
+    public function value($values = []): Input
+    {
+        if(is_array($values)) {
+            $this->values = $values;
+        } else {
+            $this->selected($values);
+        }
+
+        return $this;
     }
 }

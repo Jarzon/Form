@@ -504,9 +504,37 @@ class Form
         return $this;
     }
 
-    public function group(string $name, array $values): Form
+    public function group(string $name): Form
     {
-        $this->lastRow->group($name, $values);
+        $this->lastRow->group($name);
+
+        return $this;
+    }
+
+    public function bindOptionText(string $value): Form
+    {
+        $this->lastRow->bindOptionText($value);
+
+        return $this;
+    }
+
+    public function bindOptionValue(string $value): Form
+    {
+        $this->lastRow->bindOptionValue($value);
+
+        return $this;
+    }
+
+    public function bindOptionAttribute(string $name, string $value): Form
+    {
+        $this->lastRow->bindOptionAttribute($name, $value);
+
+        return $this;
+    }
+
+    public function bindValues(array $values): Form
+    {
+        $this->lastRow->bindValues($values);
 
         return $this;
     }

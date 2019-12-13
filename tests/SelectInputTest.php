@@ -12,13 +12,35 @@ class SelectInputTest extends TestCase
     {
         $form = new Form(['test' => 'a']);
 
+        $options = [
+            (object)[
+                'text' => 'test',
+                'value' => 'test',
+                'attr' => 'test'
+            ]
+        ];
+
+        $suboptions = [
+            (object)[
+                'text' => 'test2',
+                'value' => 'test2',
+                'attr' => 'test2'
+            ]
+        ];
+
         $form
             ->select('test')
-            ->value(['test' => 'test'])
-            ->selected('test');
+            ->bindOptionText('text')
+            ->bindOptionValue('value')
+            ->bindValues($options)
+
+            ->group('group')
+            ->bindValues($suboptions)
+
+            ->value('test');
 
         $this->assertEquals(
-            '<select name="test"><option value="test" selected>test</option></select>',
+            '<select name="test"><option value="test" selected>test</option><optgroup label="group"><option value="test2">test2</option></optgroup></select>',
             $form->getInput('test')->html
         );
 
@@ -34,7 +56,7 @@ class SelectInputTest extends TestCase
 
         $form
             ->select('test')
-            ->value(['test2' => 'test', 'empty string' => '']);
+            ->bindValues(['test2' => 'test', 'empty string' => '']);
 
         $values = $form->validation();
 
@@ -47,7 +69,7 @@ class SelectInputTest extends TestCase
 
         $form
             ->select('test')
-            ->value(['test2' => 'test', 'empty string' => ''])
+            ->bindValues(['test2' => 'test', 'empty string' => ''])
             ->selected('test');
 
         $values = $form->validation();
@@ -59,9 +81,20 @@ class SelectInputTest extends TestCase
     {
         $form = new Form(['fruits' => 'oranges']);
 
+        $options = [
+            (object)[
+                'text' => 'apples',
+                'value' => 'apples'
+            ],
+            (object)[
+                'text' => 'oranges',
+                'value' => 'oranges'
+            ]
+        ];
+
         $form
             ->select('fruits')
-            ->value(['apples' => 'apples', 'oranges' => 'oranges']);
+            ->bindValues($options);
 
         $this->assertEquals(
             '<select name="fruits"><option value="apples">apples</option><option value="oranges">oranges</option></select>',

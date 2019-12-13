@@ -6,8 +6,8 @@ use Jarzon\TextBasedInput;
 
 class FileInput extends TextBasedInput
 {
-    protected $destination;
-    protected $ext;
+    protected string $destination;
+    protected string $ext;
     protected $accept;
 
     public function __construct(string $name, $form, string $destination, string $ext)
