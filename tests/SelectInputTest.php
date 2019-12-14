@@ -14,28 +14,17 @@ class SelectInputTest extends TestCase
 
         $options = [
             (object)[
-                'text' => 'test',
-                'value' => 'test',
-                'attr' => 'test'
-            ]
-        ];
-
-        $suboptions = [
-            (object)[
                 'text' => 'test2',
-                'value' => 'test2',
-                'attr' => 'test2'
+                'value' => 'test2'
             ]
         ];
 
         $form
             ->select('test')
-            ->bindOptionText('text')
-            ->bindOptionValue('value')
-            ->bindValues($options)
+            ->addOption('test', 'test')
 
-            ->group('group')
-            ->bindValues($suboptions)
+            ->groupBind('group')
+            ->bindValues($options)
 
             ->value('test');
 

@@ -504,9 +504,23 @@ class Form
         return $this;
     }
 
+    public function addOption(string $text, $value): Form
+    {
+        $this->lastRow->addOption($text, $value);
+
+        return $this;
+    }
+
     public function group(string $name): Form
     {
         $this->lastRow->group($name);
+
+        return $this;
+    }
+
+    public function groupBind(string $name): Form
+    {
+        $this->lastRow->groupBind($name);
 
         return $this;
     }

@@ -14,11 +14,14 @@ class SelectInput extends ListBasedInput
     {
         parent::__construct($name, $form);
         $this->setTag('select');
-
-        $this->group(0);
     }
 
     public function group(string $name)
+    {
+        $this->groups[$name] = [];
+    }
+
+    public function groupBind(string $name)
     {
         $this->groups[$name] = new Bind();
     }
@@ -34,6 +37,10 @@ class SelectInput extends ListBasedInput
                 if($options instanceof Bind) {
                     foreach($options->bindValues as $value) {
                         $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $value->{$options->bindOptionAttributes['value']});
+                    }
+                } else {
+                    foreach($options as $value) {
+                        $groupContent .= $this->generateOption($value['text'], $value['value']);
                     }
                 }
 
@@ -72,13 +79,17 @@ class SelectInput extends ListBasedInput
         return $value !== $this->selected || ($this->value !== null && !$this->form->update);
     }
 
-    protected function getLastOption()
+    protected function &getLastOption()
     {
         return $this->groups[array_key_last($this->groups)];
     }
 
     public function bindOptionText(string $name): Input
     {
+        if(empty($this->groups)) {
+            $this->groupBind(0);
+        }
+
         $this->getLastOption()->bindOptionText($name);
 
         return $this;
@@ -86,6 +97,10 @@ class SelectInput extends ListBasedInput
 
     public function bindOptionValue(string $name): Input
     {
+        if(empty($this->groups)) {
+            $this->groupBind(0);
+        }
+
         $this->getLastOption()->bindOptionAttribute('value', $name);
 
         return $this;
@@ -93,6 +108,10 @@ class SelectInput extends ListBasedInput
 
     public function bindOptionAttribute(string $attribute, string $name): Input
     {
+        if(empty($this->groups)) {
+            $this->groupBind(0);
+        }
+
         $this->getLastOption()->bindOptionAttributes[$attribute] = $name;
 
         return $this;
@@ -100,8 +119,21 @@ class SelectInput extends ListBasedInput
 
     public function bindValues(array $values): Input
     {
+        if(empty($this->groups)) {
+            $this->groupBind(0);
+        }
+
         $this->getLastOption()->bindValues = $values;
 
         return $this;
+    }
+
+    public function addOption($text, $value)
+    {
+        if(empty($this->groups)) {
+            $this->group(0);
+        }
+
+        $this->getLastOption()[] = ['text' => $text, 'value' => $value];
     }
 }
