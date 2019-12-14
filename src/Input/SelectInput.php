@@ -4,6 +4,7 @@ namespace Jarzon\Input;
 use Jarzon\Bind;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
+use Jarzon\Option;
 
 class SelectInput extends ListBasedInput
 {
@@ -36,11 +37,17 @@ class SelectInput extends ListBasedInput
 
                 if($options instanceof Bind) {
                     foreach($options->bindValues as $value) {
-                        $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $value->{$options->bindOptionAttributes['value']});
+                        $attributes = [];
+
+                        foreach($options->bindOptionAttributes as $name => $bind) {
+                            $attributes[$name] = $value->$bind;
+                        }
+
+                        $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $attributes);
                     }
                 } else {
-                    foreach($options as $value) {
-                        $groupContent .= $this->generateOption($value['text'], $value['value']);
+                    foreach($options as $option) {
+                        $groupContent .= $this->generateOption($option->text, $option->attr);
                     }
                 }
 
@@ -55,19 +62,17 @@ class SelectInput extends ListBasedInput
         $this->setHtml($this->generateTag($this->tag, $this->attributes, $content));
     }
 
-    public function generateOption($name, $value)
+    public function generateOption($name, $attr = [])
     {
-        $attr = ['value' => $value];
-
         $selectedValue = $this->getSelected();
 
-        if(is_integer($value)) {
+        if(is_integer($attr['value'])) {
             $selectedValue = (int)$selectedValue;
-        } else if (is_float($value)) {
+        } else if (is_float($attr['value'])) {
             $selectedValue = (float)$selectedValue;
         }
 
-        if($selectedValue === $value) {
+        if($selectedValue === $attr['value']) {
             $attr['selected'] = null;
         }
 
@@ -128,12 +133,21 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    public function addOption($text, $value)
+    public function addOption($text, $value, array $attr = [])
     {
         if(empty($this->groups)) {
             $this->group(0);
         }
 
-        $this->getLastOption()[] = ['text' => $text, 'value' => $value];
+        $attr += ['value' => $value];
+
+        $this->getLastOption()[] = new Option($text, $attr);
+    }
+
+    public function addOptions(array $values)
+    {
+        foreach ($values as $text => $value) {
+            $this->addOption($text, $value);
+        }
     }
 }

@@ -15,7 +15,8 @@ class SelectInputTest extends TestCase
         $options = [
             (object)[
                 'text' => 'test2',
-                'value' => 'test2'
+                'value' => 'test2',
+                'customAttr' => 'test2'
             ]
         ];
 
@@ -25,11 +26,12 @@ class SelectInputTest extends TestCase
 
             ->groupBind('group')
             ->bindValues($options)
+            ->bindOptionAttribute('customAttr', 'customAttr')
 
             ->value('test');
 
         $this->assertEquals(
-            '<select name="test"><option value="test" selected>test</option><optgroup label="group"><option value="test2">test2</option></optgroup></select>',
+            '<select name="test"><option value="test" selected>test</option><optgroup label="group"><option value="test2" customAttr="test2">test2</option></optgroup></select>',
             $form->getInput('test')->html
         );
 
