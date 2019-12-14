@@ -511,6 +511,13 @@ class Form
         return $this;
     }
 
+    public function addOptions(array $options): Form
+    {
+        $this->lastRow->addOptions($options);
+
+        return $this;
+    }
+
     public function group(string $name): Form
     {
         $this->lastRow->group($name);

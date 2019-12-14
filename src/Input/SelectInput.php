@@ -17,16 +17,6 @@ class SelectInput extends ListBasedInput
         $this->setTag('select');
     }
 
-    public function group(string $name)
-    {
-        $this->groups[$name] = [];
-    }
-
-    public function groupBind(string $name)
-    {
-        $this->groups[$name] = new Bind();
-    }
-
     public function generateHtml()
     {
         $content = '';
@@ -82,6 +72,16 @@ class SelectInput extends ListBasedInput
     public function isUpdated($value): bool
     {
         return $value !== $this->selected || ($this->value !== null && !$this->form->update);
+    }
+
+    public function group(string $name)
+    {
+        $this->groups[$name] = [];
+    }
+
+    public function groupBind(string $name)
+    {
+        $this->groups[$name] = new Bind();
     }
 
     protected function &getLastOption()

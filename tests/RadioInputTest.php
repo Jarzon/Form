@@ -18,7 +18,7 @@ class RadioInputTest extends TestCase
 
         $form
             ->radio('test')
-            ->value(['test' => 'test']);
+            ->addOptions(['test' => 'test']);
 
         $form->validation();
     }
@@ -29,7 +29,7 @@ class RadioInputTest extends TestCase
 
         $form
             ->radio('test')
-            ->value(['test' => 'test', 'testy' => 'testy'])
+            ->addOptions(['test' => 'test', 'testy' => 'testy'])
             ->selected('test');
 
         $values = $form->validation();
@@ -43,7 +43,7 @@ class RadioInputTest extends TestCase
 
         $form
             ->radio('test')
-            ->value(['test' => 'test']);
+            ->addOptions(['test' => 'test']);
 
         $this->assertEquals(
             '<input name="test" type="radio" id="test_0" value="test">',
