@@ -80,10 +80,7 @@ class RadioInput extends ListBasedInput
         if($value !== null) {
             $exist = false;
 
-            if($key = array_search($value, $optionValues)) {
-                $exist = true;
-            }
-            else if($key = array_search($value, $bindValues)) {
+            if(in_array($value, $optionValues) || in_array($value, $bindValues)) {
                 $exist = true;
             }
 

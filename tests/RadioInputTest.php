@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
@@ -21,6 +20,19 @@ class RadioInputTest extends TestCase
             ->addOptions(['test' => 'test']);
 
         $form->validation();
+    }
+
+    public function testRadioExistingValue()
+    {
+        $form = new Form(['test' => 'test']);
+
+        $form
+            ->radio('test')
+            ->addOptions(['test' => 'test']);
+
+        $values = $form->validation();
+
+        $this->assertEquals('test', $values['test']);
     }
 
     public function testRadioValue()
