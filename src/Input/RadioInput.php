@@ -32,7 +32,7 @@ class RadioInput extends ListBasedInput
 
             $attr += $option->attr;
 
-            if($this->selected === $option->attr['value']) {
+            if($this->selected === $attr['value']) {
                 $attr['checked'] = null;
             }
 
@@ -40,17 +40,16 @@ class RadioInput extends ListBasedInput
             $count++;
         }
 
-        $count = 0;
         foreach($this->bind->bindValues as $value) {
             $attr = $this->attributes;
             $attr['id'] = "{$this->name}_$count";
 
-            if($this->selected === $attr['value']) {
-                $attr['checked'] = null;
+            foreach($this->bind->bindOptionAttributes as $name => $bind) {
+                $attr[$name] = $value->$bind;
             }
 
-            foreach($this->bind->bindOptionAttributes as $name => $bind) {
-                $attributes[$name] = $value->$bind;
+            if($this->selected === $attr['value']) {
+                $attr['checked'] = null;
             }
 
             $html[] = ['label' => $value->{$this->bind->bindOptionText}, 'id' => $attr['id'], 'html' => $this->generateTag($this->tag, $attr)];
