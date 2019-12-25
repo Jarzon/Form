@@ -52,6 +52,8 @@ class Tag
     {
         $this->attributes[$name] = $value;
         $this->resetIsHtmlGenerated();
+
+        return $this;
     }
 
     public function getAttribute(string $name)
