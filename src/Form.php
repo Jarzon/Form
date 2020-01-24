@@ -1,9 +1,9 @@
 <?php
 namespace Jarzon;
 
-use Jarzon\Input\{
-    CheckboxInput,
+use Jarzon\Input\{CheckboxInput,
     ColorInput,
+    CsrfInput,
     CurrencyInput,
     DateInput,
     EmailInput,
@@ -21,8 +21,7 @@ use Jarzon\Input\{
     TextareaInput,
     TextInput,
     TimeInput,
-    UrlInput
-};
+    UrlInput};
 
 class Form
 {
@@ -333,6 +332,13 @@ class Form
         $this->addInput(new FileInput($name, $this, $destination, $ext), $name);
 
         $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
+
+        return $this;
+    }
+
+    public function csrf(string $name = '_csrfToken'): Form
+    {
+        $this->addInput(new CsrfInput($name, $this), $name);
 
         return $this;
     }
