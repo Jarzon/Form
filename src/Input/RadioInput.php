@@ -32,7 +32,7 @@ class RadioInput extends ListBasedInput
 
             $attr += $option->attr;
 
-            if($this->selected === $attr['value']) {
+            if($this->selected !== null && $this->selected == $attr['value']) {
                 $attr['checked'] = null;
             }
 
@@ -48,7 +48,7 @@ class RadioInput extends ListBasedInput
                 $attr[$name] = $value->$bind;
             }
 
-            if($this->selected === $attr['value']) {
+            if($this->selected !== null && $this->selected == $attr['value']) {
                 $attr['checked'] = null;
             }
 

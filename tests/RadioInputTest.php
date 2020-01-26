@@ -69,4 +69,25 @@ class RadioInputTest extends TestCase
             $form->getInput('test')->html[0]['html']
         );
     }
+
+    public function testUpdateValuesFormsRadio()
+    {
+        $form = new Form(['test' => 'a']);
+
+        $form
+            ->radio('test')
+            ->addOptions(['test' => 0]);
+
+        $this->assertEquals(
+            '<input name="test" type="radio" id="test_0" value="0">',
+            $form->getInput('test')->html[0]['html']
+        );
+
+        $form->updateValues(['test' => '0']);
+
+        $this->assertEquals(
+            '<input name="test" type="radio" id="test_0" value="0" checked>',
+            $form->getInput('test')->html[0]['html']
+        );
+    }
 }
