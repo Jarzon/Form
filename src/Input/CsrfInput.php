@@ -1,36 +1,44 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\TextBasedInput;
 
 class CsrfInput extends TextBasedInput
 {
-    public string $token;
-    public string $pastToken;
-
     public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
         $this->setAttribute('type', 'hidden');
 
-        $this->token = bin2hex(random_bytes(10));
+        $this->value = bin2hex(random_bytes(10));
 
-        $this->value($this->token);
-        $this->required();
-
-        if(isset($_SESSION['_formToken'])) {
-            $this->pastToken = $_SESSION['_formToken'];
+        if(!isset($_SESSION['_formToken']) || !is_array($_SESSION['_formToken'])) {
+            $_SESSION['_formToken'] = [];
+        } else if (count($_SESSION['_formToken']) > 20) {
+            $_SESSION['_formToken'] = array_slice($_SESSION['_formToken'], 1, 20);
         }
 
-        $_SESSION['_formToken'] = $this->token;
+        $_SESSION['_formToken'][] = $this->value;
+
+        $this->setAttribute('value', htmlspecialchars($this->value , ENT_QUOTES | ENT_SUBSTITUTE));
+
+        $this->required();
+    }
+
+    public function value($value = ''): Input
+    {
+        return $this;
     }
 
     public function passValidation($value = null): void
     {
         parent::passValidation($value);
 
-        if($value !== $this->pastToken) {
+        if(!$key = array_search($value, $_SESSION['_formToken'])) {
             throw new \Jarzon\ValidationException("the CSRF token doesn't match");
         }
+
+        unset($_SESSION['_formToken'][$key]);
     }
 }
