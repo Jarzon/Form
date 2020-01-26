@@ -23,9 +23,4 @@ class ListBasedInput extends Input
 
         return $this;
     }
-
-    public function passValidation($value = null): bool
-    {
-        return true;
-    }
 }

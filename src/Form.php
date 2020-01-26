@@ -31,6 +31,7 @@ class Form
     public array $files = [];
     public bool $update = false;
     public bool $repeat = false;
+    public array $postValues = [];
 
     /** @var NumberInput|FileInput|SelectInput|TelInput */
     protected $lastRow;
@@ -94,26 +95,28 @@ class Form
                 continue;
             }
 
+            $input->processValues();
+
             $result = $input->validation();
 
             if($this->repeat) {
                 foreach ($result as $i => $v) {
-                    if(!isset($values[$i])) {
-                        $values[$i] = [];
+                    if(!isset($this->postValues[$i])) {
+                        $this->postValues[$i] = [];
                     }
 
-                    $values[$i][$key] = $v;
+                    $this->postValues[$i][$key] = $v;
                 }
 
                 continue;
             }
 
             if($result !== null) {
-                $values[$key] = $result;
+                $this->postValues[$key] = $result;
             }
         }
 
-        return $values;
+        return $this->postValues;
     }
 
     /*

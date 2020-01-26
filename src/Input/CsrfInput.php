@@ -25,14 +25,12 @@ class CsrfInput extends TextBasedInput
         $_SESSION['_formToken'] = $this->token;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): void
     {
         parent::passValidation($value);
 
         if($value !== $this->pastToken) {
             throw new \Jarzon\ValidationException("the CSRF token doesn't match");
         }
-
-        return true;
     }
 }

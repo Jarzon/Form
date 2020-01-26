@@ -19,16 +19,16 @@ class DigitBasedInput extends Input
         $this->max = $max;
     }
 
-    public function passValidation($value = null) : bool
+    public function passValidation($value = null): void
     {
+        parent::passValidation($value);
+
         if($this->max !== null && $value > $this->max) {
             throw new ValidationException("{$this->name} is too high");
         }
         else if($this->min !== null && $value < $this->min) {
             throw new ValidationException("{$this->name} is too low");
         }
-
-        return true;
     }
 
     public function isUpdated($value): bool

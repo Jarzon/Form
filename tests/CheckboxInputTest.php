@@ -128,7 +128,8 @@ class CheckboxInputTest extends TestCase
     {
         $form = new Form(['test' => [['1234', null]]]);
 
-        $form->repeat()
+        $form
+            ->repeat()
             ->checkbox('test')
             ->value('testy');
 

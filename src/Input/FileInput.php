@@ -2,13 +2,12 @@
 namespace Jarzon\Input;
 
 use Jarzon\Input;
-use Jarzon\TextBasedInput;
 
-class FileInput extends TextBasedInput
+class FileInput extends Input
 {
     protected string $destination;
     protected string $ext;
-    protected $accept;
+    protected array $accept;
 
     public function __construct(string $name, $form, string $destination, string $ext)
     {
@@ -20,7 +19,7 @@ class FileInput extends TextBasedInput
         $this->ext = $ext;
     }
 
-    public function accept($types) {
+    public function accept(array $types) {
         $this->accept = $types;
         $this->setAttribute('accept', implode(', ', $types));
 
@@ -45,13 +44,13 @@ class FileInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): void
     {
+        parent::passValidation($value);
+
         if(!isset($this->form->files[$this->name]) && isset($this->form->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
         }
-
-        return true;
     }
 
     public function isUpdated($value) : bool
@@ -65,10 +64,9 @@ class FileInput extends TextBasedInput
         return $updated;
     }
 
-    public function validation()
+    public function processValues(): void
     {
-        // TODO: support repeat
-        parent::validation();
+        parent::processValues();
 
         if(!isset($this->form->files[$this->name]) || $this->form->files[$this->name]['error'] === UPLOAD_ERR_NO_FILE) {
             return;
@@ -86,35 +84,38 @@ class FileInput extends TextBasedInput
 
                 list($location, $name) = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
 
-                $infos[] = [
+                $this->postValues[] = [
                     'name' => $name,
                     'original_name' => $value['name'][$index],
                     'type' => $value['type'][$index],
                     'location' => $location,
                     'size' => $value['size'][$index],
                 ];
+
+                return;
             }
-        } else {
-            if(is_array($value['error'])) {
-                throw new \Error('bypassed multiple limitation');
-            }
-
-            $this->fileErrors($value['error']);
-
-            list($location, $name) = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
-
-            $infos = [
-                'name' => $name,
-                'original_name' => $value['name'],
-                'type' => $value['type'],
-                'location' => $location,
-                'size' => $value['size']
-            ];
         }
 
-        $value = $infos;
+        if(is_array($value['error'])) {
+            throw new \Error('bypassed multiple limitation');
+        }
 
-        return $value;
+        $this->fileErrors($value['error']);
+
+        list($location, $name) = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
+
+        $this->postValue = [
+            'name' => $name,
+            'original_name' => $value['name'],
+            'type' => $value['type'],
+            'location' => $location,
+            'size' => $value['size']
+        ];
+    }
+
+    public function validation()
+    {
+        return parent::validation();
     }
 
     private function fileErrors($error)

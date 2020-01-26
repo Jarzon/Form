@@ -8,6 +8,9 @@ class Input extends Tag
 
     public string $name = '';
     protected $value = null;
+    protected array $postValues = [];
+    /** @var null|string|array */
+    protected $postValue = null;
     protected ?string $label = null;
     protected bool $isRequired = false;
     protected bool $isDisabled = false;
@@ -218,11 +221,6 @@ class Input extends Tag
         return $this;
     }
 
-    public function passValidation($value) : bool
-    {
-        return true;
-    }
-
     public function isUpdated($value): bool
     {
         return $value != $this->value || ($this->value !== null && !$this->form->update);
@@ -233,51 +231,51 @@ class Input extends Tag
         return $this->form->post[$this->name]?? null;
     }
 
-    public function validation()
+    public function processValues(): void
     {
-        $update = $this->form->update;
         $value = $this->getPostValue();
 
         if($this->form->repeat) {
-
-            $values = [];
-            // Iterate over the column for the current $input
-            $n = 0;
-            foreach($value as $v) {
-                if(!isset($v[$n])) {
-                    $values[] = [];
-                }
-
-                if($v == '' && $this->isRequired) {
-                    throw new ValidationException("{$this->name} is required");
-                }
-                else if($v !== '') {
-                    $this->passValidation($v);
-                }
-
-                $values[$n] = $v;
-
-                $n++;
+            if(!is_array($value)) {
+                throw new \Exception("{$this->name} is not an array");
             }
-
-            return $values;
+            $this->postValues = $value;
+            return;
         }
 
+        $this->postValue = $value;
+    }
+
+    protected function passValidation($value): void
+    {
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required");
         }
-        else if($value !== '') {
-            $this->passValidation($value);
+        else if($value === '') {
+            return;
+        }
+    }
+
+    public function validation()
+    {
+        if($this->form->repeat) {
+            foreach($this->postValues as $value) {
+                $this->passValidation($value);
+            }
+
+            return $this->postValues;
         }
 
-        $updated = $this->isUpdated($value);
+        $this->passValidation($this->postValue);
+
+        $updated = $this->isUpdated($this->postValue);
 
         if($updated) {
-            $this->value($value);
+            $this->value($this->postValue);
         }
 
-        if($updated || ($this->isRequired && !$update)) {
-            return $value;
+        if($updated || ($this->isRequired && !$this->form->update)) {
+            return $this->postValue;
         }
 
         return null;

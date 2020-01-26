@@ -23,7 +23,7 @@ class TimeInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): void
     {
         parent::passValidation($value);
 
@@ -33,7 +33,5 @@ class TimeInput extends TextBasedInput
                 throw new \Jarzon\ValidationException("{$this->name} is not a valid time");
             }
         }
-
-        return true;
     }
 }

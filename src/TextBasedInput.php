@@ -17,8 +17,10 @@ class TextBasedInput extends Input
         $this->max = $max;
     }
 
-    public function passValidation($value = null) : bool
+    public function passValidation($value = null): void
     {
+        parent::passValidation($value);
+
         $numberChars = mb_strlen($value);
         if(!empty($this->max) && $numberChars > $this->max) {
             throw new ValidationException("{$this->name} is too long");
@@ -26,7 +28,5 @@ class TextBasedInput extends Input
         else if(!empty($this->min) && $numberChars < $this->min) {
             throw new ValidationException("{$this->name} is too short");
         }
-
-        return true;
     }
 }

@@ -28,8 +28,10 @@ class DateInput extends Input
         $this->max = $max;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): void
     {
+        parent::passValidation($value);
+
         if(preg_match('/[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/', $value) == 0) {
             throw new \Jarzon\ValidationException("{$this->name} is not a valid date");
         }
@@ -41,8 +43,6 @@ class DateInput extends Input
         else if($this->min !== null && $date < $this->convertDate($this->min)) {
             throw new \Jarzon\ValidationException("{$this->name} is lower that {$this->min}");
         }
-
-        return true;
     }
 
     protected function convertDate($date) {

@@ -70,7 +70,7 @@ class RadioInput extends ListBasedInput
         return implode('', $output);
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): void
     {
         parent::passValidation($value);
 
@@ -88,8 +88,6 @@ class RadioInput extends ListBasedInput
                 throw new \Error("$value doesn't exist");
             }
         }
-
-        return true;
     }
 
     public function value($values = []): Input
