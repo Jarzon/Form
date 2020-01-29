@@ -22,6 +22,20 @@ class EmailInputTest extends TestCase
         $form->validation();
     }
 
+    public function testEmptyEmail()
+    {
+        $form = new Form(['test' => '']);
+
+        $form
+            ->email('test');
+
+        $form->validation();
+
+        $this->assertEquals('<input name="test" type="email">',
+            $form->getInput('test')->html
+        );
+    }
+
     public function testGetFormsEmail()
     {
         $form = new Form(['test' => 'a']);

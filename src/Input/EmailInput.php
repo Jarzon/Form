@@ -11,12 +11,16 @@ class EmailInput extends TextBasedInput
         $this->setAttribute('type', 'email');
     }
 
-    public function passValidation($value = null): void
+    public function passValidation($value = null): bool
     {
-        parent::passValidation($value);
+        if(!parent::passValidation($value)) {
+            return false;
+        }
 
         if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new \Jarzon\ValidationException("$this->name is not a valid email");
         }
+
+        return true;
     }
 }

@@ -31,9 +31,11 @@ class TelInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): void
+    public function passValidation($value = null): bool
     {
-        parent::passValidation($value);
+        if(!parent::passValidation($value)) {
+            return false;
+        }
 
         if($this->pattern !== null) {
             $format = str_replace('/', '\/', $this->pattern);
@@ -41,5 +43,7 @@ class TelInput extends TextBasedInput
                 throw new \Jarzon\ValidationException("{$this->name} is not a valid phone number");
             }
         }
+
+        return true;
     }
 }

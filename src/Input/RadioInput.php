@@ -70,9 +70,11 @@ class RadioInput extends ListBasedInput
         return implode('', $output);
     }
 
-    public function passValidation($value = null): void
+    public function passValidation($value = null): bool
     {
-        parent::passValidation($value);
+        if(!parent::passValidation($value)) {
+            return false;
+        }
 
         $bindValues = array_column($this->bind->bindValues, $this->bind->bindOptionAttributes['value']);
         $optionValues = array_column(array_column($this->options, 'attr'), 'value');
@@ -88,6 +90,8 @@ class RadioInput extends ListBasedInput
                 throw new \Error("$value doesn't exist");
             }
         }
+
+        return true;
     }
 
     public function value($values = []): Input

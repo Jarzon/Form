@@ -31,7 +31,7 @@ class CsrfInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): void
+    public function passValidation($value = null): bool
     {
         parent::passValidation($value);
 
@@ -40,5 +40,7 @@ class CsrfInput extends TextBasedInput
         }
 
         unset($_SESSION['_formToken'][$key]);
+
+        return true;
     }
 }

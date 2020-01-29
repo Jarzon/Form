@@ -246,14 +246,12 @@ class Input extends Tag
         $this->postValue = $value;
     }
 
-    protected function passValidation($value): void
+    protected function passValidation($value): bool
     {
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required");
         }
-        else if($value === '') {
-            return;
-        }
+        return $value !== '';
     }
 
     public function validation()

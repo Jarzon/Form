@@ -44,13 +44,17 @@ class FileInput extends Input
         return $this;
     }
 
-    public function passValidation($value = null): void
+    public function passValidation($value = null): bool
     {
-        parent::passValidation($value);
+        if(!parent::passValidation($value)) {
+            return false;
+        }
 
         if(!isset($this->form->files[$this->name]) && isset($this->form->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
         }
+
+        return true;
     }
 
     public function isUpdated($value) : bool
