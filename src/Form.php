@@ -534,6 +534,13 @@ class Form
         return $this;
     }
 
+    public function setGroupAttribute(string $name): Form
+    {
+        $this->lastRow->setGroupAttribute($name);
+
+        return $this;
+    }
+
     public function groupBind(string $name): Form
     {
         $this->lastRow->groupBind($name);
