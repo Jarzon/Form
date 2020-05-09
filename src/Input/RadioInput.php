@@ -1,7 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
-use Jarzon\Bind;
+use Jarzon\BindGroup;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
 use Jarzon\Option;
@@ -9,7 +9,7 @@ use Jarzon\Option;
 class RadioInput extends ListBasedInput
 {
     protected array $options = [];
-    protected Bind $bind;
+    protected BindGroup $bind;
 
     public function __construct(string $name, $form)
     {
@@ -17,7 +17,7 @@ class RadioInput extends ListBasedInput
 
         $this->setAttribute('type', 'radio');
 
-        $this->bind = new Bind();
+        $this->bind = new BindGroup();
     }
 
     public function generateHtml()
