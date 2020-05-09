@@ -1,7 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
-use Jarzon\Bind;
+use Jarzon\BindGroup;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
 use Jarzon\Option;
@@ -23,9 +23,10 @@ class SelectInput extends ListBasedInput
 
         if(!empty($this->groups)) {
             foreach($this->groups as $groupName => $options) {
+                $groupAttributes = ['label' => $groupName];
                 $groupContent = '';
 
-                if($options instanceof Bind) {
+                if($options instanceof BindGroup) {
                     foreach($options->bindValues as $value) {
                         $attributes = [];
 
@@ -34,6 +35,7 @@ class SelectInput extends ListBasedInput
                         }
 
                         $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $attributes);
+                        $groupAttributes = $groupAttributes + $options->attributes;
                     }
                 } else {
                     foreach($options as $option) {
@@ -44,7 +46,7 @@ class SelectInput extends ListBasedInput
                 if($groupName === 0) {
                     $content .= $groupContent;
                 } else {
-                    $content .= $this->generateTag('optgroup', ['label' => $groupName], $groupContent);
+                    $content .= $this->generateTag('optgroup', $groupAttributes, $groupContent);
                 }
             }
         }
@@ -83,7 +85,13 @@ class SelectInput extends ListBasedInput
     /** @param string|int $name */
     public function groupBind($name)
     {
-        $this->groups[$name] = new Bind();
+        $this->groups[$name] = new BindGroup();
+    }
+
+    public function setGroupAttribute($name, $value)
+    {
+        $this->getLastOption()->setAttribute($name, $value);
+        return $this;
     }
 
     protected function &getLastOption()

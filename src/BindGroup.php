@@ -1,7 +1,7 @@
 <?php
 namespace Jarzon;
 
-class Bind
+class BindGroup extends Tag
 {
     public array $bindValues = [];
     public string $bindOptionText = 'text';
