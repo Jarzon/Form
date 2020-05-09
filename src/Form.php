@@ -534,9 +534,9 @@ class Form
         return $this;
     }
 
-    public function setGroupAttribute(string $name): Form
+    public function setGroupAttribute(string $name, string $value): Form
     {
-        $this->lastRow->setGroupAttribute($name);
+        $this->lastRow->setGroupAttribute($name, $value));
 
         return $this;
     }
