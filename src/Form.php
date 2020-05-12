@@ -385,6 +385,13 @@ class Form
         return $this;
     }
 
+    public function setNagativevalue($value = 0): Form
+    {
+        $this->lastRow->setNagativevalue($value);
+
+        return $this;
+    }
+
     public function class(?string $classes = null): Form
     {
         $this->lastRow->class($classes);

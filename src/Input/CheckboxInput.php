@@ -6,10 +6,19 @@ use Jarzon\ListBasedInput;
 
 class CheckboxInput extends ListBasedInput
 {
+    public $negativeValue = false;
+
     public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
         $this->setAttribute('type', 'checkbox');
+    }
+
+    public function setNagativevalue($value): Input
+    {
+        $this->negativeValue = $value;
+
+        return $this;
     }
 
     public function value($value = ''): Input
@@ -49,7 +58,7 @@ class CheckboxInput extends ListBasedInput
                 if($v !== null) {
                     $v = $this->value;
                 } else {
-                    $v = false;
+                    $v = $this->negativeValue;
                 }
 
                 $values[$n] = $v;
@@ -63,7 +72,7 @@ class CheckboxInput extends ListBasedInput
         if($value !== null) {
             $value = $this->value;
         } else {
-            $value = false;
+            $value = $this->negativeValue;
         }
 
         if(!$this->selected && $value !== false) {
