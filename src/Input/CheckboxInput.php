@@ -14,7 +14,7 @@ class CheckboxInput extends ListBasedInput
         $this->setAttribute('type', 'checkbox');
     }
 
-    public function setNagativevalue($value): Input
+    public function setNegativeValue($value): Input
     {
         $this->negativeValue = $value;
 
@@ -75,10 +75,10 @@ class CheckboxInput extends ListBasedInput
             $value = $this->negativeValue;
         }
 
-        if(!$this->selected && $value !== false) {
+        if(!$this->selected && $value !== $this->negativeValue) {
             $this->selected(true);
         }
-        else if($this->selected && $value === false) {
+        else if($this->selected && $value === $this->negativeValue) {
             $this->selected(false);
         }
 

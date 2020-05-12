@@ -385,9 +385,9 @@ class Form
         return $this;
     }
 
-    public function setNagativevalue($value = 0): Form
+    public function setNegativeValue($value = 0): Form
     {
-        $this->lastRow->setNagativevalue($value);
+        $this->lastRow->setNegativeValue($value);
 
         return $this;
     }
