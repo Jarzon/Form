@@ -14,7 +14,7 @@ class CurrencyInput extends DigitBasedInput
 
     public function isUpdated($value): bool
     {
-        return $value !== $this->value || ($this->value !== null && !$this->form->update);
+        return $value !== $this->value || $this->value !== null;
     }
 
     public function validation()

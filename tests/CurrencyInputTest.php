@@ -25,14 +25,28 @@ class CurrencyInputTest extends TestCase
 
     public function testShouldCorrectlyDetectDecimals()
     {
-        $form = new Form(['test' => '0.5']);
+        $form = new Form(['test' => '0.05']);
 
         $form
             ->currency('test');
 
         $values = $form->validation();
 
-        $this->assertEquals(['test' => '0.5'], $values);
+        $this->assertEquals(['test' => '0.05'], $values);
+    }
+
+    public function testShouldCorrectlyDetectDecimalsOnUpdate()
+    {
+        $form = new Form(['test' => '0.05']);
+
+        $form
+            ->currency('test');
+
+        $form->updateValues(['test' => '0.05']);
+
+        $values = $form->validation();
+
+        $this->assertEquals(['test' => '0.05'], $values);
     }
 
     public function testRepeated()
