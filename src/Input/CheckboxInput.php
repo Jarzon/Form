@@ -21,6 +21,11 @@ class CheckboxInput extends ListBasedInput
         return $this;
     }
 
+    public function getRow()
+    {
+        return $this->getHtml().$this->getLabel();
+    }
+
     public function value($value = ''): Input
     {
         $this->value = $value;
