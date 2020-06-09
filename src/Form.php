@@ -5,6 +5,7 @@ use Jarzon\Input\{CheckboxInput,
     ColorInput,
     CsrfInput,
     CurrencyInput,
+    DataListInput,
     DateInput,
     EmailInput,
     FileInput,
@@ -339,6 +340,13 @@ class Form
         return $this;
     }
 
+    public function datalist(string $name): Form
+    {
+        $this->addInput(new DataListInput($name, $this), $name);
+
+        return $this;
+    }
+
     public function csrf(string $name = '_csrfToken'): Form
     {
         $this->addInput(new CsrfInput($name, $this), $name);
@@ -548,7 +556,7 @@ class Form
         return $this;
     }
 
-    public function groupBind(string $name): Form
+    public function groupBind(string $name = ''): Form
     {
         $this->lastRow->groupBind($name);
 
