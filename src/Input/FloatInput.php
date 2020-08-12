@@ -12,6 +12,11 @@ class FloatInput extends DigitBasedInput
         $this->setAttribute('step', 0.01);
     }
 
+    public function isUpdated($value): bool
+    {
+        return $value !== $this->value || $this->value !== null;
+    }
+
     public function validation()
     {
         $value = parent::validation();
@@ -24,7 +29,6 @@ class FloatInput extends DigitBasedInput
             return $value;
         }
 
-        if($value !== null) return (float)$value;
-        else return null;
+        return (float)$value;
     }
 }

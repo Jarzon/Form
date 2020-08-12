@@ -5,11 +5,13 @@ use Jarzon\DigitBasedInput;
 
 class CurrencyInput extends DigitBasedInput
 {
-    public function __construct(string $name, $form)
+    public function __construct(string $name, string $inputType, $form)
     {
         parent::__construct($name, $form);
-        $this->setAttribute('type', 'number');
-        $this->setAttribute('step', 0.01);
+        $this->setAttribute('type', $inputType);
+        if($inputType === 'number') {
+            $this->setAttribute('step', 0.01);
+        }
     }
 
     public function isUpdated($value): bool

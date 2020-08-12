@@ -282,9 +282,9 @@ class Form
         return $this;
     }
 
-    public function currency(string $name): Form
+    public function currency(string $name, ?string $inputType = 'number'): Form
     {
-        $this->addInput(new CurrencyInput($name, $this), $name);
+        $this->addInput(new CurrencyInput($name, $inputType, $this), $name);
 
         return $this;
     }
