@@ -1,6 +1,11 @@
 <?php
 namespace Jarzon;
 
+/**
+ * @property ?string $row
+ * @property ?string $label
+ * @property null|string|int|float $value
+ */
 class Input extends Tag
 {
     /** @var Form */

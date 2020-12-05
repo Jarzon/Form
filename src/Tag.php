@@ -1,6 +1,10 @@
 <?php
 namespace Jarzon;
 
+/**
+ * @property null|string|array $html
+ * @property string $row
+ */
 class Tag
 {
     protected string $tag = '';
