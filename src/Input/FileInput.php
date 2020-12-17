@@ -61,7 +61,7 @@ class FileInput extends Input
     {
         $updated = false;
 
-        if($value !== '') {
+        if($value !== null) {
             $updated = true;
         }
 
@@ -115,11 +115,6 @@ class FileInput extends Input
             'location' => $location,
             'size' => $value['size']
         ];
-    }
-
-    public function validation()
-    {
-        return parent::validation();
     }
 
     private function fileErrors($error)
