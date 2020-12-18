@@ -60,7 +60,7 @@ class CheckboxInput extends ListBasedInput
                     $values[] = [];
                 }
 
-                if($v !== null) {
+                if($v === $this->value) {
                     $v = $this->value;
                 } else {
                     $v = $this->negativeValue;
