@@ -33,14 +33,18 @@ class Form
     public bool $update = false;
     public bool $repeat = false;
     public array $postValues = [];
+    public string $postPrefix = '';
 
     /** @var NumberInput|FileInput|SelectInput|TelInput */
     protected $lastRow;
 
-    public function __construct(array $post, array $files = [])
+    public function __construct(array $post, array $files = [], string $postPrefix = '')
     {
         $this->post = $post;
         $this->files = $files;
+        if($postPrefix !== '') {
+            $this->postPrefix = $postPrefix;
+        }
 
         $this->addInput(new FormTag(), 'form');
     }
@@ -92,6 +96,7 @@ class Form
         $values = [];
 
         foreach($this->inputs as $key => $input) {
+
             if(!is_subclass_of($input, Input::class) || !$this->keyExists($key)) {
                 continue;
             }
@@ -207,133 +212,133 @@ class Form
 
     public function hidden(string $name): Form
     {
-        $this->addInput(new HiddenInput($name, $this), $name);
+        $this->addInput(new HiddenInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function text(string $name): Form
     {
-        $this->addInput(new TextInput($name, $this), $name);
+        $this->addInput(new TextInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function textarea(string $name): Form
     {
-        $this->addInput(new TextareaInput($name, $this), $name);
+        $this->addInput(new TextareaInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function password(string $name): Form
     {
-        $this->addInput(new PasswordInput($name, $this), $name);
+        $this->addInput(new PasswordInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function email(string $name): Form
     {
-        $this->addInput(new EmailInput($name, $this), $name);
+        $this->addInput(new EmailInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function url(string $name): Form
     {
-        $this->addInput(new UrlInput($name, $this), $name);
+        $this->addInput(new UrlInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function search(string $name): Form
     {
-        $this->addInput(new SearchInput($name, $this), $name);
+        $this->addInput(new SearchInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function tel(string $name): Form
     {
-        $this->addInput(new TelInput($name, $this), $name);
+        $this->addInput(new TelInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function color(string $name): Form
     {
-        $this->addInput(new ColorInput($name, $this), $name);
+        $this->addInput(new ColorInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function number(string $name): Form
     {
-        $this->addInput(new NumberInput($name, $this), $name);
+        $this->addInput(new NumberInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function float(string $name): Form
     {
-        $this->addInput(new FloatInput($name, $this), $name);
+        $this->addInput(new FloatInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function currency(string $name, ?string $inputType = 'number'): Form
     {
-        $this->addInput(new CurrencyInput($name, $inputType, $this), $name);
+        $this->addInput(new CurrencyInput($this->postPrefix.$name, $inputType, $this), $name);
 
         return $this;
     }
 
     public function range(string $name): Form
     {
-        $this->addInput(new RangeInput($name, $this), $name);
+        $this->addInput(new RangeInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function date(string $name): Form
     {
-        $this->addInput(new DateInput($name, $this), $name);
+        $this->addInput(new DateInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function time(string $name): Form
     {
-        $this->addInput(new TimeInput($name, $this), $name);
+        $this->addInput(new TimeInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function select(string $name): Form
     {
-        $this->addInput(new SelectInput($name, $this), $name);
+        $this->addInput(new SelectInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function radio(string $name): Form
     {
-        $this->addInput(new RadioInput($name, $this), $name);
+        $this->addInput(new RadioInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function checkbox(string $name): Form
     {
-        $this->addInput(new CheckboxInput($name, $this), $name);
+        $this->addInput(new CheckboxInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function file(string $name, string $destination = '/tmp/', string $ext = ''): Form
     {
-        $this->addInput(new FileInput($name, $this, $destination, $ext), $name);
+        $this->addInput(new FileInput($this->postPrefix.$name, $this, $destination, $ext), $name);
 
         $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
 
@@ -342,14 +347,14 @@ class Form
 
     public function datalist(string $name): Form
     {
-        $this->addInput(new DataListInput($name, $this), $name);
+        $this->addInput(new DataListInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
 
     public function csrf(string $name = '_csrfToken'): Form
     {
-        $this->addInput(new CsrfInput($name, $this), $name);
+        $this->addInput(new CsrfInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
