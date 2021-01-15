@@ -15,7 +15,7 @@ abstract class FormAbstract
         return ($this->form)($name);
     }
 
-    public function updateValues($settings): void
+    public function updateValues(object|array $settings): void
     {
         $this->form->updateValues($settings);
     }

@@ -17,7 +17,7 @@ class SelectInput extends ListBasedInput
         $this->setTag('select');
     }
 
-    public function generateHtml()
+    public function generateHtml(): void
     {
         $content = '';
 

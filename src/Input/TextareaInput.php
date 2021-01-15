@@ -19,7 +19,7 @@ class TextareaInput extends TextBasedInput
         return $this;
     }
 
-    public function generateHtml()
+    public function generateHtml(): void
     {
         $this->setHtml($this->generateTag($this->tag, $this->attributes, $this->value));
     }

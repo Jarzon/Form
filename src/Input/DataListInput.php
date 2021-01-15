@@ -16,7 +16,7 @@ class DataListInput extends Input
         $this->setTag('input');
     }
 
-    public function generateHtml()
+    public function generateHtml(): void
     {
         $content = '';
 

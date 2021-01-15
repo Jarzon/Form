@@ -1,7 +1,8 @@
 <?php
 namespace Jarzon;
 
-use Jarzon\Input\{CheckboxInput,
+use Jarzon\Input\{
+    CheckboxInput,
     ColorInput,
     CsrfInput,
     CurrencyInput,
@@ -35,7 +36,7 @@ class Form
     public array $postValues = [];
     public string $postPrefix = '';
 
-    /** @var NumberInput|FileInput|SelectInput|TelInput */
+    /** @var ListBasedInput|TextBasedInput|DigitBasedInput|FileInput|FormTag|SubmitInput */
     protected $lastRow;
 
     public function __construct(array $post, array $files = [], string $postPrefix = '')
@@ -66,7 +67,7 @@ class Form
         return array_key_exists($name ?? $this->submitName, $this->post);
     }
 
-    public function updateValues($values = []): void
+    public function updateValues(object|array $values = []): void
     {
         if(empty($values)) {
             $values = $this->post;
@@ -188,13 +189,8 @@ class Form
     /*
      * Input types
      */
-
-    public function submit(string $name = null): Form
+    public function submit(string $name = 'submit'): Form
     {
-        if($name === null) {
-            $name = 'submit';
-        }
-
         if($this->keyExists('submit')) {
             throw new \Error('The class only support one submit button');
         }
@@ -400,6 +396,10 @@ class Form
 
     public function setNegativeValue($value = 0): Form
     {
+        if(!$this->lastRow instanceof CheckboxInput) {
+            throw new \Exception("Illegal use of setNegativeValue() on unsupported tag");
+        }
+
         $this->lastRow->setNegativeValue($value);
 
         return $this;
@@ -421,6 +421,10 @@ class Form
 
     public function min(...$min): Form
     {
+        if($this->lastRow instanceof FormTag) {
+            throw new \Exception("Illegal use of min() on unsupported tag");
+        }
+
         $this->lastRow->min(...$min);
 
         return $this;
@@ -428,6 +432,10 @@ class Form
 
     public function max(...$max): Form
     {
+        if($this->lastRow instanceof FormTag) {
+            throw new \Exception("Illegal use of max() on unsupported tag");
+        }
+
         $this->lastRow->max(...$max);
 
         return $this;
@@ -435,6 +443,10 @@ class Form
 
     public function accept(array $types = []): Form
     {
+        if(!$this->lastRow instanceof FileInput) {
+            throw new \Exception("Illegal use of accept() on unsupported tag");
+        }
+
         $this->lastRow->accept($types);
 
         return $this;
@@ -463,6 +475,10 @@ class Form
 
     public function multiple(bool $multiple = true): Form
     {
+        if(!$this->lastRow instanceof FileInput) {
+            throw new \Exception("Illegal use of multiple() on unsupported tag");
+        }
+
         $this->lastRow->multiple($multiple);
 
         return $this;
@@ -535,6 +551,10 @@ class Form
 
     public function addOption(string $text, $value): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of addOption() on unsupported tag");
+        }
+
         $this->lastRow->addOption($text, $value);
 
         return $this;
@@ -542,6 +562,10 @@ class Form
 
     public function addOptions(array $options): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of addOptions() on unsupported tag");
+        }
+
         $this->lastRow->addOptions($options);
 
         return $this;
@@ -549,6 +573,10 @@ class Form
 
     public function group(string $name): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of group() on unsupported tag");
+        }
+
         $this->lastRow->group($name);
 
         return $this;
@@ -556,6 +584,10 @@ class Form
 
     public function setGroupAttribute(string $name, string $value): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of setGroupAttribute() on unsupported tag");
+        }
+
         $this->lastRow->setGroupAttribute($name, $value);
 
         return $this;
@@ -563,6 +595,10 @@ class Form
 
     public function groupBind(string $name = ''): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of groupBind() on unsupported tag");
+        }
+
         $this->lastRow->groupBind($name);
 
         return $this;
@@ -570,6 +606,10 @@ class Form
 
     public function bindOptionText(string $value): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of bindOptionText() on unsupported tag");
+        }
+
         $this->lastRow->bindOptionText($value);
 
         return $this;
@@ -577,6 +617,10 @@ class Form
 
     public function bindOptionValue(string $value): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of bindOptionValue() on unsupported tag");
+        }
+
         $this->lastRow->bindOptionValue($value);
 
         return $this;
@@ -584,6 +628,10 @@ class Form
 
     public function bindOptionAttribute(string $name, string $value): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of bindOptionAttribute() on unsupported tag");
+        }
+
         $this->lastRow->bindOptionAttribute($name, $value);
 
         return $this;
@@ -591,6 +639,10 @@ class Form
 
     public function bindValues(array $values): Form
     {
+        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
+            throw new \Exception("Illegal use of bindValues() on unsupported tag");
+        }
+
         $this->lastRow->bindValues($values);
 
         return $this;

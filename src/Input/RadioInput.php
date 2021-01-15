@@ -20,7 +20,7 @@ class RadioInput extends ListBasedInput
         $this->bind = new BindGroup();
     }
 
-    public function generateHtml()
+    public function generateHtml(): void
     {
         $html = [];
 

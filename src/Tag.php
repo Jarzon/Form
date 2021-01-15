@@ -20,7 +20,7 @@ class Tag
         }
     }
 
-    public function generateTag(string $tag, array $attributes, $content = false) : string
+    public function generateTag(string $tag, array $attributes, $content = false): string
     {
         $attr = '';
 
@@ -41,18 +41,18 @@ class Tag
         return $html;
     }
 
-    public function setTag(string $tag)
+    public function setTag(string $tag): void
     {
         $this->tag = $tag;
     }
 
-    public function generateHtml()
+    public function generateHtml(): void
     {
         $this->setHtml($this->generateTag($this->tag, $this->attributes));
         $this->isHtmlGenerated = true;
     }
 
-    public function setAttribute(string $name, $value = null)
+    public function setAttribute(string $name, $value = null): Tag
     {
         $this->attributes[$name] = $value;
         $this->resetIsHtmlGenerated();
@@ -65,7 +65,7 @@ class Tag
         return $this->attributes[$name];
     }
 
-    public function deleteAttribute(string $name)
+    public function deleteAttribute(string $name): void
     {
         if(!$this->hasAttribute($name)) {
             throw new \Exception("Trying to delete input attribute $name and it doesn't exist");
@@ -73,7 +73,7 @@ class Tag
         unset($this->attributes[$name]);
     }
 
-    public function hasAttribute(string $name) : bool
+    public function hasAttribute(string $name): bool
     {
         return array_key_exists($name, $this->attributes);
     }
@@ -84,7 +84,7 @@ class Tag
         return $this->html;
     }
 
-    public function setHtml($html)
+    public function setHtml($html): void
     {
         $this->html = $html;
     }
@@ -94,7 +94,7 @@ class Tag
         return $this->isHtmlGenerated;
     }
 
-    public function resetIsHtmlGenerated()
+    public function resetIsHtmlGenerated(): void
     {
         $this->isHtmlGenerated = false;
     }
