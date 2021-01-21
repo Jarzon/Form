@@ -136,6 +136,6 @@ class CheckboxInputTest extends TestCase
 
         $values = $form->validation();
 
-        $this->assertEquals([0 => ['test' => null]], $values);
+        $this->assertEquals([0 => ['test' => 'testy']], $values);
     }
 }

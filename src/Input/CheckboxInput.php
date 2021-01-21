@@ -1,14 +1,16 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Form;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
 
 class CheckboxInput extends ListBasedInput
 {
+    public $value = true;
     public $negativeValue = false;
 
-    public function __construct(string $name, $form)
+    public function __construct(string $name, Form $form)
     {
         parent::__construct($name, $form);
         $this->setAttribute('type', 'checkbox');
@@ -54,21 +56,19 @@ class CheckboxInput extends ListBasedInput
         if($this->form->repeat) {
             $values = [];
             // Iterate over the column for the current $input
-            $n = 0;
-            foreach($value as $v) {
+
+            $numberOfLines = $this->form->getNumberOfRows();
+
+            for($n = 0; $n <= $numberOfLines; $n++) {
                 if(!isset($values[$n])) {
                     $values[] = [];
                 }
 
-                if($v === $this->value) {
-                    $v = $this->value;
+                if(isset($value[$n])) {
+                    $values[$n] = $this->value;
                 } else {
-                    $v = $this->negativeValue;
+                    $values[$n] = $this->negativeValue;
                 }
-
-                $values[$n] = $v;
-
-                $n++;
             }
 
             return $values;

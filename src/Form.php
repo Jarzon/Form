@@ -92,6 +92,17 @@ class Form
         return $this->inputs;
     }
 
+    public function getNumberOfRows(): int
+    {
+        $max = 0;
+        foreach($this->inputs as $input) {
+            if(!$input instanceof Input || !isset($this->post[$input->name]) || !is_array($this->post[$input->name])) continue;
+
+            $max = max($max, count($this->post[$input->name]));
+        }
+        return $max - 1;
+    }
+
     public function validation(): array
     {
         $values = [];
