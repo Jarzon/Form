@@ -40,7 +40,7 @@ class CheckboxInput extends ListBasedInput
     public function selected($selected = true) {
         if($selected) {
             $this->setAttribute('checked', null);
-        } else if(!$selected && $this->hasAttribute('checked')) {
+        } else if($selected === false && $this->hasAttribute('checked')) {
             $this->deleteAttribute('checked');
         }
 

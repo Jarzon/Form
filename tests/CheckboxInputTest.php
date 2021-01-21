@@ -138,4 +138,22 @@ class CheckboxInputTest extends TestCase
 
         $this->assertEquals([0 => ['test' => 'testy']], $values);
     }
+
+    public function testRepeatedEmptyPost()
+    {
+        $form = new Form(['what' => [
+            'test', 'test'
+        ]]);
+
+        $form
+            ->repeat()
+            ->text('what')
+            ->checkbox('test')
+            ->value('testy')
+            ->setNegativeValue(null);
+
+        $values = $form->validation();
+
+        $this->assertEquals([0 => ['test' => null, 'what' => 'test'], 1 => ['test' => null, 'what' => 'test']], $values);
+    }
 }

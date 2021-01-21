@@ -241,10 +241,7 @@ class Input extends Tag
         $value = $this->getPostValue();
 
         if($this->form->repeat) {
-            if(!is_array($value)) {
-                throw new \Exception("{$this->name} is not an array");
-            }
-            $this->postValues = $value;
+            $this->postValues = (array)$value;
             return;
         }
 
