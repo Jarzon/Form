@@ -39,14 +39,14 @@ class FileInput extends Input
         return $this;
     }
 
-    public function value($value = ''): Input
+    public function value(mixed $value = ''): Input
     {
         $this->value = $value;
 
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation(mixed $value = null): bool
     {
         if(!parent::passValidation($value)) {
             return false;
@@ -119,7 +119,7 @@ class FileInput extends Input
         ];
     }
 
-    private function fileErrors($error): void
+    private function fileErrors(int $error): void
     {
         switch ($error) {
             case UPLOAD_ERR_OK:
