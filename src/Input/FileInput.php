@@ -2,6 +2,7 @@
 namespace Jarzon\Input;
 
 use Jarzon\Input;
+use Jarzon\ValidationException;
 
 class FileInput extends Input
 {
@@ -19,14 +20,15 @@ class FileInput extends Input
         $this->ext = $ext;
     }
 
-    public function accept(array $types) {
+    public function accept(array $types): Input
+    {
         $this->accept = $types;
         $this->setAttribute('accept', implode(', ', $types));
 
         return $this;
     }
 
-    public function multiple(bool $multiple)
+    public function multiple(bool $multiple): Input
     {
         if($multiple) {
             $this->setAttribute('multiple');
@@ -117,22 +119,22 @@ class FileInput extends Input
         ];
     }
 
-    private function fileErrors($error)
+    private function fileErrors($error): void
     {
         switch ($error) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
-                throw new \Exception('no file sent');
+                throw new \Error('no file sent');
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                throw new \Exception('exceeded filesize limit');
+                throw new ValidationException('exceeded filesize limit');
             default:
                 throw new \Error('unknown upload error');
         }
     }
 
-    private function fileMove(string $tmp_name, string $dest, string $ext = '')
+    private function fileMove(string $tmp_name, string $dest, string $ext = ''): array
     {
         $name = sha1_file($tmp_name);
 
@@ -155,7 +157,7 @@ class FileInput extends Input
         return [$file, $name];
     }
 
-    public function move_uploaded_file($tmp_name, $dest)
+    public function move_uploaded_file(string $tmp_name, string $dest): bool
     {
         return move_uploaded_file(
             $tmp_name,
