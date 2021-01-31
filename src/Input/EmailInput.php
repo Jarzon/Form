@@ -1,6 +1,7 @@
 <?php
 namespace Jarzon\Input;
 
+use Jarzon\Input;
 use Jarzon\TextBasedInput;
 
 class EmailInput extends TextBasedInput
@@ -22,5 +23,16 @@ class EmailInput extends TextBasedInput
         }
 
         return true;
+    }
+
+    public function multiple(bool $multiple): Input
+    {
+        if($multiple) {
+            $this->setAttribute('multiple');
+        } else {
+            $this->deleteAttribute('multiple');
+        }
+
+        return $this;
     }
 }

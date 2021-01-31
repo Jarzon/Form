@@ -486,7 +486,7 @@ class Form
 
     public function multiple(bool $multiple = true): Form
     {
-        if(!$this->lastRow instanceof FileInput) {
+        if(!$this->lastRow instanceof FileInput && !$this->lastRow instanceof EmailInput) {
             throw new \Exception("Illegal use of multiple() on unsupported tag");
         }
 
