@@ -62,18 +62,18 @@ class DataListInput extends Input
     }
 
     /** @param string|int $name */
-    public function group()
+    public function group($name)
     {
         $this->groups[] = [];
     }
 
     /** @param string|int $name */
-    public function groupBind()
+    public function groupBind($name)
     {
         $this->groups[] = new BindGroup();
     }
 
-    public function setGroupAttribute($name, $value)
+    public function setGroupAttribute($name, $value): DataListInput
     {
         $this->getLastOption()->setAttribute($name, $value);
         return $this;
@@ -87,7 +87,7 @@ class DataListInput extends Input
     public function bindOptionText(string $name): Input
     {
         if(empty($this->groups)) {
-            $this->groupBind();
+            $this->groupBind($name);
         }
 
         $this->getLastOption()->bindOptionText($name);
@@ -98,7 +98,7 @@ class DataListInput extends Input
     public function bindOptionValue(string $name): Input
     {
         if(empty($this->groups)) {
-            $this->groupBind();
+            $this->groupBind($name);
         }
 
         $this->getLastOption()->bindOptionAttribute('value', $name);
@@ -109,7 +109,7 @@ class DataListInput extends Input
     public function bindOptionAttribute(string $attribute, string $name): Input
     {
         if(empty($this->groups)) {
-            $this->groupBind();
+            $this->groupBind($name);
         }
 
         $this->getLastOption()->bindOptionAttributes[$attribute] = $name;
@@ -120,7 +120,7 @@ class DataListInput extends Input
     public function bindValues(array $values): Input
     {
         if(empty($this->groups)) {
-            $this->groupBind();
+            $this->groupBind('default');
         }
 
         $this->getLastOption()->bindValues = $values;
@@ -131,7 +131,7 @@ class DataListInput extends Input
     public function addOption($text, $value, array $attr = [])
     {
         if(empty($this->groups)) {
-            $this->group();
+            $this->group('default');
         }
 
         $attr += ['value' => $value];

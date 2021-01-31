@@ -18,8 +18,14 @@ class EmailInput extends TextBasedInput
             return false;
         }
 
-        if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            throw new \Jarzon\ValidationException("$this->name is not a valid email");
+        $email = str_replace(' ', '', $value);
+
+        $emails = explode(',', $email);
+
+        foreach ($emails as $mail) {
+            if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                throw new \Jarzon\ValidationException("$this->name is not a valid email");
+            }
         }
 
         return true;

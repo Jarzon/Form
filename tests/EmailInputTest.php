@@ -36,6 +36,21 @@ class EmailInputTest extends TestCase
         );
     }
 
+    public function testMultipleEmail()
+    {
+        $form = new Form(['test' => 'tata@abc.com, coco@abc.com']);
+
+        $form
+            ->email('test')
+            ->multiple();
+
+        $form->validation();
+
+        $this->assertEquals('<input name="test" type="email" multiple value="tata@abc.com, coco@abc.com">',
+            $form->getInput('test')->html
+        );
+    }
+
     public function testGetFormsEmail()
     {
         $form = new Form(['test' => 'a']);
