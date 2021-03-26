@@ -103,7 +103,7 @@ class Form
         return $max - 1;
     }
 
-    public function validation(): array
+    public function validation(bool $groupColumns = false): array
     {
         $values = [];
 
@@ -119,8 +119,16 @@ class Form
 
             if($this->repeat && $result !== null) {
                 foreach ($result as $i => $v) {
-                    if(!isset($this->postValues[$i])) {
+                    if($groupColumns && !isset($this->postValues[$key])) {
+                        $this->postValues[$key] = [];
+                    } else if(!$groupColumns && !isset($this->postValues[$i])) {
                         $this->postValues[$i] = [];
+                    }
+
+                    if($groupColumns) {
+                        $this->postValues[$key][$i] = $v;
+                    } else {
+                        $this->postValues[$i][$key] = $v;
                     }
 
                     $this->postValues[$i][$key] = $v;
