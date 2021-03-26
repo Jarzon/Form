@@ -117,7 +117,7 @@ class Form
 
             $result = $input->validation();
 
-            if($this->repeat) {
+            if($this->repeat && $result !== null) {
                 foreach ($result as $i => $v) {
                     if(!isset($this->postValues[$i])) {
                         $this->postValues[$i] = [];
