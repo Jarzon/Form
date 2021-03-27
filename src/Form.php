@@ -105,10 +105,7 @@ class Form
 
     public function validation(bool $groupColumns = false): array
     {
-        $values = [];
-
         foreach($this->inputs as $key => $input) {
-
             if(!is_subclass_of($input, Input::class) || !$this->keyExists($key)) {
                 continue;
             }
@@ -130,8 +127,6 @@ class Form
                     } else {
                         $this->postValues[$i][$key] = $v;
                     }
-
-                    $this->postValues[$i][$key] = $v;
                 }
 
                 continue;
