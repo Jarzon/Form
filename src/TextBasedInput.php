@@ -23,7 +23,7 @@ class TextBasedInput extends Input
             return false;
         }
 
-        $numberChars = mb_strlen($value);
+        $numberChars = mb_strlen((string)$value);
         if(!empty($this->max) && $numberChars > $this->max) {
             throw new ValidationException("{$this->name} is too long");
         }
