@@ -160,4 +160,35 @@ class SelectInput extends ListBasedInput
             $this->addOption($text, $value);
         }
     }
+
+    protected function passValidation($val): bool
+    {
+        if($val !== '' && $val !== '0') {
+            $found = false;
+
+            if(!empty($this->groups)) {
+                foreach($this->groups as $options) {
+                    if($options instanceof BindGroup) {
+                        foreach($options->bindValues as $value) {
+                            $target = $options->bindOptionAttributes['value'];
+                            if($val == $value->$target) {
+                                $found = true;
+                            }
+                        }
+                    } else {
+                        foreach($options as $option) {
+                            if($val == $option->attr['value']) {
+                                $found = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!$found) {
+                throw new ValidationException("{$this->name} value isn't part of the list");
+            }
+        }
+        return $val !== '';
+    }
 }
