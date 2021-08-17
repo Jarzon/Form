@@ -164,7 +164,7 @@ class SelectInput extends ListBasedInput
 
     protected function passValidation($val): bool
     {
-        if($val !== '' && $val !== '0') {
+        if(($val !== null && $val !== '' && $val !== '0') || $this->isRequired) {
             $found = false;
 
             if(!empty($this->groups)) {
