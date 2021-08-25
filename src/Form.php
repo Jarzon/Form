@@ -47,7 +47,11 @@ class Form
             $this->postPrefix = $postPrefix;
         }
 
-        $this->addInput(new FormTag(), 'form');
+        $form = new FormTag();
+
+        $this->lastRow = $form;
+
+        $this->addInput($form, 'form');
     }
 
     /**
