@@ -19,18 +19,23 @@ class CurrencyInput extends DigitBasedInput
         return $value !== $this->value || $this->value !== null;
     }
 
+    protected function convertValue($value): float
+    {
+        return (float)str_replace(' ', '', $value);
+    }
+
     public function validation()
     {
         $value = parent::validation();
 
         if($this->form->repeat) {
             foreach ($value as $i => $v) {
-                $value[$i] = (float)$v;
+                $value[$i] = $this->convertValue($v);
             }
 
             return $value;
         }
 
-        return (float)$value;
+        return $this->convertValue($value);
     }
 }
