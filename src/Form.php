@@ -567,7 +567,7 @@ class Form
         return $this;
     }
 
-    public function addOption(string $text, $value): Form
+    public function addOption(string $text, $value, array $attributes = []): Form
     {
         if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
             throw new \Exception("Illegal use of addOption() on unsupported tag");
