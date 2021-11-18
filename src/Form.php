@@ -573,7 +573,7 @@ class Form
             throw new \Exception("Illegal use of addOption() on unsupported tag");
         }
 
-        $this->lastRow->addOption($text, $value);
+        $this->lastRow->addOption($text, $value, $attributes);
 
         return $this;
     }
