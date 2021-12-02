@@ -17,7 +17,7 @@ class TextBasedInput extends Input
         $this->max = $max;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = ''): bool
     {
         if(!parent::passValidation($value)) {
             return false;
