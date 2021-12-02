@@ -139,7 +139,7 @@ class Input extends Tag
     {
         $this->value = $value;
 
-        $this->setAttribute('value', is_string($value)? htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE) : $value);
+        $this->setAttribute('value', is_string($value) && $value? htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE) : $value);
 
         return $this;
     }
