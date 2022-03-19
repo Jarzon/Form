@@ -17,7 +17,7 @@ class FloatInput extends DigitBasedInput
         return $value !== $this->value || $this->value !== null;
     }
 
-    public function validation(): array|null
+    public function validation(): array|string|null
     {
         $value = parent::validation();
 

@@ -11,7 +11,7 @@ class SubmitInput extends Input
         parent::__construct($name, $this);
     }
 
-    public function validation(): array|null
+    public function validation(): array|string|null
     {
         return null;
     }

@@ -12,7 +12,7 @@ class NumberInput extends DigitBasedInput
         $this->setAttribute('step', 1);
     }
 
-    public function validation(): array|null
+    public function validation(): array|string|null
     {
         $value = parent::validation();
 
