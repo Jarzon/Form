@@ -11,6 +11,7 @@ class CurrencyInput extends DigitBasedInput
         $this->setAttribute('type', $inputType);
         if($inputType === 'number') {
             $this->setAttribute('step', 0.01);
+            $this->setAttribute('inputmode', 'decimal');
         }
     }
 
