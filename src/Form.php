@@ -405,6 +405,13 @@ class Form
         return $this;
     }
 
+    public function mandatory(bool $mandatory = true): Form
+    {
+        $this->lastRow->mandatory($mandatory);
+
+        return $this;
+    }
+
     public function value($value = ''): Form
     {
         $this->lastRow->value($value);

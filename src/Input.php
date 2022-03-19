@@ -8,8 +8,7 @@ namespace Jarzon;
  */
 class Input extends Tag
 {
-    /** @var Form */
-    protected $form;
+    protected Form $form;
 
     public string $name = '';
     protected $value = null;
@@ -18,6 +17,7 @@ class Input extends Tag
     protected $postValue = null;
     protected ?string $label = null;
     protected bool $isRequired = false;
+    protected bool $isMandatory = false;
     protected bool $isDisabled = false;
     protected bool $isReadonly = false;
     protected ?string $labelHtml = null;
@@ -46,7 +46,7 @@ class Input extends Tag
         }
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->setAttribute('name', $name);
 
@@ -101,12 +101,12 @@ class Input extends Tag
         return $label;
     }
 
-    public function getRow()
+    public function getRow(): string
     {
         return $this->getLabel().$this->getHtml();
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         if(!$this->isLabelGenerated()) $this->generateLabel();
         return $this->labelHtml;
@@ -198,6 +198,13 @@ class Input extends Tag
         return $this;
     }
 
+    public function mandatory(bool $mandatory = true): Input
+    {
+        $this->isMandatory = $mandatory;
+
+        return $this;
+    }
+
     public function disabled(bool $disabled = true): Input
     {
         if($disabled && !$this->isDisabled) {
@@ -256,7 +263,7 @@ class Input extends Tag
         return $value !== '';
     }
 
-    public function validation()
+    public function validation(): array|null
     {
         if($this->form->repeat) {
             foreach($this->postValues as $value) {
@@ -274,14 +281,14 @@ class Input extends Tag
             $this->value($this->postValue);
         }
 
-        if($updated || ($this->isRequired && !$this->form->update)) {
+        if($updated || ($this->isRequired && !$this->form->update) || $this->isMandatory) {
             return $this->postValue;
         }
 
         return null;
     }
 
-    public function __call($name, $arguments)
+    public function __call($name, $arguments): void
     {
         throw new \Exception("Illegal $name attribute on $this->name");
     }
