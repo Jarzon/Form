@@ -264,7 +264,7 @@ class Input extends Tag
         return $value !== '';
     }
 
-    public function validation(): array|string|null
+    public function validation(): mixed
     {
         if($this->form->repeat) {
             foreach($this->postValues as $value) {

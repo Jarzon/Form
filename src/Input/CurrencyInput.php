@@ -25,7 +25,7 @@ class CurrencyInput extends DigitBasedInput
         return (float)str_replace(' ', '', $value);
     }
 
-    public function validation(): array|string|null
+    public function validation(): array|float|null
     {
         $value = parent::validation();
 
