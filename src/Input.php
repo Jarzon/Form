@@ -107,7 +107,7 @@ class Input extends Tag
         return $this->getLabel().$this->getHtml();
     }
 
-    public function getLabel(): string
+    public function getLabel(): string|null
     {
         if(!$this->isLabelGenerated()) $this->generateLabel();
         return $this->labelHtml;
