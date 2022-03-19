@@ -59,7 +59,7 @@ class RadioInput extends ListBasedInput
         $this->setHtml($html);
     }
 
-    public function getRow()
+    public function getRow(): string
     {
         $output = [];
 

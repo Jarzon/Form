@@ -8,7 +8,8 @@ namespace Jarzon;
  */
 class Input extends Tag
 {
-    protected Form $form;
+    /* @var Form $form */
+    protected $form;
 
     public string $name = '';
     protected $value = null;
