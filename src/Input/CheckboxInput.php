@@ -49,7 +49,7 @@ class CheckboxInput extends ListBasedInput
         return $this;
     }
 
-    public function validation(): array|string|bool
+    public function validation(): array|string|int|bool
     {
         $value = $this->getPostValue();
 
