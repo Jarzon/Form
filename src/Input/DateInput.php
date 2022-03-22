@@ -35,15 +35,15 @@ class DateInput extends Input
         }
 
         if(preg_match('/[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/', $value) == 0) {
-            throw new \Jarzon\ValidationException("{$this->name} is not a valid date");
+            throw new \Jarzon\ValidationException("{$this->name} is not a valid date", 50);
         }
 
         $date = $this->convertDate($value);
         if($this->max !== null && $date > $this->convertDate($this->max)) {
-            throw new \Jarzon\ValidationException("{$this->name} is higher that {$this->max}");
+            throw new \Jarzon\ValidationException("{$this->name} is higher that {$this->max}", 51);
         }
         else if($this->min !== null && $date < $this->convertDate($this->min)) {
-            throw new \Jarzon\ValidationException("{$this->name} is lower that {$this->min}");
+            throw new \Jarzon\ValidationException("{$this->name} is lower that {$this->min}", 52);
         }
 
         return true;

@@ -18,7 +18,7 @@ class UrlInput extends TextBasedInput
         }
 
         if(!filter_var($value, FILTER_VALIDATE_URL)) {
-            throw new \Jarzon\ValidationException("$this->name is not a valid url");
+            throw new \Jarzon\ValidationException("$this->name is not a valid url", 27);
         }
 
         return true;

@@ -187,7 +187,7 @@ class SelectInput extends ListBasedInput
             }
 
             if(!$found) {
-                throw new ValidationException("{$this->name} value isn't part of the list");
+                throw new ValidationException("{$this->name} value isn't part of the list", 40);
             }
         }
         return $val !== '';

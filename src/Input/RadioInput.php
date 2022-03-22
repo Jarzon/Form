@@ -5,6 +5,7 @@ use Jarzon\BindGroup;
 use Jarzon\Input;
 use Jarzon\ListBasedInput;
 use Jarzon\Option;
+use Jarzon\ValidationException;
 
 class RadioInput extends ListBasedInput
 {
@@ -87,7 +88,7 @@ class RadioInput extends ListBasedInput
             }
 
             if(!$exist) {
-                throw new \Error("$value doesn't exist");
+                throw new ValidationException("{$this->name} value isn't part of the list", 41);
             }
         }
 

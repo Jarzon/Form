@@ -40,7 +40,7 @@ class TelInput extends TextBasedInput
         if($this->pattern !== null) {
             $format = str_replace('/', '\/', $this->pattern);
             if(preg_match("/$format/", $value) == 0) {
-                throw new \Jarzon\ValidationException("{$this->name} is not a valid phone number");
+                throw new \Jarzon\ValidationException("{$this->name} is not a valid phone number", 22);
             }
         }
 

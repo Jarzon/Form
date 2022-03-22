@@ -36,7 +36,7 @@ class CsrfInput extends TextBasedInput
         parent::passValidation($value);
 
         if(!$key = array_search($value, $_SESSION['_formToken'])) {
-            throw new \Jarzon\ValidationException("the CSRF token doesn't match");
+            throw new \Jarzon\ValidationException("the CSRF token doesn't match", 23);
         }
 
         unset($_SESSION['_formToken'][$key]);

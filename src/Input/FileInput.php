@@ -128,7 +128,7 @@ class FileInput extends Input
                 throw new \Error('no file sent');
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                throw new ValidationException('exceeded filesize limit');
+                throw new ValidationException('exceeded filesize limit', 30);
             default:
                 throw new \Error('unknown upload error');
         }

@@ -26,10 +26,10 @@ class DigitBasedInput extends Input
         }
 
         if($this->max !== null && $value > $this->max) {
-            throw new ValidationException("{$this->name} is too high");
+            throw new ValidationException("{$this->name} is too high", 30);
         }
         else if($this->min !== null && $value < $this->min) {
-            throw new ValidationException("{$this->name} is too low");
+            throw new ValidationException("{$this->name} is too low", 31);
         }
 
         return true;

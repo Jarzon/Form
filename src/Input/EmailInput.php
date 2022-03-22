@@ -24,7 +24,7 @@ class EmailInput extends TextBasedInput
 
         foreach ($emails as $mail) {
             if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                throw new \Jarzon\ValidationException("$this->name is not a valid email");
+                throw new \Jarzon\ValidationException("$this->name is not a valid email", 24);
             }
         }
 
