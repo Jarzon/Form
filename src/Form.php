@@ -110,6 +110,7 @@ class Form
     public function validation(bool $groupColumns = false): array
     {
         foreach($this->inputs as $key => $input) {
+            // Dont validate submit and form tags
             if(!is_subclass_of($input, Input::class) || !$this->keyExists($key)) {
                 continue;
             }

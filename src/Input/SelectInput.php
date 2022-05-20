@@ -11,6 +11,7 @@ class SelectInput extends ListBasedInput
 {
     protected $selected = null;
     protected array $groups = [];
+    public int $numberOfElements = 0;
 
     public function __construct(string $name, $form)
     {
@@ -139,6 +140,8 @@ class SelectInput extends ListBasedInput
             $this->groupBind(0);
         }
 
+        $this->numberOfElements += count($values);
+
         $this->getLastOption()->bindValues = $values;
 
         return $this;
@@ -151,6 +154,8 @@ class SelectInput extends ListBasedInput
         }
 
         $attr += ['value' => $value];
+
+        $this->numberOfElements += 1;
 
         $this->getLastOption()[] = new Option($text, $attr);
     }
