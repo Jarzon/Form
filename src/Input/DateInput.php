@@ -14,6 +14,12 @@ class DateInput extends Input
         $this->setAttribute('type', 'date');
     }
 
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = \DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
+    }
+
     public function min(string $min)
     {
         $this->setAttribute('min', $min);
@@ -34,7 +40,7 @@ class DateInput extends Input
             return false;
         }
 
-        if(preg_match('/[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])/', $value) == 0) {
+        if(!$this->validateDate($value)) {
             throw new \Jarzon\ValidationException("{$this->name} is not a valid date", 50);
         }
 
