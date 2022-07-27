@@ -12,10 +12,7 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 class FileInputTest extends TestCase
 {
-    /**
-     * @var  vfsStreamDirectory
-     */
-    private $root;
+    private vfsStreamDirectory $root;
 
     public function setUp(): void
     {

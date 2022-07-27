@@ -14,7 +14,7 @@ class DateInput extends Input
         $this->setAttribute('type', 'date');
     }
 
-    function validateDate($date, $format = 'Y-m-d')
+    function validateDate($date, $format = 'Y-m-d'): bool
     {
         $d = \DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
@@ -55,7 +55,8 @@ class DateInput extends Input
         return true;
     }
 
-    protected function convertDate($date) {
+    protected function convertDate($date): int
+    {
         return strtotime($date);
     }
 }

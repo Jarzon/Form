@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Jarzon\ValidationException;
 use PHPUnit\Framework\TestCase;
 use Jarzon\Form;
 
@@ -10,8 +11,8 @@ class RadioInputTest extends TestCase
 {
     public function testRadioValueException()
     {
-        $this->expectException(\Error::class);
-        $this->expectExceptionMessage('123456789ab doesn\'t exist');
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage("test value isn't part of the list");
 
         $form = new Form(['test' => '123456789ab']);
 
