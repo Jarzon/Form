@@ -630,13 +630,13 @@ class Form
         return $this;
     }
 
-    public function groupAction(string $actionUrl = '', string $actionContent = ''): Form
+    public function groupAction(string $actionCallback = '', string $actionContent = ''): Form
     {
         if(!$this->lastRow instanceof SelectInput) {
             throw new \Exception("Illegal use of groupBind() on unsupported tag");
         }
 
-        $this->lastRow->groupAction($actionUrl, $actionContent);
+        $this->lastRow->groupAction($actionCallback, $actionContent);
 
         return $this;
     }

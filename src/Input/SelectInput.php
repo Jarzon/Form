@@ -90,9 +90,9 @@ class SelectInput extends ListBasedInput
         $this->groups[$name] = new BindGroup();
     }
 
-    public function groupAction(string $actionUrl = '', string $actionContent = ''): Input
+    public function groupAction(string $actionCallback = '', string $actionContent = ''): Input
     {
-        $this->getLastOption()->setAttribute('data-actionUrl', $actionUrl);
+        $this->getLastOption()->setAttribute('data-actionCallback', $actionCallback);
         $this->getLastOption()->setAttribute('data-actionContent', $actionContent);
 
         return $this;
