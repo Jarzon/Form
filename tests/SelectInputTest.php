@@ -33,7 +33,7 @@ class SelectInputTest extends TestCase
             ->value('test');
 
         $this->assertEquals(
-            '<select name="test"><option value="test" selected>test</option><optgroup label="group" actionUrl="/rebates/edit/" actionContent="edit"><option value="test2" actionAttribute="0" customAttr="test2">test2</option></optgroup></select>',
+            '<select name="test"><option value="test" selected>test</option><optgroup label="group" data-actionUrl="/rebates/edit/" data-actionContent="edit"><option value="test2" actionAttribute="0" customAttr="test2">test2</option></optgroup></select>',
             $form->getInput('test')->html
         );
 

@@ -92,8 +92,8 @@ class SelectInput extends ListBasedInput
 
     public function groupBindAction(string $actionUrl = '', string $actionContent = '', string $actionBind = ''): Input
     {
-        $this->getLastOption()->setAttribute('actionUrl', $actionUrl);
-        $this->getLastOption()->setAttribute('actionContent', $actionContent);
+        $this->getLastOption()->setAttribute('data-actionUrl', $actionUrl);
+        $this->getLastOption()->setAttribute('data-actionContent', $actionContent);
         if($actionBind !== '') $this->bindOptionAttribute('actionAttribute', $actionBind);
 
         return $this;
