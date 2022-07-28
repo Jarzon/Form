@@ -94,7 +94,7 @@ class SelectInput extends ListBasedInput
     {
         $this->getLastOption()->setAttribute('actionUrl', $actionUrl);
         $this->getLastOption()->setAttribute('actionContent', $actionContent);
-        $this->bindOptionAttribute('actionAttribute', $actionBind);
+        if($actionBind !== '') $this->bindOptionAttribute('actionAttribute', $actionBind);
 
         return $this;
     }
