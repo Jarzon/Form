@@ -26,14 +26,14 @@ class SelectInputTest extends TestCase
             ->addOption('test', 'test')
 
             ->groupBind('group')
-            ->groupBindAction('/rebates/edit/', 'edit', 'id')
+            ->groupAction('/rebates/edit/', 'edit')
             ->bindValues($options)
             ->bindOptionAttribute('customAttr', 'customAttr')
 
             ->value('test');
 
         $this->assertEquals(
-            '<select name="test"><option value="test" selected>test</option><optgroup label="group" data-actionUrl="/rebates/edit/" data-actionContent="edit"><option value="test2" actionAttribute="0" customAttr="test2">test2</option></optgroup></select>',
+            '<select name="test"><option value="test" selected>test</option><optgroup label="group" data-actionUrl="/rebates/edit/" data-actionContent="edit"><option value="test2" customAttr="test2">test2</option></optgroup></select>',
             $form->getInput('test')->html
         );
 
