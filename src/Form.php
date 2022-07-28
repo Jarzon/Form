@@ -630,6 +630,17 @@ class Form
         return $this;
     }
 
+    public function groupBindAction(string $actionUrl = '', string $actionContent = '', string $actionBind = ''): Form
+    {
+        if(!$this->lastRow instanceof SelectInput) {
+            throw new \Exception("Illegal use of groupBind() on unsupported tag");
+        }
+
+        $this->lastRow->groupBindAction($actionUrl, $actionContent, $actionBind);
+
+        return $this;
+    }
+
     public function bindOptionText(string $value): Form
     {
         if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
