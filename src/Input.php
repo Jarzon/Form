@@ -258,7 +258,6 @@ class Input extends Tag
 
     protected function passValidation($value): bool
     {
-        if($this->isDisabled) return false;
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required", 1);
         }
@@ -267,6 +266,7 @@ class Input extends Tag
 
     public function validation(): mixed
     {
+        if($this->isDisabled) return null;
         if($this->form->repeat) {
             foreach($this->postValues as $value) {
                 $this->passValidation($value);
