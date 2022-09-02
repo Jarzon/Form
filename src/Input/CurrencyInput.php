@@ -27,6 +27,9 @@ class CurrencyInput extends DigitBasedInput
 
     public function validation(): array|float|null
     {
+        if($this->isDisabled) {
+            return null;
+        }
         $value = parent::validation();
 
         if($this->form->repeat) {
