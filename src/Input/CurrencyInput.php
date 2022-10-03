@@ -2,17 +2,17 @@
 namespace Jarzon\Input;
 
 use Jarzon\DigitBasedInput;
+use Jarzon\ValidationException;
 
 class CurrencyInput extends DigitBasedInput
 {
-    public function __construct(string $name, string $inputType, $form)
+    public int $decimals = 2;
+
+    public function __construct(string $name, $form)
     {
         parent::__construct($name, $form);
-        $this->setAttribute('type', $inputType);
-        if($inputType === 'number') {
-            $this->setAttribute('step', 0.01);
-            $this->setAttribute('inputmode', 'decimal');
-        }
+        $this->setAttribute('type', 'text');
+        $this->setAttribute('inputmode', 'decimal');
     }
 
     public function isUpdated($value): bool
@@ -22,7 +22,16 @@ class CurrencyInput extends DigitBasedInput
 
     protected function convertValue($value): float
     {
-        return (float)str_replace(' ', '', $value);
+        return (float)str_replace(' ', '', str_replace(',', '.', $value));
+    }
+
+    public function passValidation($value = null): bool
+    {
+        if((int)strpos(strrev($value), ".") > $this->decimals) {
+            throw new ValidationException("{$this->name} have too many decimals", 30);
+        }
+
+        return parent::passValidation($value);
     }
 
     public function validation(): array|float|null
@@ -41,5 +50,16 @@ class CurrencyInput extends DigitBasedInput
         }
 
         return $this->convertValue($value);
+    }
+
+    public function generateHtml(): void
+    {
+        $this->setAttribute('oninput', "validator(this, {$this->min}, {$this->max}, {$this->decimals})");
+        parent::generateHtml();
+    }
+
+    public function decimal(int $decimals = 2): void
+    {
+        $this->decimals = $decimals;
     }
 }

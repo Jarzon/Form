@@ -5,17 +5,13 @@ class DigitBasedInput extends Input
 {
     protected $value = 0;
 
-    public function min(int $min = PHP_INT_MAX)
+    public function min(int $min = 0)
     {
-        $this->setAttribute('min', $min);
-
         $this->min = $min;
     }
 
-    public function max(int $max = 0)
+    public function max(int $max = PHP_INT_MAX)
     {
-        $this->setAttribute('max', $max);
-
         $this->max = $max;
     }
 

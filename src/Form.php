@@ -302,9 +302,9 @@ class Form
         return $this;
     }
 
-    public function currency(string $name, ?string $inputType = 'number'): Form
+    public function currency(string $name): Form
     {
-        $this->addInput(new CurrencyInput($this->postPrefix.$name, $inputType, $this), $name);
+        $this->addInput(new CurrencyInput($this->postPrefix.$name, $this), $name);
 
         return $this;
     }
@@ -463,6 +463,17 @@ class Form
         }
 
         $this->lastRow->max(...$max);
+
+        return $this;
+    }
+
+    public function decimal(int $decimals): Form
+    {
+        if(!$this->lastRow instanceof CurrencyInput) {
+            throw new \Exception("Illegal use of decimal() on unsupported tag");
+        }
+
+        $this->lastRow->decimal($decimals);
 
         return $this;
     }
