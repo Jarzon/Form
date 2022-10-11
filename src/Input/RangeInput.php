@@ -10,4 +10,16 @@ class RangeInput extends DigitBasedInput
         parent::__construct($name, $form);
         $this->setAttribute('type', 'range');
     }
+
+    public function min(int $min = 0)
+    {
+        parent::min($min);
+        $this->setAttribute('min', $min);
+    }
+
+    public function max(int $max = PHP_INT_MAX)
+    {
+        parent::max($max);
+        $this->setAttribute('max', $max);
+    }
 }
