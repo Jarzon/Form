@@ -80,13 +80,18 @@ class Form
         }
 
         foreach ($values as $name => $value) {
-            if($this->keyExists($name)) {
-                $input = $this->getInput($name);
-                if($input instanceof CheckboxInput) {
-                    $input->selected($value);
-                } else {
-                    $input->value($value);
-                }
+            $this->updateValue($name, $value);
+        }
+    }
+
+    public function updateValue(string $name, mixed $value): void
+    {
+        if($this->keyExists($name)) {
+            $input = $this->getInput($name);
+            if($input instanceof CheckboxInput) {
+                $input->selected($value);
+            } else {
+                $input->value($value);
             }
         }
     }
