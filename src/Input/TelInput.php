@@ -10,7 +10,6 @@ class TelInput extends TextBasedInput
     {
         parent::__construct($name, $form);
         $this->setAttribute('type', 'tel');
-        $this->pattern();
     }
 
     public function pattern(?string $pattern = null, ?string $message = null): Input
@@ -19,14 +18,10 @@ class TelInput extends TextBasedInput
             $pattern = '(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?';
         }
 
-        if ($message === null) {
-            $message = 'Phone number (eg. 418-555-5555, 1-418-555-5555 #555)';
-        }
-
         $this->pattern = $pattern;
 
         $this->setAttribute('pattern', $pattern);
-        $this->setAttribute('title', $message);
+        $this->setAttribute('title', $message === null? $message : 'Phone number (eg. 418-555-5555, 1-418-555-5555 #555)');
 
         return $this;
     }
