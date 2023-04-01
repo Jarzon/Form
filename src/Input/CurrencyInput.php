@@ -20,9 +20,9 @@ class CurrencyInput extends DigitBasedInput
         return $value !== $this->value || $this->value !== null;
     }
 
-    protected function convertValue($value): float
+    protected function convertValue($value): string
     {
-        return (float)str_replace(' ', '', str_replace(',', '.', $value));
+        return str_replace(' ', '', str_replace(',', '.', $value));
     }
 
     public function passValidation($value = null): bool
@@ -34,7 +34,7 @@ class CurrencyInput extends DigitBasedInput
         return parent::passValidation($value);
     }
 
-    public function validation(): array|float|null
+    public function validation(): array|string|null
     {
         if($this->isDisabled) {
             return null;
