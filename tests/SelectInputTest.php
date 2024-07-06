@@ -58,12 +58,12 @@ class SelectInputTest extends TestCase
 
     public function testFirstValueIsSelected()
     {
-        $form = new Form(['test' => 'test']);
+        $form = new Form(['select' => 'firstValue']);
 
         $form
-            ->select('test')
-            ->bindValues(['test2' => 'test', 'empty string' => ''])
-            ->selected('test');
+            ->select('select')
+            ->bindValues(['firstOption' => 'firstValue', 'secondOption' => ''])
+            ->selected('firstValue');
 
         $values = $form->validation();
 

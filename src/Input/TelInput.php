@@ -21,7 +21,7 @@ class TelInput extends TextBasedInput
         $this->pattern = $pattern;
 
         $this->setAttribute('pattern', $pattern);
-        $this->setAttribute('title', $message === null? $message : 'Phone number (eg. 418-555-5555, 1-418-555-5555 #555)');
+        $this->setAttribute('title', $message !== null? $message : 'Phone number (eg. 418-555-5555, 1-418-555-5555 #555)');
 
         return $this;
     }

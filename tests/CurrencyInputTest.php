@@ -18,7 +18,7 @@ class CurrencyInputTest extends TestCase
             ->max(10);
 
         $this->assertEquals(
-            '<input name="test" type="number" step="0.01" inputmode="decimal" min="4" max="10">',
+            '<input name="test" type="text" inputmode="decimal" oninput="validator(this, 4, 10, 2)">',
             $form->getInput('test')->html
         );
     }
