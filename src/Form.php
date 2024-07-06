@@ -213,13 +213,13 @@ class Form
     /*
      * Input types
      */
-    public function submit(string $name = 'submit'): Form
+    public function submit(string $name = 'save'): Form
     {
-        if($this->keyExists('submit')) {
-            throw new \Error('The class only support one submit button');
+        if($this->keyExists($name)) {
+            throw new \Error("Trying to redeclare a existing submit input named: $name");
         }
 
-        $this->addInput(new SubmitInput($name), 'submit');
+        $this->addInput(new SubmitInput($name), $name);
 
         if($this->keyExists('form') && !$this->keyExists('/form')) {
             $this->addInput(new FormTag(true), '/form', false);

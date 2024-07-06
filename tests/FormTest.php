@@ -33,7 +33,7 @@ class FormTest extends TestCase
         }
 
         $this->assertEquals(
-            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>',
+            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="save" value="Save"></form>',
             $output
         );
     }
@@ -63,14 +63,14 @@ class FormTest extends TestCase
         }
 
         $this->assertEquals(
-            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="submit" value="Save"></form>',
+            '<form method="POST"><input name="username" type="text" minlength="4" maxlength="10"><input name="password" type="password" minlength="10" maxlength="100"><input type="submit" name="save" value="Save"></form>',
             $output
         );
     }
 
     public function testFormSubmited()
     {
-        $form = new Form(['username' => 'Joe Doe', 'submit' => 'Save']);
+        $form = new Form(['username' => 'Joe Doe', 'save' => 'Save']);
 
         $form
             ->text('username')
