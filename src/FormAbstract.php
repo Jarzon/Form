@@ -20,9 +20,9 @@ abstract class FormAbstract
         $this->form->updateValues($settings);
     }
 
-    public function submitted(): bool
+    public function submitted(string $name = null): bool
     {
-        return $this->form->submitted();
+        return $this->form->submitted($name);
     }
 
     public function validation(): array
