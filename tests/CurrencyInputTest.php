@@ -53,7 +53,8 @@ class CurrencyInputTest extends TestCase
     {
         $form = new Form(['test' => ['1234', 'NaN']]);
 
-        $form->repeat()
+        $form
+            ->repeat()
             ->currency('test');
 
         $values = $form->validation();

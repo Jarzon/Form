@@ -61,16 +61,14 @@ class DataListInput extends Input
         return $value !== $this->value || $this->form->update;
     }
 
-    /** @param string|int $name */
-    public function group($name)
+    public function group(string|int $name)
     {
         $this->groups[] = [];
     }
 
-    /** @param string|int $name */
-    public function groupBind($name)
+    public function groupBind(string|int $name, string $class = '')
     {
-        $this->groups[] = new BindGroup();
+        $this->groups[$name] = new BindGroup($class);
     }
 
     public function setGroupAttribute($name, $value): DataListInput

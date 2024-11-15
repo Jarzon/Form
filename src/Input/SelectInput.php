@@ -78,16 +78,14 @@ class SelectInput extends ListBasedInput
         return $value !== $this->selected || ($this->value !== null && !$this->form->update);
     }
 
-    /** @param string|int $name */
-    public function group($name)
+    public function group(string|int $name)
     {
         $this->groups[$name] = [];
     }
 
-    /** @param string|int $name */
-    public function groupBind($name)
+    public function groupBind(string|int $name, string $class = '')
     {
-        $this->groups[$name] = new BindGroup();
+        $this->groups[$name] = new BindGroup($class);
     }
 
     public function groupAction(string $actionCallback = '', string $actionContent = ''): Input

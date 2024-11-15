@@ -7,6 +7,12 @@ class BindGroup extends Tag
     public string $bindOptionText = 'text';
     public array $bindOptionAttributes = ['value' => 'value'];
 
+    public function __construct(string $class = '') {
+        if($class !== '') {
+            $this->setAttribute('class', $class);
+        }
+    }
+
     public function bindOptionText(string $name): void
     {
         $this->bindOptionText = $name;

@@ -635,13 +635,13 @@ class Form
         return $this;
     }
 
-    public function groupBind(string $name = ''): Form
+    public function groupBind(string $name = '', string $class = ''): Form
     {
         if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
             throw new \Exception("Illegal use of groupBind() on unsupported tag");
         }
 
-        $this->lastRow->groupBind($name);
+        $this->lastRow->groupBind($name, $class);
 
         return $this;
     }
