@@ -37,8 +37,8 @@ class SelectInput extends ListBasedInput
                         }
 
                         $groupContent .= $this->generateOption($value->{$options->bindOptionText}, $attributes);
-                        $groupAttributes = $groupAttributes + $options->attributes;
                     }
+                    $groupAttributes = $groupAttributes + $options->attributes;
                 } else {
                     foreach($options as $option) {
                         $groupContent .= $this->generateOption($option->text, $option->attr);
