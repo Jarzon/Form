@@ -12,7 +12,7 @@ class TimeInput extends TextBasedInput
         $this->setAttribute('type', 'time');
     }
 
-    public function pattern(?string $pattern = null, ?string $message = null): Input
+    public function pattern(string|null $pattern = null, string|null $message = null): Input
     {
         if($pattern === null) {
             $pattern = '[0-9]{2}:[0-9]{2}';

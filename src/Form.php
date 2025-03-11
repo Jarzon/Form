@@ -66,7 +66,7 @@ class Form
         throw new \Exception("$name input doesn't exist");
     }
 
-    public function submitted(string $name = null): bool
+    public function submitted(string|null $name = null): bool
     {
         return array_key_exists($name ?? $this->submitName, $this->post);
     }
@@ -154,7 +154,7 @@ class Form
      * Collection methods
      */
 
-    protected function addInput(object $object, ?string $key = null, bool $lastRow = true): void
+    protected function addInput(object $object, string|null $key = null, bool $lastRow = true): void
     {
         if ($key === null) {
             $this->inputs[] = $object;
@@ -436,14 +436,14 @@ class Form
         return $this;
     }
 
-    public function class(?string $classes = null): Form
+    public function class(string|null $classes = null): Form
     {
         $this->lastRow->class($classes);
 
         return $this;
     }
 
-    public function id(?string $id = null): Form
+    public function id(string|null $id = null): Form
     {
         $this->lastRow->id($id);
 
@@ -526,35 +526,35 @@ class Form
         return $this;
     }
 
-    public function pattern(?string $pattern = null, ?string $message = null): Form
+    public function pattern(string|null $pattern = null, string|null $message = null): Form
     {
         $this->lastRow->pattern($pattern, $message);
 
         return $this;
     }
 
-    public function placeholder(?string $placeholder = null): Form
+    public function placeholder(string|null $placeholder = null): Form
     {
         $this->lastRow->placeholder($placeholder);
 
         return $this;
     }
 
-    public function spellcheck(?bool $placeholder = null): Form
+    public function spellcheck(bool|null $placeholder = null): Form
     {
         $this->lastRow->spellcheck($placeholder);
 
         return $this;
     }
 
-    public function autocomplete(?string $value = null): Form
+    public function autocomplete(string|null $value = null): Form
     {
         $this->lastRow->autocomplete($value);
 
         return $this;
     }
 
-    public function tabindex(?int $index = null): Form
+    public function tabindex(int|null $index = null): Form
     {
         $this->lastRow->tabindex($index);
 

@@ -2,9 +2,9 @@
 namespace Jarzon;
 
 /**
- * @property ?string $row
- * @property ?string $label
- * @property null|string|int|float $value
+ * @property string|null $row
+ * @property string|null $label
+ * @property string|int|float|null $value
  */
 class Input extends Tag
 {
@@ -16,18 +16,18 @@ class Input extends Tag
     protected array $postValues = [];
     /** @var null|string|array */
     protected $postValue = null;
-    protected ?string $label = null;
+    protected string|null $label = null;
     protected bool $isRequired = false;
     protected bool $isMandatory = false;
     protected bool $isDisabled = false;
     protected bool $isReadonly = false;
-    protected ?string $labelHtml = null;
-    public ?string $class = null;
+    protected string|null $labelHtml = null;
+    public string|null $class = null;
 
     protected $min = null;
     protected $max = null;
 
-    protected ?string $pattern = null;
+    protected string|null $pattern = null;
 
     protected bool $isLabelGenerated = false;
 
@@ -68,7 +68,7 @@ class Input extends Tag
         return $this->value;
     }
 
-    public function class(?string $classes = null): Input
+    public function class(string|null $classes = null): Input
     {
         if($classes === null) {
             $classes = $this->name;
@@ -81,7 +81,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function id(?string $id = null): Input
+    public function id(string|null $id = null): Input
     {
         if($id === null) $id = $this->name;
 
@@ -145,35 +145,35 @@ class Input extends Tag
         return $this;
     }
 
-    public function placeholder(?string $placeholder = null): Input
+    public function placeholder(string|null $placeholder = null): Input
     {
         $this->setAttribute('placeholder', $placeholder);
 
         return $this;
     }
 
-    public function spellcheck(?bool $placeholder = null): Input
+    public function spellcheck(bool|null $placeholder = null): Input
     {
         $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
 
         return $this;
     }
 
-    public function autocomplete(?string $value = null): Input
+    public function autocomplete(string|null $value = null): Input
     {
         $this->setAttribute('autocomplete', $value);
 
         return $this;
     }
 
-    public function tabindex(?int $index = null): Input
+    public function tabindex(int|null $index = null): Input
     {
         $this->setAttribute('tabindex', $index);
 
         return $this;
     }
 
-    public function pattern(?string $pattern = null, ?string $message = null): Input
+    public function pattern(string|null $pattern = null, string|null $message = null): Input
     {
         $this->pattern = $pattern;
 
