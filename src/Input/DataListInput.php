@@ -66,12 +66,14 @@ class DataListInput extends Input
         $this->groups[] = [];
     }
 
-    public function groupBind(string|int $name, string $class = '')
+    public function groupBind(string|int $name, string $class = ''): self
     {
         $this->groups[$name] = new BindGroup($class);
+
+        return $this;
     }
 
-    public function setGroupAttribute($name, $value): DataListInput
+    public function setGroupAttribute($name, $value): static
     {
         $this->getLastOption()->setAttribute($name, $value);
         return $this;
@@ -82,7 +84,7 @@ class DataListInput extends Input
         return $this->groups[array_key_last($this->groups)];
     }
 
-    public function bindOptionText(string $name): Input
+    public function bindOptionText(string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind($name);
@@ -93,7 +95,7 @@ class DataListInput extends Input
         return $this;
     }
 
-    public function bindOptionValue(string $name): Input
+    public function bindOptionValue(string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind($name);
@@ -104,7 +106,7 @@ class DataListInput extends Input
         return $this;
     }
 
-    public function bindOptionAttribute(string $attribute, string $name): Input
+    public function bindOptionAttribute(string $attribute, string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind($name);
@@ -115,7 +117,7 @@ class DataListInput extends Input
         return $this;
     }
 
-    public function bindValues(array $values): Input
+    public function bindValues(array $values): static
     {
         if(empty($this->groups)) {
             $this->groupBind('default');
@@ -126,7 +128,7 @@ class DataListInput extends Input
         return $this;
     }
 
-    public function addOption($text, $value, array $attr = [])
+    public function addOption($text, $value, array $attr = []): static
     {
         if(empty($this->groups)) {
             $this->group('default');
@@ -135,12 +137,16 @@ class DataListInput extends Input
         $attr += ['value' => $value];
 
         $this->getLastOption()[] = new Option($text, $attr);
+
+        return $this;
     }
 
-    public function addOptions(array $values)
+    public function addOptions(array $values): static
     {
         foreach ($values as $text => $value) {
             $this->addOption($text, $value);
         }
+
+        return $this;
     }
 }

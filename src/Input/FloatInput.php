@@ -17,9 +17,9 @@ class FloatInput extends DigitBasedInput
         return $value !== $this->value || $this->value !== null;
     }
 
-    public function validation(): array|float|null
+    public function inputValidation(): array|float|null
     {
-        $value = parent::validation();
+        $value = parent::inputValidation();
 
         if($this->form->repeat) {
             foreach ($value as $i => $v) {
@@ -32,15 +32,17 @@ class FloatInput extends DigitBasedInput
         return (float)$value;
     }
 
-    public function min(int $min = 0)
+    public function min(int $min = 0): static
     {
         parent::min($min);
         $this->setAttribute('min', $min);
+        return $this;
     }
 
-    public function max(int $max = PHP_INT_MAX)
+    public function max(int $max = PHP_INT_MAX): static
     {
         parent::max($max);
         $this->setAttribute('max', $max);
+        return $this;
     }
 }

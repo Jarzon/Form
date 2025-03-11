@@ -31,7 +31,7 @@ class EmailInput extends TextBasedInput
         return true;
     }
 
-    public function multiple(bool $multiple): Input
+    public function multiple(bool $multiple = true): static
     {
         if($multiple) {
             $this->setAttribute('multiple');

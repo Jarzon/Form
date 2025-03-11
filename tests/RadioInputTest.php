@@ -63,7 +63,7 @@ class RadioInputTest extends TestCase
             $form->getInput('test')->html[0]['html']
         );
 
-        $form->selected('test');
+        $form->getInput('test')->selected('test');
 
         $this->assertEquals(
             '<input name="test" type="radio" id="test_0" value="test" checked>',

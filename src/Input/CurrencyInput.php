@@ -34,12 +34,12 @@ class CurrencyInput extends DigitBasedInput
         return parent::passValidation($value);
     }
 
-    public function validation(): array|string|null
+    public function inputValidation(): array|string|null
     {
         if($this->isDisabled) {
             return null;
         }
-        $value = parent::validation();
+        $value = parent::inputValidation();
 
         if($this->form->repeat) {
             foreach ($value as $i => $v) {
@@ -58,8 +58,10 @@ class CurrencyInput extends DigitBasedInput
         parent::generateHtml();
     }
 
-    public function decimal(int $decimals = 2): void
+    public function decimal(int $decimals = 2): static
     {
         $this->decimals = $decimals;
+
+        return $this;
     }
 }

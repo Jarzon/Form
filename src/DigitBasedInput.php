@@ -5,14 +5,18 @@ class DigitBasedInput extends Input
 {
     protected $value = 0;
 
-    public function min(int $min = 0)
+    public function min(int $min = 0): static
     {
         $this->min = $min;
+
+        return $this;
     }
 
-    public function max(int $max = PHP_INT_MAX)
+    public function max(int $max = PHP_INT_MAX): static
     {
         $this->max = $max;
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

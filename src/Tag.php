@@ -98,4 +98,13 @@ class Tag
     {
         $this->isHtmlGenerated = false;
     }
+
+    public function attributes($attributes = []): self
+    {
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+
+        return $this;
+    }
 }

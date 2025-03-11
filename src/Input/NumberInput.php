@@ -12,21 +12,25 @@ class NumberInput extends DigitBasedInput
         $this->setAttribute('step', 1);
     }
 
-    public function min(int $min = 0)
+    public function min(int $min = 0): static
     {
         parent::min($min);
         $this->setAttribute('min', $min);
+
+        return $this;
     }
 
-    public function max(int $max = PHP_INT_MAX)
+    public function max(int $max = PHP_INT_MAX): static
     {
         parent::max($max);
         $this->setAttribute('max', $max);
+
+        return $this;
     }
 
-    public function validation(): array|int|null
+    public function inputValidation(): array|int|null
     {
-        $value = parent::validation();
+        $value = parent::inputValidation();
 
         if($this->form->repeat) {
             foreach ($value as $i => $v) {

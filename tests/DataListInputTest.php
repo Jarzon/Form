@@ -24,7 +24,7 @@ class DataListInputTest extends TestCase
             ->datalist('test')
             ->addOption('test', 'test')
 
-            ->groupBind()
+            ->groupBind('test')
             ->bindValues($options)
             ->bindOptionAttribute('customAttr', 'customAttr')
 

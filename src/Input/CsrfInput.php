@@ -26,7 +26,7 @@ class CsrfInput extends TextBasedInput
         $this->required();
     }
 
-    public function value($value = ''): Input
+    public function value($value = ''): static
     {
         return $this;
     }

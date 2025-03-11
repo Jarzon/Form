@@ -95,21 +95,21 @@ class RadioInput extends ListBasedInput
         return true;
     }
 
-    public function value($values = []): Input
+    public function value($values = []): static
     {
         $this->selected($values);
 
         return $this;
     }
 
-    public function bindOptionText(string $name): Input
+    public function bindOptionText(string $name): static
     {
         $this->bind->bindOptionText($name);
 
         return $this;
     }
 
-    public function bindOptionValue(string $name): Input
+    public function bindOptionValue(string $name): static
     {
         $this->bind->bindOptionAttribute('value', $name);
 
@@ -123,7 +123,7 @@ class RadioInput extends ListBasedInput
         return $this;
     }
 
-    public function bindValues(array $values): Input
+    public function bindValues(array $values): static
     {
         $this->bind->bindValues = $values;
 
@@ -137,10 +137,12 @@ class RadioInput extends ListBasedInput
         $this->options[] = new Option($text, $attr);
     }
 
-    public function addOptions(array $values)
+    public function addOptions(array $values): static
     {
         foreach ($values as $text => $value) {
             $this->addOption($text, $value);
         }
+
+        return $this;
     }
 }

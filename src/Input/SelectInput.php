@@ -83,12 +83,14 @@ class SelectInput extends ListBasedInput
         $this->groups[$name] = [];
     }
 
-    public function groupBind(string|int $name, string $class = '')
+    public function groupBind(string|int $name, string $class = ''): static
     {
         $this->groups[$name] = new BindGroup($class);
+
+        return $this;
     }
 
-    public function groupAction(string $actionCallback = '', string $actionContent = ''): Input
+    public function groupAction(string $actionCallback = '', string $actionContent = ''): static
     {
         $this->getLastOption()->setAttribute('data-actionCallback', $actionCallback);
         $this->getLastOption()->setAttribute('data-actionContent', $actionContent);
@@ -107,7 +109,7 @@ class SelectInput extends ListBasedInput
         return $this->groups[array_key_last($this->groups)];
     }
 
-    public function bindOptionText(string $name): Input
+    public function bindOptionText(string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind(0);
@@ -118,7 +120,7 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    public function bindOptionValue(string $name): Input
+    public function bindOptionValue(string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind(0);
@@ -129,7 +131,7 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    public function bindOptionAttribute(string $attribute, string $name): Input
+    public function bindOptionAttribute(string $attribute, string $name): static
     {
         if(empty($this->groups)) {
             $this->groupBind(0);
@@ -140,7 +142,7 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    public function bindValues(array $values): Input
+    public function bindValues(array $values): static
     {
         if(empty($this->groups)) {
             $this->groupBind(0);
@@ -153,7 +155,7 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    public function addOption($text, $value, array $attr = [])
+    public function addOption($text, $value, array $attr = []): static
     {
         if(empty($this->groups)) {
             $this->group(0);
@@ -164,13 +166,17 @@ class SelectInput extends ListBasedInput
         $this->numberOfElements += 1;
 
         $this->getLastOption()[] = new Option($text, $attr);
+
+        return $this;
     }
 
-    public function addOptions(array $values)
+    public function addOptions(array $values): static
     {
         foreach ($values as $text => $value) {
             $this->addOption($text, $value);
         }
+
+        return $this;
     }
 
     protected function passValidation($val): bool

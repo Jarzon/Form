@@ -20,18 +20,22 @@ class DateInput extends Input
         return $d && $d->format($format) == $date;
     }
 
-    public function min(string $min)
+    public function min(string $min): static
     {
         $this->setAttribute('min', $min);
 
         $this->min = $min;
+
+        return $this;
     }
 
-    public function max(string $max)
+    public function max(string $max): static
     {
         $this->setAttribute('max', $max);
 
         $this->max = $max;
+
+        return $this;
     }
 
     public function passValidation($value = null): bool

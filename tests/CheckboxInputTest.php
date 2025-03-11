@@ -149,8 +149,8 @@ class CheckboxInputTest extends TestCase
             ->repeat()
             ->text('what')
             ->checkbox('test')
-            ->value('testy')
-            ->setNegativeValue(null);
+                ->value('testy')
+                ->setNegativeValue(null);
 
         $values = $form->validation();
 

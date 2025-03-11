@@ -13,7 +13,7 @@ class TextareaInput extends TextBasedInput
         $this->setTag('textarea');
     }
 
-    public function value($value = ''): Input
+    public function value($value = ''): static
     {
         $this->value = $value;
 

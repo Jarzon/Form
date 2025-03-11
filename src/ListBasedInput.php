@@ -5,11 +5,13 @@ class ListBasedInput extends Input
 {
     protected $selected;
 
-    public function selected($selected)
+    public function selected($selected): self
     {
         $this->selected = $selected;
 
         $this->resetIsHtmlGenerated();
+
+        return $this;
     }
 
     public function getSelected()
@@ -17,7 +19,7 @@ class ListBasedInput extends Input
         return $this->selected;
     }
 
-    public function value($value = ''): Input
+    public function value($value = ''): static
     {
         $this->selected($value);
 

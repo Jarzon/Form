@@ -122,7 +122,7 @@ class Form
 
             $input->processValues();
 
-            $result = $input->validation();
+            $result = $input->inputValidation();
 
             if($this->repeat && $result !== null) {
                 foreach ($result as $i => $v) {
@@ -210,16 +210,26 @@ class Form
         return count($this->inputs);
     }
 
+    public function attributes($attributes = []): static
+    {
+        foreach ($attributes as $name => $value) {
+            $this->lastRow->setAttribute($name, $value);
+        }
+
+        return $this;
+    }
+
     /*
      * Input types
      */
-    public function submit(string $name = 'save'): Form
+    public function submit(string $name = 'save'): SubmitInput
     {
         if($this->keyExists($name)) {
             throw new \Error("Trying to redeclare a existing submit input named: $name");
         }
 
-        $this->addInput(new SubmitInput($name), $name);
+        $input = new SubmitInput($name, $this);
+        $this->addInput($input, $name);
 
         if($this->keyExists('form') && !$this->keyExists('/form')) {
             $this->addInput(new FormTag(true), '/form', false);
@@ -227,156 +237,178 @@ class Form
 
         $this->submitName = $name;
 
-        return $this;
+        return $input;
     }
 
-    public function hidden(string $name): Form
+    public function hidden(string $name): HiddenInput
     {
-        $this->addInput(new HiddenInput($this->postPrefix.$name, $this), $name);
+        $input = new HiddenInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function text(string $name): Form
+    public function text(string $name): TextInput
     {
-        $this->addInput(new TextInput($this->postPrefix.$name, $this), $name);
+        $input = new TextInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function textarea(string $name): Form
+    public function textarea(string $name): TextareaInput
     {
-        $this->addInput(new TextareaInput($this->postPrefix.$name, $this), $name);
+        $input = new TextareaInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function password(string $name): Form
+    public function password(string $name): PasswordInput
     {
-        $this->addInput(new PasswordInput($this->postPrefix.$name, $this), $name);
+        $input = new PasswordInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function email(string $name): Form
+    public function email(string $name): EmailInput
     {
-        $this->addInput(new EmailInput($this->postPrefix.$name, $this), $name);
+        $input = new EmailInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function url(string $name): Form
+    public function url(string $name): UrlInput
     {
-        $this->addInput(new UrlInput($this->postPrefix.$name, $this), $name);
+        $input = new UrlInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function search(string $name): Form
+    public function search(string $name): SearchInput
     {
-        $this->addInput(new SearchInput($this->postPrefix.$name, $this), $name);
+        $input = new SearchInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function tel(string $name): Form
+    public function tel(string $name): TelInput
     {
-        $this->addInput(new TelInput($this->postPrefix.$name, $this), $name);
+        $input = new TelInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function color(string $name): Form
+    public function color(string $name): ColorInput
     {
-        $this->addInput(new ColorInput($this->postPrefix.$name, $this), $name);
+        $input = new ColorInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function number(string $name): Form
+    public function number(string $name): NumberInput
     {
-        $this->addInput(new NumberInput($this->postPrefix.$name, $this), $name);
+        $input = new NumberInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function float(string $name): Form
+    public function float(string $name): FloatInput
     {
-        $this->addInput(new FloatInput($this->postPrefix.$name, $this), $name);
+        $input = new FloatInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function currency(string $name): Form
+    public function currency(string $name): CurrencyInput
     {
-        $this->addInput(new CurrencyInput($this->postPrefix.$name, $this), $name);
+        $input = new CurrencyInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function range(string $name): Form
+    public function range(string $name): RangeInput
     {
-        $this->addInput(new RangeInput($this->postPrefix.$name, $this), $name);
+        $input = new RangeInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function date(string $name): Form
+    public function date(string $name): DateInput
     {
-        $this->addInput(new DateInput($this->postPrefix.$name, $this), $name);
+        $input = new DateInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function time(string $name): Form
+    public function time(string $name): TimeInput
     {
-        $this->addInput(new TimeInput($this->postPrefix.$name, $this), $name);
+        $input = new TimeInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function select(string $name): Form
+    public function select(string $name): SelectInput
     {
-        $this->addInput(new SelectInput($this->postPrefix.$name, $this), $name);
+        $input = new SelectInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function radio(string $name): Form
+    public function radio(string $name): RadioInput
     {
-        $this->addInput(new RadioInput($this->postPrefix.$name, $this), $name);
+        $input = new RadioInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function checkbox(string $name): Form
+    public function checkbox(string $name): CheckboxInput
     {
-        $this->addInput(new CheckboxInput($this->postPrefix.$name, $this), $name);
+        $input = new CheckboxInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function file(string $name, string $destination = '/tmp/', string $ext = ''): Form
+    public function file(string $name, string $destination = '/tmp/', string $ext = ''): FileInput
     {
-        $this->addInput(new FileInput($this->postPrefix.$name, $this, $destination, $ext), $name);
+        $input = new FileInput($this->postPrefix.$name, $this, $destination, $ext);
+
+        $this->addInput($input, $name);
 
         $this->getInput('form')->setAttribute('enctype', 'multipart/form-data');
 
-        return $this;
+        return $input;
     }
 
-    public function datalist(string $name): Form
+    public function datalist(string $name): DataListInput
     {
-        $this->addInput(new DataListInput($this->postPrefix.$name, $this), $name);
+        $input = new DataListInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
-    public function csrf(string $name = '_csrfToken'): Form
+    public function csrf(string $name = '_csrfToken'): CsrfInput
     {
-        $this->addInput(new CsrfInput($this->postPrefix.$name, $this), $name);
+        $input = new CsrfInput($this->postPrefix.$name, $this);
+        $this->addInput($input, $name);
 
-        return $this;
+        return $input;
     }
 
     /*
@@ -404,299 +436,9 @@ class Form
         return $this;
     }
 
-    public function required(bool $required = true): Form
-    {
-        $this->lastRow->required($required);
-
-        return $this;
-    }
-
-    public function mandatory(bool $mandatory = true): Form
-    {
-        $this->lastRow->mandatory($mandatory);
-
-        return $this;
-    }
-
-    public function value($value = ''): Form
-    {
-        $this->lastRow->value($value);
-
-        return $this;
-    }
-
-    public function setNegativeValue($value = 0): Form
-    {
-        if(!$this->lastRow instanceof CheckboxInput) {
-            throw new \Exception("Illegal use of setNegativeValue() on unsupported tag");
-        }
-
-        $this->lastRow->setNegativeValue($value);
-
-        return $this;
-    }
-
-    public function class(string|null $classes = null): Form
-    {
-        $this->lastRow->class($classes);
-
-        return $this;
-    }
-
-    public function id(string|null $id = null): Form
-    {
-        $this->lastRow->id($id);
-
-        return $this;
-    }
-
-    public function min(...$min): Form
-    {
-        if($this->lastRow instanceof FormTag) {
-            throw new \Exception("Illegal use of min() on unsupported tag");
-        }
-
-        $this->lastRow->min(...$min);
-
-        return $this;
-    }
-
-    public function max(...$max): Form
-    {
-        if($this->lastRow instanceof FormTag) {
-            throw new \Exception("Illegal use of max() on unsupported tag");
-        }
-
-        $this->lastRow->max(...$max);
-
-        return $this;
-    }
-
-    public function decimal(int $decimals): Form
-    {
-        if(!$this->lastRow instanceof CurrencyInput) {
-            throw new \Exception("Illegal use of decimal() on unsupported tag");
-        }
-
-        $this->lastRow->decimal($decimals);
-
-        return $this;
-    }
-
-    public function accept(array $types = []): Form
-    {
-        if(!$this->lastRow instanceof FileInput) {
-            throw new \Exception("Illegal use of accept() on unsupported tag");
-        }
-
-        $this->lastRow->accept($types);
-
-        return $this;
-    }
-
-    public function selected($selected = true): Form
-    {
-        $this->lastRow->selected($selected);
-
-        return $this;
-    }
-
-    public function disabled($disabled = true): Form
-    {
-        $this->lastRow->disabled($disabled);
-
-        return $this;
-    }
-
-    public function readonly($readonly = true): Form
-    {
-        $this->lastRow->readonly($readonly);
-
-        return $this;
-    }
-
-    public function multiple(bool $multiple = true): Form
-    {
-        if(!$this->lastRow instanceof FileInput && !$this->lastRow instanceof EmailInput) {
-            throw new \Exception("Illegal use of multiple() on unsupported tag");
-        }
-
-        $this->lastRow->multiple($multiple);
-
-        return $this;
-    }
-
-    public function pattern(string|null $pattern = null, string|null $message = null): Form
-    {
-        $this->lastRow->pattern($pattern, $message);
-
-        return $this;
-    }
-
-    public function placeholder(string|null $placeholder = null): Form
-    {
-        $this->lastRow->placeholder($placeholder);
-
-        return $this;
-    }
-
-    public function spellcheck(bool|null $placeholder = null): Form
-    {
-        $this->lastRow->spellcheck($placeholder);
-
-        return $this;
-    }
-
-    public function autocomplete(string|null $value = null): Form
-    {
-        $this->lastRow->autocomplete($value);
-
-        return $this;
-    }
-
-    public function tabindex(int|null $index = null): Form
-    {
-        $this->lastRow->tabindex($index);
-
-        return $this;
-    }
-
-    public function label($label = null): Form
-    {
-        $this->lastRow->label($label);
-
-        return $this;
-    }
-
-    public function attributes($attributes = []): Form
-    {
-        foreach ($attributes as $name => $value) {
-            $this->lastRow->setAttribute($name, $value);
-        }
-
-        return $this;
-    }
-
-    public function deleteAttribute($attribute): Form
-    {
-        $this->lastRow->deleteAttribute($attribute);
-
-        return $this;
-    }
-
     public function repeat(): Form
     {
         $this->repeat = true;
-
-        return $this;
-    }
-
-    public function addOption(string $text, $value, array $attributes = []): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of addOption() on unsupported tag");
-        }
-
-        $this->lastRow->addOption($text, $value, $attributes);
-
-        return $this;
-    }
-
-    public function addOptions(array $options): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of addOptions() on unsupported tag");
-        }
-
-        $this->lastRow->addOptions($options);
-
-        return $this;
-    }
-
-    public function group(string $name): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of group() on unsupported tag");
-        }
-
-        $this->lastRow->group($name);
-
-        return $this;
-    }
-
-    public function setGroupAttribute(string $name, string $value): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of setGroupAttribute() on unsupported tag");
-        }
-
-        $this->lastRow->setGroupAttribute($name, $value);
-
-        return $this;
-    }
-
-    public function groupBind(string $name = '', string $class = ''): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of groupBind() on unsupported tag");
-        }
-
-        $this->lastRow->groupBind($name, $class);
-
-        return $this;
-    }
-
-    public function groupAction(string $actionCallback = '', string $actionContent = ''): Form
-    {
-        if(!$this->lastRow instanceof SelectInput) {
-            throw new \Exception("Illegal use of groupBind() on unsupported tag");
-        }
-
-        $this->lastRow->groupAction($actionCallback, $actionContent);
-
-        return $this;
-    }
-
-    public function bindOptionText(string $value): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of bindOptionText() on unsupported tag");
-        }
-
-        $this->lastRow->bindOptionText($value);
-
-        return $this;
-    }
-
-    public function bindOptionValue(string $value): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of bindOptionValue() on unsupported tag");
-        }
-
-        $this->lastRow->bindOptionValue($value);
-
-        return $this;
-    }
-
-    public function bindOptionAttribute(string $name, string $value): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of bindOptionAttribute() on unsupported tag");
-        }
-
-        $this->lastRow->bindOptionAttribute($name, $value);
-
-        return $this;
-    }
-
-    public function bindValues(array $values): Form
-    {
-        if(!$this->lastRow instanceof SelectInput && !$this->lastRow instanceof DataListInput && !$this->lastRow instanceof RadioInput) {
-            throw new \Exception("Illegal use of bindValues() on unsupported tag");
-        }
-
-        $this->lastRow->bindValues($values);
 
         return $this;
     }

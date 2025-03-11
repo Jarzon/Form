@@ -3,18 +3,22 @@ namespace Jarzon;
 
 class TextBasedInput extends Input
 {
-    public function min(int $min = 0)
+    public function min(int $min = 0): static
     {
         $this->setAttribute('minlength', $min);
 
         $this->min = $min;
+
+        return $this;
     }
 
-    public function max(int $max = 0)
+    public function max(int $max = 0): static
     {
         $this->setAttribute('maxlength', $max);
 
         $this->max = $max;
+
+        return $this;
     }
 
     public function passValidation($value = ''): bool

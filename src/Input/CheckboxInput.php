@@ -16,7 +16,7 @@ class CheckboxInput extends ListBasedInput
         $this->setAttribute('type', 'checkbox');
     }
 
-    public function setNegativeValue($value): Input
+    public function setNegativeValue($value): static
     {
         $this->negativeValue = $value;
 
@@ -28,7 +28,7 @@ class CheckboxInput extends ListBasedInput
         return $this->getHtml().$this->getLabel();
     }
 
-    public function value($value = ''): Input
+    public function value($value = ''): static
     {
         $this->value = $value;
 
@@ -37,7 +37,8 @@ class CheckboxInput extends ListBasedInput
         return $this;
     }
 
-    public function selected($selected = true) {
+    public function selected($selected = true): static
+    {
         if($selected) {
             $this->setAttribute('checked', null);
         } else if($selected === false && $this->hasAttribute('checked')) {
@@ -49,7 +50,7 @@ class CheckboxInput extends ListBasedInput
         return $this;
     }
 
-    public function validation(): array|string|int|bool
+    public function inputValidation(): array|string|int|bool
     {
         $value = $this->getPostValue();
 

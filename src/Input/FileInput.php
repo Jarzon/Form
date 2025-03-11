@@ -20,7 +20,7 @@ class FileInput extends Input
         $this->ext = $ext;
     }
 
-    public function accept(array $types): Input
+    public function accept(array $types): static
     {
         $this->accept = $types;
         $this->setAttribute('accept', implode(', ', $types));
@@ -28,7 +28,7 @@ class FileInput extends Input
         return $this;
     }
 
-    public function multiple(bool $multiple): Input
+    public function multiple(bool $multiple = true): static
     {
         if($multiple) {
             $this->setAttribute('multiple');
@@ -39,7 +39,7 @@ class FileInput extends Input
         return $this;
     }
 
-    public function value(mixed $value = ''): Input
+    public function value(mixed $value = ''): static
     {
         $this->value = $value;
 

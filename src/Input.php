@@ -1,6 +1,26 @@
 <?php declare(strict_types=1);
 namespace Jarzon;
 
+use Jarzon\Input\CheckboxInput;
+use Jarzon\Input\ColorInput;
+use Jarzon\Input\CurrencyInput;
+use Jarzon\Input\DateInput;
+use Jarzon\Input\EmailInput;
+use Jarzon\Input\FloatInput;
+use Jarzon\Input\HiddenInput;
+use Jarzon\Input\NumberInput;
+use Jarzon\Input\PasswordInput;
+use Jarzon\Input\RadioInput;
+use Jarzon\Input\RangeInput;
+use Jarzon\Input\SearchInput;
+use Jarzon\Input\SelectInput;
+use Jarzon\Input\SubmitInput;
+use Jarzon\Input\TelInput;
+use Jarzon\Input\TextareaInput;
+use Jarzon\Input\TextInput;
+use Jarzon\Input\TimeInput;
+use Jarzon\Input\UrlInput;
+
 /**
  * @property string|null $row
  * @property string|null $label
@@ -8,8 +28,7 @@ namespace Jarzon;
  */
 class Input extends Tag
 {
-    /* @var Form $form */
-    protected $form;
+    protected Form $form;
 
     public string $name = '';
     protected $value = null;
@@ -31,7 +50,7 @@ class Input extends Tag
 
     protected bool $isLabelGenerated = false;
 
-    public function __construct(string $name, $form)
+    public function __construct(string $name, Form $form)
     {
         $this->form = $form;
 
@@ -68,7 +87,7 @@ class Input extends Tag
         return $this->value;
     }
 
-    public function class(string|null $classes = null): Input
+    public function class(string|null $classes = null): static
     {
         if($classes === null) {
             $classes = $this->name;
@@ -81,7 +100,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function id(string|null $id = null): Input
+    public function id(string|null $id = null): static
     {
         if($id === null) $id = $this->name;
 
@@ -113,7 +132,7 @@ class Input extends Tag
         return $this->labelHtml;
     }
 
-    public function label($label = null): Input
+    public function label($label = null): static
     {
         if($label !== null) {
             $this->id();
@@ -136,7 +155,7 @@ class Input extends Tag
         $this->isLabelGenerated = false;
     }
 
-    public function value($value = ''): Input
+    public function value($value = ''): static
     {
         $this->value = $value;
 
@@ -145,35 +164,35 @@ class Input extends Tag
         return $this;
     }
 
-    public function placeholder(string|null $placeholder = null): Input
+    public function placeholder(string|null $placeholder = null): static
     {
         $this->setAttribute('placeholder', $placeholder);
 
         return $this;
     }
 
-    public function spellcheck(bool|null $placeholder = null): Input
+    public function spellcheck(bool|null $placeholder = null): static
     {
         $this->setAttribute('spellcheck', ($placeholder) ? 'true': 'false');
 
         return $this;
     }
 
-    public function autocomplete(string|null $value = null): Input
+    public function autocomplete(string|null $value = null): static
     {
         $this->setAttribute('autocomplete', $value);
 
         return $this;
     }
 
-    public function tabindex(int|null $index = null): Input
+    public function tabindex(int|null $index = null): static
     {
         $this->setAttribute('tabindex', $index);
 
         return $this;
     }
 
-    public function pattern(string|null $pattern = null, string|null $message = null): Input
+    public function pattern(string|null $pattern = null, string|null $message = null): static
     {
         $this->pattern = $pattern;
 
@@ -185,7 +204,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function required(bool $required = true): Input
+    public function required(bool $required = true): static
     {
         if($required && !$this->isRequired) {
             $this->setAttribute('required', null);
@@ -199,14 +218,14 @@ class Input extends Tag
         return $this;
     }
 
-    public function mandatory(bool $mandatory = true): Input
+    public function mandatory(bool $mandatory = true): static
     {
         $this->isMandatory = $mandatory;
 
         return $this;
     }
 
-    public function disabled(bool $disabled = true): Input
+    public function disabled(bool $disabled = true): static
     {
         if($disabled && !$this->isDisabled) {
             $this->setAttribute('disabled', null);
@@ -220,7 +239,7 @@ class Input extends Tag
         return $this;
     }
 
-    public function readonly(bool $readonly = true): Input
+    public function readonly(bool $readonly = true): static
     {
         if($readonly && !$this->isReadonly) {
             $this->setAttribute('readonly', null);
@@ -264,7 +283,7 @@ class Input extends Tag
         return $value !== '';
     }
 
-    public function validation(): mixed
+    public function inputValidation(): mixed
     {
         if($this->isDisabled) return null;
         if($this->form->repeat) {
@@ -290,8 +309,107 @@ class Input extends Tag
         return null;
     }
 
+    public function validation(): mixed
+    {
+        return $this->form->validation();
+    }
+
     public function __call($name, $arguments): void
     {
         throw new \Exception("Illegal $name attribute on $this->name");
+    }
+
+    public function submit(string $name = 'save'): SubmitInput
+    {
+        return $this->form->submit($name);
+    }
+
+    public function hidden(string $name): HiddenInput
+    {
+        return $this->form->hidden($name);
+    }
+
+    public function text(string $name): TextInput
+    {
+        return $this->form->text($name);
+    }
+
+    public function textarea(string $name): TextareaInput
+    {
+        return $this->form->textarea($name);
+    }
+
+    public function password(string $name): PasswordInput
+    {
+        return $this->form->password($name);
+    }
+
+    public function email(string $name): EmailInput
+    {
+        return $this->form->email($name);
+    }
+
+    public function url(string $name): UrlInput
+    {
+        return $this->form->url($name);
+    }
+
+    public function search(string $name): SearchInput
+    {
+        return $this->form->search($name);
+    }
+
+    public function tel(string $name): TelInput
+    {
+        return $this->form->tel($name);
+    }
+
+    public function color(string $name): ColorInput
+    {
+        return $this->form->color($name);
+    }
+    public function number(string $name): NumberInput
+    {
+        return $this->form->number($name);
+    }
+
+    public function float(string $name): FloatInput
+    {
+        return $this->form->float($name);
+    }
+
+    public function currency(string $name): CurrencyInput
+    {
+        return $this->form->currency($name);
+    }
+
+    public function range(string $name): RangeInput
+    {
+        return $this->form->range($name);
+    }
+
+    public function date(string $name): DateInput
+    {
+        return $this->form->date($name);
+    }
+
+    public function time(string $name): TimeInput
+    {
+        return $this->form->time($name);
+    }
+
+    public function select(string $name): SelectInput
+    {
+        return $this->form->select($name);
+    }
+
+    public function radio(string $name): RadioInput
+    {
+        return $this->form->radio($name);
+    }
+
+    public function checkbox(string $name): CheckboxInput
+    {
+        return $this->form->checkbox($name);
     }
 }
