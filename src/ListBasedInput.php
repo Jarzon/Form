@@ -5,7 +5,7 @@ class ListBasedInput extends Input
 {
     protected $selected;
 
-    public function selected($selected): self
+    public function selected($selected): static
     {
         $this->selected = $selected;
 

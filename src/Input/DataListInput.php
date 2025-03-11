@@ -66,7 +66,7 @@ class DataListInput extends Input
         $this->groups[] = [];
     }
 
-    public function groupBind(string|int $name, string $class = ''): self
+    public function groupBind(string|int $name, string $class = ''): static
     {
         $this->groups[$name] = new BindGroup($class);
 
