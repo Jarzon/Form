@@ -6,7 +6,7 @@ use Jarzon\Input;
 
 class SubmitInput extends Input
 {
-    public function __construct(string|null $name = null, Form $form)
+    public function __construct(string|null $name, Form $form)
     {
         $this->setAttribute('type', 'submit');
         parent::__construct($name, $form);
