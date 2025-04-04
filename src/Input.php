@@ -30,7 +30,7 @@ class Input extends Tag
 {
     protected Form $form;
 
-    public string $name = '';
+    protected string $name = '';
     protected $value = null;
     protected array $postValues = [];
     /** @var null|string|array */
