@@ -62,7 +62,9 @@ class SelectInputTest extends TestCase
 
         $form
             ->select('select')
-            ->bindValues(['firstOption' => 'firstValue', 'secondOption' => ''])
+            ->bindValues(['firstOption' => (object)['text' => 'text', 'value' => 'firstValue'], 'secondOption' => (object)['text' => 'text2', 'value' => '']])
+            ->bindOptionText('text')
+            ->bindOptionValue('value')
             ->selected('firstValue');
 
         $values = $form->validation();
