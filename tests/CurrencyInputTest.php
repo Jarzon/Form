@@ -23,16 +23,33 @@ class CurrencyInputTest extends TestCase
         );
     }
 
-    public function testShouldCorrectlyDetectDecimals()
+    public function testShouldCorrectlyDefaultTo0()
     {
-        $form = new Form(['test' => '0.05']);
+        $form = new Form(['test' => 'aaa']);
 
         $form
             ->currency('test');
 
         $values = $form->validation();
 
-        $this->assertEquals(['test' => '0.05'], $values);
+        $this->assertEquals(['test' => '0.00'], $values);
+    }
+
+    public function testShouldCorrectlyDetectDecimals()
+    {
+        $form = new Form(['test' => '']);
+        $form
+            ->currency('test');
+
+        for($d = 0; $d < 10; $d++) {
+            for($c = 0; $c < 100; $c++) {
+                $form->post = ['test' => "$d.$c"];
+
+                $values = $form->validation();
+
+                $this->assertEquals(['test' => "$d.$c"], $values);
+            }
+        }
     }
 
     public function testShouldCorrectlyDetectDecimalsOnUpdate()

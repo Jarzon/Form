@@ -22,7 +22,8 @@ class CurrencyInput extends DigitBasedInput
 
     protected function convertValue($value): string
     {
-        return str_replace(' ', '', str_replace(',', '.', $value));
+        $value = str_replace(' ', '', str_replace(',', '.', $value));
+        return is_numeric($value) ? $value : '0.00';
     }
 
     public function passValidation($value = null): bool
