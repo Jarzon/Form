@@ -20,7 +20,7 @@ abstract class FormAbstract
         $this->form->updateValues($settings);
     }
 
-    public function submitted(string $name = null): bool
+    public function submitted(string|null $name = null): bool
     {
         return $this->form->submitted($name);
     }
