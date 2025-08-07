@@ -74,32 +74,36 @@ class FileInput extends Input
     {
         parent::processValues();
 
-        if(!isset($this->form->files[$this->name]) || $this->form->files[$this->name]['error'] === UPLOAD_ERR_NO_FILE) {
+        $name = $this->hasAttribute('multiple')? str_replace('[]', '', $this->name) : $this->name;
+
+        if(!isset($this->form->files[$name])) {
             return;
         }
 
-        $value = $this->form->files[$this->name];
-
-        $infos = [];
+        $value = $this->form->files[$name];
 
         // TODO: verify file type
 
-        if(array_key_exists('multiple', $this->attributes)) {
-            foreach ($value['error'] AS $index => $error) {
-                $this->fileErrors($error);
+        if($this->hasAttribute('multiple')) {
+            foreach ($value['name'] AS $index => $val) {
+                $this->fileErrors($value['error'][$index]);
 
-                list($location, $name) = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
+                list($location, $filename) = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
 
-                $this->postValues[] = [
-                    'name' => $name,
+                $this->postValue[] = [
+                    'name' => $filename,
                     'original_name' => $value['name'][$index],
                     'type' => $value['type'][$index],
                     'location' => $location,
                     'size' => $value['size'][$index],
                 ];
-
-                return;
             }
+
+            return;
+        }
+
+        if($this->form->files[$name]['error'] === UPLOAD_ERR_NO_FILE) {
+            return;
         }
 
         if(is_array($value['error'])) {
@@ -108,10 +112,10 @@ class FileInput extends Input
 
         $this->fileErrors($value['error']);
 
-        list($location, $name) = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
+        list($location, $filename) = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
 
         $this->postValue = [
-            'name' => $name,
+            'name' => $filename,
             'original_name' => $value['name'],
             'type' => $value['type'],
             'location' => $location,
