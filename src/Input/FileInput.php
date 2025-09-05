@@ -9,9 +9,14 @@ class FileInput extends Input
     protected string $destination;
     protected string $ext;
     protected array $accept;
+    protected int $limit = 2_097_152;
 
-    public function __construct(string $name, $form, string $destination, string $ext)
-    {
+    public function __construct(
+        string $name,
+               $form,
+        string $destination,
+        string $ext
+    ) {
         parent::__construct($name, $form);
 
         $this->setAttribute('type', 'file');
@@ -24,6 +29,14 @@ class FileInput extends Input
     {
         $this->accept = $types;
         $this->setAttribute('accept', implode(', ', $types));
+
+        return $this;
+    }
+
+    public function limit(int $limit): static
+    {
+        $this->limit = $limit;
+        $this->setAttribute('data-limit', $limit);
 
         return $this;
     }
@@ -54,6 +67,21 @@ class FileInput extends Input
 
         if(!isset($this->form->files[$this->name]) && isset($this->form->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
+        }
+
+        if($this->hasAttribute('multiple')) {
+            $currentSize = 0;
+            foreach ($value['size'] AS $index => $val) {
+                $currentSize += $val;
+            }
+
+            if($currentSize > $this->limit) {
+                throw new ValidationException("{$this->name} file is too big", 70);
+            }
+        } else {
+            if(isset($this->form->files[$this->name]) && $this->form->files[$this->name]['size'] > $this->limit) {
+                throw new ValidationException("{$this->name} file is too big", 70);
+            }
         }
 
         return true;
