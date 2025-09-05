@@ -19,6 +19,7 @@ class FileInputTest extends TestCase
         $this->root = vfsStream::setup('root', null, [
             'temp' => [
                 'test.txt' => '',
+                'test2.txt' => '',
             ],
             'data' => [
             ],
@@ -116,7 +117,7 @@ class FileInputTest extends TestCase
             'name' => 'test.txt',
             'type' => 'text',
             'tmp_name' => vfsStream::url('root/temp/test.txt'),
-            'size' => 4,
+            'size' => filesize(vfsStream::url('root/temp/test.txt')),
             'error' => UPLOAD_ERR_OK,
         ]]);
 
@@ -133,7 +134,38 @@ class FileInputTest extends TestCase
             'original_name' => 'test.txt',
             'type' => 'text',
             'location' => 'vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709',
-            'size' => 4
+            'size' => 0
+        ], $values['test']);
+    }
+
+    public function testFileNumberOfFiles()
+    {
+        $this->expectException(ValidationException::class);
+
+        $form = new Form([], ['test' => [
+            'name' => ['test.txt', 'test.txt'],
+            'type' => ['text', 'text'],
+            'tmp_name' => [vfsStream::url('root/temp/test.txt'), vfsStream::url('root/temp/test2.txt')],
+            'size' => [filesize(vfsStream::url('root/temp/test.txt')), filesize(vfsStream::url('root/temp/test2.txt'))],
+            'error' => [UPLOAD_ERR_OK, UPLOAD_ERR_OK],
+        ]]);
+
+        $form
+            ->file('test', vfsStream::url('root/data'))
+            ->accept(['.txt', '.text'])
+            ->multiple()
+            ->maxNumberOfFiles(1);
+
+        $values = $form->validation();
+
+        $this->assertTrue(file_exists('vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709'));
+
+        $this->assertEquals([
+            'name' => 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
+            'original_name' => 'test.txt',
+            'type' => 'text',
+            'location' => 'vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709',
+            'size' => 0
         ], $values['test']);
     }
 

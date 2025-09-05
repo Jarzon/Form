@@ -10,6 +10,7 @@ class FileInput extends Input
     protected string $ext;
     protected array $accept;
     protected int $limit = 2_097_152;
+    protected int $maxNumberOfFiles = 20;
 
     public function __construct(
         string $name,
@@ -37,6 +38,14 @@ class FileInput extends Input
     {
         $this->limit = $limit;
         $this->setAttribute('data-limit', $limit);
+
+        return $this;
+    }
+
+    public function maxNumberOfFiles(int $maxNumberOfFiles): static
+    {
+        $this->maxNumberOfFiles = $maxNumberOfFiles;
+        $this->setAttribute('data-maxNumberOfFiles', $maxNumberOfFiles);
 
         return $this;
     }
@@ -70,6 +79,10 @@ class FileInput extends Input
         }
 
         if($this->hasAttribute('multiple')) {
+            if(isset($this->form->files[$this->name]) && count($this->form->files[$this->name]['name']) > $this->maxNumberOfFiles) {
+                throw new ValidationException("{$this->name} have too many files", 71);
+            }
+
             $currentSize = 0;
             foreach ($value['size'] AS $index => $val) {
                 $currentSize += $val;
