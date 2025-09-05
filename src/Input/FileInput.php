@@ -42,20 +42,16 @@ class FileInput extends Input
         return $this;
     }
 
-    public function maxNumberOfFiles(int $maxNumberOfFiles): static
+    public function multiple(int $maxNumberOfFiles = 20, bool $remove = false): static
     {
-        $this->maxNumberOfFiles = $maxNumberOfFiles;
-        $this->setAttribute('data-maxNumberOfFiles', $maxNumberOfFiles);
-
-        return $this;
-    }
-
-    public function multiple(bool $multiple = true): static
-    {
-        if($multiple) {
-            $this->setAttribute('multiple');
-        } else {
+        if($remove) {
+            $this->maxNumberOfFiles = 1;
             $this->deleteAttribute('multiple');
+            $this->deleteAttribute('data-maxNumberOfFiles');
+        } else {
+            $this->maxNumberOfFiles = $maxNumberOfFiles;
+            $this->setAttribute('multiple');
+            if($maxNumberOfFiles > 0) $this->setAttribute('data-maxNumberOfFiles', $maxNumberOfFiles);
         }
 
         return $this;

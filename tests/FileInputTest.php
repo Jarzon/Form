@@ -153,8 +153,7 @@ class FileInputTest extends TestCase
         $form
             ->file('test', vfsStream::url('root/data'))
             ->accept(['.txt', '.text'])
-            ->multiple()
-            ->maxNumberOfFiles(1);
+            ->multiple(1);
 
         $values = $form->validation();
 
@@ -179,7 +178,7 @@ class FileInputTest extends TestCase
             ->multiple();
 
         $this->assertEquals(
-            '<input name="test" type="file" accept=".jpg, .jpeg" multiple>',
+            '<input name="test" type="file" accept=".jpg, .jpeg" multiple data-maxNumberOfFiles="20">',
             $form->getInput('test')->html
         );
     }
