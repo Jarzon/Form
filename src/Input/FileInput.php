@@ -10,7 +10,7 @@ class FileInput extends Input
     protected string $ext;
     protected array $accept;
     protected int $limit = 2_097_152;
-    protected int $maxNumberOfFiles = 20;
+    protected int $maxNumberOfFiles = 1;
 
     public function __construct(
         string $name,
