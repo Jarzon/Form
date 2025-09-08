@@ -75,7 +75,11 @@ class FileInput extends Input
         }
 
         if($this->hasAttribute('multiple')) {
-            if(isset($this->form->files[$this->name]) && count($this->form->files[$this->name]['name']) > $this->maxNumberOfFiles) {
+            $name = str_replace('[]', '', $this->name);
+            // no files sent
+            if(!$this->isRequired && $this->form->files[$name]['full_path'][0] === '') return false;
+
+            if(isset($this->form->files[$name]) && count($this->form->files[$name]['name']) > $this->maxNumberOfFiles) {
                 throw new ValidationException("{$this->name} have too many files", 71);
             }
 
@@ -113,7 +117,7 @@ class FileInput extends Input
 
         $name = $this->hasAttribute('multiple')? str_replace('[]', '', $this->name) : $this->name;
 
-        if(!isset($this->form->files[$name])) {
+        if(!isset($this->form->files[$name]) || ($this->hasAttribute('multiple') && $this->form->files[$name])) {
             return;
         }
 
@@ -123,6 +127,7 @@ class FileInput extends Input
 
         if($this->hasAttribute('multiple')) {
             foreach ($value['name'] AS $index => $val) {
+                if($value['full_path'][$index] === '') continue;
                 $this->fileErrors($value['error'][$index]);
 
                 list($location, $filename) = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
