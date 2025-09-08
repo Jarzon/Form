@@ -117,7 +117,7 @@ class FileInput extends Input
 
         $name = $this->hasAttribute('multiple')? str_replace('[]', '', $this->name) : $this->name;
 
-        if(!isset($this->form->files[$name]) || ($this->hasAttribute('multiple') && $this->form->files[$name])) {
+        if(!isset($this->form->files[$name]) || ($this->hasAttribute('multiple') && $this->form->files[$name]['full_path'][0] === '')) {
             return;
         }
 
