@@ -84,7 +84,7 @@ class FileInput extends Input
             }
 
             $currentSize = 0;
-            foreach ($value['size'] AS $index => $val) {
+            foreach ($this->form->files[$name]['size'] AS $index => $val) {
                 $currentSize += $val;
             }
 
