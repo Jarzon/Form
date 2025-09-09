@@ -49,6 +49,7 @@ class FileInputTest extends TestCase
             'name' => '',
             'type' => '',
             'tmp_name' => '',
+            'full_path' => '',
             'size' => 4,
             'error' => UPLOAD_ERR_NO_FILE,
         ]]);
@@ -166,6 +167,23 @@ class FileInputTest extends TestCase
             'location' => 'vfs://root/data/da39a3ee5e6b4b0d3255bfef95601890afd80709',
             'size' => 0
         ], $values['test']);
+    }
+
+    public function testNoFileWithMutliple()
+    {
+//        $this->expectException(ValidationException::class);
+
+        $form = new Form(['text' => 'testing'], []);
+
+        $form
+            ->text('text');
+       $form->file('test[]', vfsStream::url('root/data'))
+            ->accept(['.txt', '.text'])
+            ->multiple(5);
+
+        $values = $form->validation();
+
+        $this->assertEquals(['text' => 'testing'], $values);
     }
 
     public function testGetFormsFile()

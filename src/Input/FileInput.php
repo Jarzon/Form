@@ -66,18 +66,21 @@ class FileInput extends Input
 
     public function passValidation(mixed $value = null): bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
-
         if(!isset($this->form->files[$this->name]) && isset($this->form->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
         }
 
         if($this->hasAttribute('multiple')) {
             $name = str_replace('[]', '', $this->name);
+
             // no files sent
-            if(!$this->isRequired && $this->form->files[$name]['full_path'][0] === '') return false;
+            if(!isset($this->form->files[$name]) || $this->form->files[$name]['full_path'][0] === '') {
+                if($this->isRequired) {
+                    throw new ValidationException("{$this->name} is required", 1);
+                } else {
+                    return false;
+                }
+            }
 
             if(isset($this->form->files[$name]) && count($this->form->files[$name]['name']) > $this->maxNumberOfFiles) {
                 throw new ValidationException("{$this->name} have too many files", 71);
@@ -92,6 +95,15 @@ class FileInput extends Input
                 throw new ValidationException("{$this->name} file is too big", 70);
             }
         } else {
+            // no files sent
+            if(!isset($this->form->files[$this->name]) || $this->form->files[$this->name]['full_path'] === '') {
+                if($this->isRequired) {
+                    throw new ValidationException("{$this->name} is required", 1);
+                } else {
+                    return false;
+                }
+            }
+
             if(isset($this->form->files[$this->name]) && $this->form->files[$this->name]['size'] > $this->limit) {
                 throw new ValidationException("{$this->name} file is too big", 70);
             }
