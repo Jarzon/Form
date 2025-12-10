@@ -88,7 +88,10 @@ class Form
     {
         if($this->keyExists($name)) {
             $input = $this->getInput($name);
-            if($input instanceof CheckboxInput) {
+            if($value instanceof \BackedEnum) {
+                $input->value($value->value);
+            }
+            else if($input instanceof CheckboxInput) {
                 $input->selected($value);
             } else {
                 $input->value($value);
