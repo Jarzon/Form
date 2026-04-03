@@ -31,7 +31,8 @@ class EmailInputTest extends TestCase
 
         $form->validation();
 
-        $this->assertEquals('<input name="test" type="email">',
+        $this->assertEquals(
+            '<input name="test" type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">',
             $form->getInput('test')->html
         );
     }
@@ -46,7 +47,8 @@ class EmailInputTest extends TestCase
 
         $form->validation();
 
-        $this->assertEquals('<input name="test" type="email" multiple value="tata@abc.com, coco@abc.com">',
+        $this->assertEquals(
+            '<input name="test" type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" multiple value="tata@abc.com, coco@abc.com">',
             $form->getInput('test')->html
         );
     }
@@ -60,7 +62,8 @@ class EmailInputTest extends TestCase
             ->min(4)
             ->max(10);
 
-        $this->assertEquals('<input name="test" type="email" minlength="4" maxlength="10">',
+        $this->assertEquals(
+            '<input name="test" type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" minlength="4" maxlength="10">',
             $form->getInput('test')->html
         );
     }
