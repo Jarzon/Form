@@ -25,7 +25,7 @@ class EmailInput extends TextBasedInput
         $emails = explode(',', $email);
 
         foreach ($emails as $mail) {
-            if(!preg_match("/$this->pattern/", $value)) {
+            if(!preg_match("/$this->pattern/", $mail)) {
                 throw new \Jarzon\ValidationException("$this->name is not a valid email", 24);
             }
         }
