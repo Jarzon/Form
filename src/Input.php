@@ -290,14 +290,14 @@ class Input extends Tag
         if($this->form->repeat) {
             foreach($this->postValues as $value) {
                 $return = $this->passValidation($value);
-                if(!$this->form->error) $this->form->error = $return;
+                if(!$this->form->error && !is_bool($return)) $this->form->error = $return;
             }
 
             return $this->postValues;
         }
 
         $return = $this->passValidation($this->postValue);
-        if(!$this->form->error) $this->form->error = $return;
+        if(!$this->form->error && !is_bool($return)) $this->form->error = $return;
 
         $updated = $this->isUpdated($this->postValue);
 
