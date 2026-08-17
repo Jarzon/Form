@@ -27,6 +27,10 @@ class TextareaInput extends TextBasedInput
 
     public function passValidation($value = ''): bool
     {
+        if(!parent::passValidation($value)) {
+            return false;
+        }
+
         if($value == '' && $this->isRequired) {
             throw new ValidationException("{$this->name} is required", 1);
         }
