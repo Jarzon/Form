@@ -35,6 +35,7 @@ class Form
     public bool $repeat = false;
     public array $postValues = [];
     public string $postPrefix = '';
+    public ValidationException|bool $error = false;
 
     /** @var ListBasedInput|TextBasedInput|DigitBasedInput|FileInput|FormTag|SubmitInput */
     protected $lastRow;
@@ -123,7 +124,7 @@ class Form
                 continue;
             }
 
-            $input->processValues();
+            $input->populateValues();
 
             $result = $input->inputValidation();
 
@@ -149,6 +150,8 @@ class Form
                 $this->postValues[$key] = $result;
             }
         }
+
+        if($this->error instanceof ValidationException) throw $this->error;
 
         return $this->postValues;
     }

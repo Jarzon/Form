@@ -2,6 +2,7 @@
 namespace Jarzon\Input;
 
 use Jarzon\TextBasedInput;
+use Jarzon\ValidationException;
 
 class UrlInput extends TextBasedInput
 {
@@ -11,16 +12,17 @@ class UrlInput extends TextBasedInput
         $this->setAttribute('type', 'url');
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
+
+        if($value == '' && !$this->isRequired) return false;
 
         if(!filter_var($value, FILTER_VALIDATE_URL)) {
-            throw new \Jarzon\ValidationException("$this->name is not a valid url", 27);
+            return new ValidationException("$this->name is not a valid url", 27);
         }
 
-        return true;
+        return false;
     }
 }

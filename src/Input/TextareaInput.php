@@ -25,14 +25,13 @@ class TextareaInput extends TextBasedInput
         $this->setHtml($this->generateTag($this->tag, $this->attributes, $this->value));
     }
 
-    public function passValidation($value = ''): bool
+    public function passValidation($value = ''): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         if($value == '' && $this->isRequired) {
-            throw new ValidationException("{$this->name} is required", 1);
+            return new ValidationException("{$this->name} is required", 1);
         }
 
         $value = (string)$value;
@@ -40,12 +39,12 @@ class TextareaInput extends TextBasedInput
         $numberChars = mb_strlen($value);
         $lineBreaks = $this->max > 0? mb_substr_count($value, "\n") : 0;
         if(!empty($this->max) && (($numberChars - $lineBreaks) > $this->max || $lineBreaks > $this->max)) {
-            throw new ValidationException("{$this->name} is too long", 20);
+            return new ValidationException("{$this->name} is too long", 20);
         }
         else if(!empty($this->min) && ($numberChars - $lineBreaks) < $this->min) {
-            throw new ValidationException("{$this->name} is too short", 21);
+            return new ValidationException("{$this->name} is too short", 21);
         }
 
-        return $value !== '';
+        return false;
     }
 }

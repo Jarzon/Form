@@ -263,7 +263,7 @@ class Input extends Tag
         return $this->form->post[$this->name]?? null;
     }
 
-    public function processValues(): void
+    public function populateValues(): void
     {
         $value = $this->getPostValue();
 
@@ -275,12 +275,13 @@ class Input extends Tag
         $this->postValue = $value;
     }
 
-    protected function passValidation($value): bool
+    protected function passValidation($value): ValidationException|bool
     {
-        if($value == '' && $this->isRequired) {
-            throw new ValidationException("{$this->name} is required", 1);
+        if($value == '') {
+            if($this->isRequired) return new ValidationException("{$this->name} is required", 1);
+            else return true; // optional; skip other validations
         }
-        return $value !== '';
+        return false; // continue validation
     }
 
     public function inputValidation(): mixed
@@ -288,13 +289,15 @@ class Input extends Tag
         if($this->isDisabled) return null;
         if($this->form->repeat) {
             foreach($this->postValues as $value) {
-                $this->passValidation($value);
+                $return = $this->passValidation($value);
+                if(!$this->form->error) $this->form->error = $return;
             }
 
             return $this->postValues;
         }
 
-        $this->passValidation($this->postValue);
+        $return = $this->passValidation($this->postValue);
+        if(!$this->form->error) $this->form->error = $return;
 
         $updated = $this->isUpdated($this->postValue);
 

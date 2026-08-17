@@ -21,20 +21,19 @@ class TextBasedInput extends Input
         return $this;
     }
 
-    public function passValidation($value = ''): bool
+    public function passValidation($value = ''): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         $numberChars = mb_strlen((string)$value);
         if(!empty($this->max) && $numberChars > $this->max) {
-            throw new ValidationException("{$this->name} is too long", 20);
+            return new ValidationException("{$this->name} is too long", 20);
         }
         else if(!empty($this->min) && $numberChars < $this->min) {
-            throw new ValidationException("{$this->name} is too short", 21);
+            return new ValidationException("{$this->name} is too short", 21);
         }
 
-        return true;
+        return false;
     }
 }

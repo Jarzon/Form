@@ -2,6 +2,7 @@
 namespace Jarzon\Input;
 
 use Jarzon\Input;
+use Jarzon\ValidationException;
 
 class DateInput extends Input
 {
@@ -38,25 +39,24 @@ class DateInput extends Input
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         if(!$this->validateDate($value)) {
-            throw new \Jarzon\ValidationException("{$this->name} is not a valid date", 50);
+            return new ValidationException("{$this->name} is not a valid date", 50);
         }
 
         $date = $this->convertDate($value);
         if($this->max !== null && $date > $this->convertDate($this->max)) {
-            throw new \Jarzon\ValidationException("{$this->name} is higher that {$this->max}", 51);
+            return new ValidationException("{$this->name} is higher that {$this->max}", 51);
         }
         else if($this->min !== null && $date < $this->convertDate($this->min)) {
-            throw new \Jarzon\ValidationException("{$this->name} is lower that {$this->min}", 52);
+            return new ValidationException("{$this->name} is lower that {$this->min}", 52);
         }
 
-        return true;
+        return false;
     }
 
     protected function convertDate($date): int

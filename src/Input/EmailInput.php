@@ -2,6 +2,7 @@
 namespace Jarzon\Input;
 
 use Jarzon\TextBasedInput;
+use Jarzon\ValidationException;
 
 class EmailInput extends TextBasedInput
 {
@@ -14,23 +15,22 @@ class EmailInput extends TextBasedInput
             ->setAttribute('pattern', $this->pattern);
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
-        $email = str_replace(' ', '', $value);
+        if(!$this->isRequired && $value === '') return false;
 
-        $emails = explode(',', $email);
+        $emails = explode(',', str_replace(' ', '', $value));
 
-        foreach ($emails as $mail) {
-            if(!preg_match("/$this->pattern/", $mail)) {
-                throw new \Jarzon\ValidationException("$this->name is not a valid email", 24);
+        foreach ($emails as $email) {
+            if(!preg_match("/$this->pattern/", $email)) {
+                return new ValidationException("$this->name is not a valid email", 24);
             }
         }
 
-        return true;
+        return false;
     }
 
     public function multiple(bool $multiple = true): static

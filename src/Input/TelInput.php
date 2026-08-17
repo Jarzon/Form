@@ -3,6 +3,7 @@ namespace Jarzon\Input;
 
 use Jarzon\Input;
 use Jarzon\TextBasedInput;
+use Jarzon\ValidationException;
 
 class TelInput extends TextBasedInput
 {
@@ -26,19 +27,18 @@ class TelInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         if($this->pattern !== null) {
             $format = str_replace('/', '\/', $this->pattern);
             if(preg_match("/$format/", $value) == 0) {
-                throw new \Jarzon\ValidationException("{$this->name} is not a valid phone number", 22);
+                return new ValidationException("{$this->name} is not a valid phone number", 22);
             }
         }
 
-        return true;
+        return false;
     }
 }

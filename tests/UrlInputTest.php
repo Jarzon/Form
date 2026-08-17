@@ -22,6 +22,19 @@ class UrlInputTest extends TestCase
         $form->validation();
     }
 
+    public function testOptionalUrl()
+    {
+        $form = new Form(['test' => '']);
+
+        $form
+            ->url('test');
+
+        $this->assertEquals(
+            [],
+            $form->validation()
+        );
+    }
+
     public function testGetFormsUrl()
     {
         $form = new Form(['test' => 'a']);

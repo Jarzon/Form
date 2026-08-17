@@ -26,10 +26,10 @@ class CurrencyInput extends DigitBasedInput
         return is_numeric($value) ? $value : '0.00';
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
         if((int)strpos(strrev($value), ".") > $this->decimals) {
-            throw new ValidationException("{$this->name} have too many decimals", 30);
+            return new ValidationException("{$this->name} have too many decimals", 30);
         }
 
         return parent::passValidation($value);

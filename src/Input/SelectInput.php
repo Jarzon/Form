@@ -179,7 +179,7 @@ class SelectInput extends ListBasedInput
         return $this;
     }
 
-    protected function passValidation($val): bool
+    protected function passValidation($val): ValidationException|bool
     {
         if(($val !== null && $val !== '' && $val !== '0') || $this->isRequired) {
             $found = false;
@@ -204,9 +204,9 @@ class SelectInput extends ListBasedInput
             }
 
             if(!$found) {
-                throw new ValidationException("{$this->name} value isn't part of the list", 40);
+                return new ValidationException("{$this->name} value isn't part of the list", 40);
             }
         }
-        return $val !== '';
+        return false;
     }
 }

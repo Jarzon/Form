@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 namespace Jarzon\Input;
 
-use Jarzon\Input;
 use Jarzon\TextBasedInput;
+use Jarzon\ValidationException;
 
 class CsrfInput extends TextBasedInput
 {
@@ -31,16 +31,17 @@ class CsrfInput extends TextBasedInput
         return $this;
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        parent::passValidation($value);
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         if(!$key = array_search($value, $_SESSION['_formToken'])) {
-            throw new \Jarzon\ValidationException("the CSRF token doesn't match", 23);
+            return new ValidationException("the CSRF token doesn't match", 23);
         }
 
         unset($_SESSION['_formToken'][$key]);
 
-        return true;
+        return false;
     }
 }

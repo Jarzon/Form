@@ -64,7 +64,7 @@ class FileInput extends Input
         return $this;
     }
 
-    public function passValidation(mixed $value = null): bool
+    public function passValidation(mixed $value = null): ValidationException|bool
     {
         if(!isset($this->form->files[$this->name]) && isset($this->form->post[$this->name])) {
             throw new \Error('form seems to miss enctype attribute');
@@ -76,14 +76,14 @@ class FileInput extends Input
             // no files sent
             if(!isset($this->form->files[$name]) || $this->form->files[$name]['full_path'][0] === '') {
                 if($this->isRequired) {
-                    throw new ValidationException("{$this->name} is required", 1);
+                    return new ValidationException("{$this->name} is required", 1);
                 } else {
                     return false;
                 }
             }
 
             if(isset($this->form->files[$name]) && count($this->form->files[$name]['name']) > $this->maxNumberOfFiles) {
-                throw new ValidationException("{$this->name} have too many files", 71);
+                return new ValidationException("{$this->name} have too many files", 71);
             }
 
             $currentSize = 0;
@@ -92,24 +92,24 @@ class FileInput extends Input
             }
 
             if($currentSize > $this->limit) {
-                throw new ValidationException("{$this->name} file is too big", 70);
+                return new ValidationException("{$this->name} file is too big", 70);
             }
         } else {
             // no files sent
             if(!isset($this->form->files[$this->name]) || $this->form->files[$this->name]['full_path'] === '') {
                 if($this->isRequired) {
-                    throw new ValidationException("{$this->name} is required", 1);
+                    return new ValidationException("{$this->name} is required", 1);
                 } else {
                     return false;
                 }
             }
 
             if(isset($this->form->files[$this->name]) && $this->form->files[$this->name]['size'] > $this->limit) {
-                throw new ValidationException("{$this->name} file is too big", 70);
+                return new ValidationException("{$this->name} file is too big", 70);
             }
         }
 
-        return true;
+        return false;
     }
 
     public function isUpdated($value) : bool
@@ -123,9 +123,9 @@ class FileInput extends Input
         return $updated;
     }
 
-    public function processValues(): void
+    public function populateValues(): void
     {
-        parent::processValues();
+        parent::populateValues();
 
         $name = $this->hasAttribute('multiple')? str_replace('[]', '', $this->name) : $this->name;
 
@@ -142,7 +142,7 @@ class FileInput extends Input
                 if($value['full_path'][$index] === '') continue;
                 $this->fileErrors($value['error'][$index]);
 
-                list($location, $filename) = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
+                [$location, $filename] = $this->fileMove($value['tmp_name'][$index], $this->destination, $this->ext);
 
                 $this->postValue[] = [
                     'name' => $filename,
@@ -166,7 +166,7 @@ class FileInput extends Input
 
         $this->fileErrors($value['error']);
 
-        list($location, $filename) = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
+        [$location, $filename] = $this->fileMove($value['tmp_name'], $this->destination, $this->ext);
 
         $this->postValue = [
             'name' => $filename,

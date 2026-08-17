@@ -71,11 +71,10 @@ class RadioInput extends ListBasedInput
         return implode('', $output);
     }
 
-    public function passValidation($value = null): bool
+    public function passValidation($value = null): ValidationException|bool
     {
-        if(!parent::passValidation($value)) {
-            return false;
-        }
+        $err = parent::passValidation($value);
+        if($err) return $err;
 
         $bindValues = array_column($this->bind->bindValues, $this->bind->bindOptionAttributes['value']);
         $optionValues = array_column(array_column($this->options, 'attr'), 'value');
@@ -88,11 +87,11 @@ class RadioInput extends ListBasedInput
             }
 
             if(!$exist) {
-                throw new ValidationException("{$this->name} value isn't part of the list", 41);
+                return new ValidationException("{$this->name} value isn't part of the list", 41);
             }
         }
 
-        return true;
+        return false;
     }
 
     public function value($values = []): static
