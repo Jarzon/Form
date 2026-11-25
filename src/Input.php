@@ -6,6 +6,7 @@ use Jarzon\Input\ColorInput;
 use Jarzon\Input\CurrencyInput;
 use Jarzon\Input\DateInput;
 use Jarzon\Input\EmailInput;
+use Jarzon\Input\FileInput;
 use Jarzon\Input\FloatInput;
 use Jarzon\Input\HiddenInput;
 use Jarzon\Input\NumberInput;
@@ -414,5 +415,10 @@ class Input extends Tag
     public function checkbox(string $name): CheckboxInput
     {
         return $this->form->checkbox($name);
+    }
+
+    public function file(string $name, string $destination = '/tmp/', string $ext = ''): FileInput
+    {
+        return $this->form->file($name, $destination, $ext);
     }
 }
